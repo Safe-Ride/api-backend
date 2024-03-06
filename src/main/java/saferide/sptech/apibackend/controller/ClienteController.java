@@ -9,6 +9,7 @@ import saferide.sptech.apibackend.model.Responsavel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/clientes")
@@ -30,7 +31,7 @@ public class ClienteController {
     @PostMapping("/responsaveis/{idResponsavel}/dependentes")
     public ResponseEntity<Dependente> criarDependente(@PathVariable int idResponsavel, @RequestBody Dependente dependente) {
         Responsavel responsavel = procurarResponsavel(idResponsavel);
-
+        dependente.setIdResponsavel(idResponsavel);
         responsavel.adicionarDependente(dependente);
 
         return ResponseEntity.status(201).body(dependente);
@@ -55,10 +56,60 @@ public class ClienteController {
         return ResponseEntity.status(204).build();
     }
 
+    @PutMapping("/motoristas/{idMotorista}")
+    public ResponseEntity<Motorista> atualizarMotorista(@PathVariable int idMotorista, @RequestBody Motorista motorista) {
+        int motoristaIndex = procurarIndexClientePorId(idMotorista);
+
+        if (motoristaIndex == -1) {
+            return ResponseEntity.status(404).build();
+        }
+        motorista.setId(clientes.get(motoristaIndex).getId());
+        clientes.set(motoristaIndex, motorista);
+        return ResponseEntity.status(204).build();
+    }
+    @PutMapping("/responsaveis/{idResponsavel}")
+    public ResponseEntity<Motorista> atualizarResponsavel(@PathVariable int idResponsavel, @RequestBody Responsavel responsavel) {
+        int responsavelIndex = procurarIndexClientePorId(idResponsavel);
+        if (responsavelIndex == -1) {
+            return ResponseEntity.status(404).build();
+        }
+        Responsavel responsavelAntigo = (Responsavel) clientes.get(responsavelIndex);
+        responsavel.setId(idResponsavel);
+        for (Dependente dependente : responsavelAntigo.getDependentes()) {
+            responsavel.adicionarDependente(dependente);
+        }
+        clientes.set(responsavelIndex, responsavel);
+        return ResponseEntity.status(204).build();
+    }
+    @PutMapping("/responsaveis/{idResponsavel}/dependentes/{idDependente}")
+    public ResponseEntity<Dependente> atualizarDependente(@PathVariable int idResponsavel, @PathVariable int idDependente, @RequestBody Dependente dependente) {
+        Responsavel responsavel = procurarResponsavel(idResponsavel);
+        List<Dependente> dependentes = responsavel.getDependentes();
+        Dependente dependenteAntigo = dependentes
+                .stream()
+                .filter(d -> d.getId() == idDependente)
+                .toList().get(0);
+        if(Objects.isNull(dependenteAntigo)) {
+            return ResponseEntity.status(404).build();
+        }
+        int indiceDependente = dependentes.indexOf(dependenteAntigo);
+        dependente.setId(idDependente);
+        dependente.setIdResponsavel(idResponsavel);
+
+        dependentes.set(indiceDependente, dependente);
+        return ResponseEntity.status(204).build();
+    }
+
     private Responsavel procurarResponsavel(int idResponsavel) {
         return (Responsavel) clientes.stream()
                 .filter(c -> c.getClass().equals(Responsavel.class))
                 .filter(r -> r.getId() == idResponsavel).toList().get(0);
+    }
+
+    private int procurarIndexClientePorId(int id) {
+        return clientes.indexOf(
+                clientes.stream()
+                        .filter(c -> c.getId() == id).toList().get(0));
     }
 
 

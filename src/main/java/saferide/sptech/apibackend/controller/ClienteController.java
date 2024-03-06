@@ -29,9 +29,7 @@ public class ClienteController {
 
     @PostMapping("/responsaveis/{idResponsavel}/dependentes")
     public ResponseEntity<Dependente> criarDependente(@PathVariable int idResponsavel, @RequestBody Dependente dependente) {
-        Responsavel responsavel = (Responsavel) clientes.stream()
-                .filter(c -> c.getClass().equals(Responsavel.class))
-                .filter(r -> r.getId() == idResponsavel).toList().get(0);
+        Responsavel responsavel = procurarResponsavel(idResponsavel);
 
         responsavel.adicionarDependente(dependente);
 
@@ -48,9 +46,7 @@ public class ClienteController {
 
     @GetMapping("/responsaveis/{idResponsavel}/dependentes")
     public ResponseEntity<List<Dependente>> listarDependentesPorResponsavel(@PathVariable int idResponsavel) {
-        Responsavel responsavel = (Responsavel) clientes.stream()
-                .filter(c -> c.getClass().equals(Responsavel.class))
-                .filter(r -> r.getId() == idResponsavel).toList().get(0);
+        Responsavel responsavel = procurarResponsavel(idResponsavel);
 
         List<Dependente> dependentes = responsavel.getDependentes();
         if (!dependentes.isEmpty()) {
@@ -58,4 +54,12 @@ public class ClienteController {
         }
         return ResponseEntity.status(204).build();
     }
+
+    private Responsavel procurarResponsavel(int idResponsavel) {
+        return (Responsavel) clientes.stream()
+                .filter(c -> c.getClass().equals(Responsavel.class))
+                .filter(r -> r.getId() == idResponsavel).toList().get(0);
+    }
+
+
 }

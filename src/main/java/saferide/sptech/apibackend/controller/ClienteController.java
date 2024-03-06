@@ -20,13 +20,15 @@ public class ClienteController {
         clientes.add(motorista);
         return ResponseEntity.status(201).body(motorista);
     }
+
     @PostMapping("/responsaveis")
-    public ResponseEntity<Responsavel> criarDependente(@RequestBody Responsavel responsavel) {
+    public ResponseEntity<Responsavel> criarResponsavel(@RequestBody Responsavel responsavel) {
         clientes.add(responsavel);
         return ResponseEntity.status(201).body(responsavel);
     }
+
     @PostMapping("/responsaveis/{idResponsavel}/dependentes")
-    public ResponseEntity<Dependente> criarDependente(@RequestParam int idResponsavel, @RequestBody Dependente dependente) {
+    public ResponseEntity<Dependente> criarDependente(@PathVariable int idResponsavel, @RequestBody Dependente dependente) {
         Responsavel responsavel = (Responsavel) clientes.stream()
                 .filter(c -> c.getClass().equals(Responsavel.class))
                 .filter(r -> r.getId() == idResponsavel).toList().get(0);
@@ -38,19 +40,20 @@ public class ClienteController {
 
     @GetMapping
     public ResponseEntity<List<Cliente>> listarClientes() {
-        if(!clientes.isEmpty()) {
+        if (!clientes.isEmpty()) {
             return ResponseEntity.status(200).body(clientes);
         }
         return ResponseEntity.status(204).build();
     }
+
     @GetMapping("/responsaveis/{idResponsavel}/dependentes")
-    public ResponseEntity<List<Dependente>> listarDependentesPorResponsavel(@RequestParam int idResponsavel, @RequestBody Dependente dependente) {
+    public ResponseEntity<List<Dependente>> listarDependentesPorResponsavel(@PathVariable int idResponsavel, @RequestBody Dependente dependente) {
         Responsavel responsavel = (Responsavel) clientes.stream()
                 .filter(c -> c.getClass().equals(Responsavel.class))
                 .filter(r -> r.getId() == idResponsavel).toList().get(0);
 
         List<Dependente> dependentes = responsavel.getDependentes();
-        if(!dependentes.isEmpty()) {
+        if (!dependentes.isEmpty()) {
             return ResponseEntity.status(200).body(dependentes);
         }
         return ResponseEntity.status(204).build();

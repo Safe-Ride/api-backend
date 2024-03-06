@@ -47,7 +47,7 @@ public class ClienteController {
     }
 
     @GetMapping("/responsaveis/{idResponsavel}/dependentes")
-    public ResponseEntity<List<Dependente>> listarDependentesPorResponsavel(@PathVariable int idResponsavel, @RequestBody Dependente dependente) {
+    public ResponseEntity<List<Dependente>> listarDependentesPorResponsavel(@PathVariable int idResponsavel) {
         Responsavel responsavel = (Responsavel) clientes.stream()
                 .filter(c -> c.getClass().equals(Responsavel.class))
                 .filter(r -> r.getId() == idResponsavel).toList().get(0);

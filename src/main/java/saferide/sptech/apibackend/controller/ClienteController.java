@@ -39,9 +39,8 @@ public class ClienteController {
 
     @GetMapping
     public ResponseEntity<List<Cliente>> listarClientes() {
-        if (!clientes.isEmpty()) {
-            return ResponseEntity.status(200).body(clientes);
-        }
+        if (!clientes.isEmpty()) return ResponseEntity.status(200).body(clientes);
+
         return ResponseEntity.status(204).build();
     }
 
@@ -60,19 +59,18 @@ public class ClienteController {
     public ResponseEntity<Motorista> atualizarMotorista(@PathVariable int idMotorista, @RequestBody Motorista motorista) {
         int motoristaIndex = procurarIndexClientePorId(idMotorista);
 
-        if (motoristaIndex == -1) {
-            return ResponseEntity.status(404).build();
-        }
+        if (motoristaIndex == -1) return ResponseEntity.status(404).build();
+
         motorista.setId(clientes.get(motoristaIndex).getId());
         clientes.set(motoristaIndex, motorista);
         return ResponseEntity.status(204).build();
     }
+
     @PutMapping("/responsaveis/{idResponsavel}")
-    public ResponseEntity<Motorista> atualizarResponsavel(@PathVariable int idResponsavel, @RequestBody Responsavel responsavel) {
+    public ResponseEntity<Responsavel> atualizarResponsavel(@PathVariable int idResponsavel, @RequestBody Responsavel responsavel) {
         int responsavelIndex = procurarIndexClientePorId(idResponsavel);
-        if (responsavelIndex == -1) {
-            return ResponseEntity.status(404).build();
-        }
+        if (responsavelIndex == -1) return ResponseEntity.status(404).build();
+
         Responsavel responsavelAntigo = (Responsavel) clientes.get(responsavelIndex);
         responsavel.setId(idResponsavel);
         for (Dependente dependente : responsavelAntigo.getDependentes()) {
@@ -81,22 +79,41 @@ public class ClienteController {
         clientes.set(responsavelIndex, responsavel);
         return ResponseEntity.status(204).build();
     }
+
     @PutMapping("/responsaveis/{idResponsavel}/dependentes/{idDependente}")
     public ResponseEntity<Dependente> atualizarDependente(@PathVariable int idResponsavel, @PathVariable int idDependente, @RequestBody Dependente dependente) {
         Responsavel responsavel = procurarResponsavel(idResponsavel);
         List<Dependente> dependentes = responsavel.getDependentes();
-        Dependente dependenteAntigo = dependentes
-                .stream()
-                .filter(d -> d.getId() == idDependente)
-                .toList().get(0);
-        if(Objects.isNull(dependenteAntigo)) {
+        Dependente dependenteAntigo = procurarDependentePorId(idDependente, dependentes);
+
+        if (Objects.isNull(dependenteAntigo)) {
             return ResponseEntity.status(404).build();
         }
+
         int indiceDependente = dependentes.indexOf(dependenteAntigo);
         dependente.setId(idDependente);
         dependente.setIdResponsavel(idResponsavel);
 
         dependentes.set(indiceDependente, dependente);
+        return ResponseEntity.status(204).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Motorista> removerCliente(@PathVariable int id) {
+        int indice = procurarIndexClientePorId(id);
+
+        if (indice == -1) return ResponseEntity.status(404).build();
+
+        clientes.remove(indice);
+        return ResponseEntity.status(204).build();
+    }
+
+    @DeleteMapping("/responsaveis/{idResponsavel}/dependentes/{idDependente}")
+    public ResponseEntity<Dependente> removerDependente(@PathVariable int idResponsavel, @PathVariable int idDependente) {
+        List<Dependente> dependentes = procurarResponsavel(idResponsavel).getDependentes();
+        Dependente dependente = procurarDependentePorId(idDependente, dependentes);
+        if (Objects.isNull(dependente)) return ResponseEntity.status(404).build();
+        dependentes.remove(dependente);
         return ResponseEntity.status(204).build();
     }
 
@@ -107,10 +124,24 @@ public class ClienteController {
     }
 
     private int procurarIndexClientePorId(int id) {
-        return clientes.indexOf(
-                clientes.stream()
-                        .filter(c -> c.getId() == id).toList().get(0));
+        try {
+            return clientes.indexOf(
+                    clientes.stream()
+                            .filter(c -> c.getId() == id).toList().get(0));
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
+        }
     }
 
-
+    private Dependente procurarDependentePorId(int idDependente, List<Dependente> dependentes) {
+        try {
+            return dependentes
+                    .stream()
+                    .filter(d -> d.getId() == idDependente)
+                    .toList().get(0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
 }

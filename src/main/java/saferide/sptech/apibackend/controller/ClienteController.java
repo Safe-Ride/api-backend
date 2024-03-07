@@ -44,6 +44,15 @@ public class ClienteController {
         return ResponseEntity.status(204).build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> pegarClientePorId(@PathVariable int id) {
+        int indexCliente = procurarIndexClientePorId(id);
+
+        if (indexCliente > -1) return ResponseEntity.status(200).body(clientes.get(indexCliente));
+
+        return ResponseEntity.status(404).build();
+    }
+
     @GetMapping("/responsaveis/{idResponsavel}/dependentes")
     public ResponseEntity<List<Dependente>> listarDependentesPorResponsavel(@PathVariable int idResponsavel) {
         Responsavel responsavel = procurarResponsavel(idResponsavel);
@@ -53,6 +62,15 @@ public class ClienteController {
             return ResponseEntity.status(200).body(dependentes);
         }
         return ResponseEntity.status(204).build();
+    }
+    @GetMapping("/responsaveis/{idResponsavel}/dependentes/{idDependente}")
+    public ResponseEntity<Dependente> pegarDependentePorId(@PathVariable int idResponsavel, @PathVariable int idDependente) {
+        Responsavel responsavel = procurarResponsavel(idResponsavel);
+
+        Dependente dependente = procurarDependentePorId(idDependente, responsavel.getDependentes());
+        if (Objects.nonNull(dependente)) return ResponseEntity.status(200).body(dependente);
+
+        return ResponseEntity.status(404).build();
     }
 
     @PutMapping("/motoristas/{idMotorista}")
@@ -128,8 +146,7 @@ public class ClienteController {
             return clientes.indexOf(
                     clientes.stream()
                             .filter(c -> c.getId() == id).toList().get(0));
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             return -1;
         }
     }

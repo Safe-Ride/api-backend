@@ -15,15 +15,18 @@ import java.util.Objects;
 @RequestMapping("/clientes")
 public class ClienteController {
     private List<Cliente> clientes = new ArrayList<>();
+    private int identificador = 0;
 
     @PostMapping("/motoristas")
     public ResponseEntity<Motorista> criarMotorista(@RequestBody Motorista motorista) {
+        motorista.setId(++identificador);
         clientes.add(motorista);
         return ResponseEntity.status(201).body(motorista);
     }
 
     @PostMapping("/responsaveis")
     public ResponseEntity<Responsavel> criarResponsavel(@RequestBody Responsavel responsavel) {
+        responsavel.setId(++identificador);
         clientes.add(responsavel);
         return ResponseEntity.status(201).body(responsavel);
     }

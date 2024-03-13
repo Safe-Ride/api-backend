@@ -15,18 +15,19 @@ import java.util.Objects;
 @RequestMapping("/clientes")
 public class ClienteController {
     private List<Cliente> clientes = new ArrayList<>();
-    private int identificador = 0;
+    private int idCliente = 0;
+    private int idDependente = 0;
 
     @PostMapping("/motoristas")
     public ResponseEntity<Motorista> criarMotorista(@RequestBody Motorista motorista) {
-        motorista.setId(++identificador);
+        motorista.setId(++idCliente);
         clientes.add(motorista);
         return ResponseEntity.status(201).body(motorista);
     }
 
     @PostMapping("/responsaveis")
     public ResponseEntity<Responsavel> criarResponsavel(@RequestBody Responsavel responsavel) {
-        responsavel.setId(++identificador);
+        responsavel.setId(++idCliente);
         clientes.add(responsavel);
         return ResponseEntity.status(201).body(responsavel);
     }
@@ -34,6 +35,7 @@ public class ClienteController {
     @PostMapping("/responsaveis/{idResponsavel}/dependentes")
     public ResponseEntity<Dependente> criarDependente(@PathVariable int idResponsavel, @RequestBody Dependente dependente) {
         Responsavel responsavel = procurarResponsavel(idResponsavel);
+        dependente.setId(++idDependente);
         dependente.setIdResponsavel(idResponsavel);
         responsavel.adicionarDependente(dependente);
 

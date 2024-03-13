@@ -1,11 +1,16 @@
 package saferide.sptech.apibackend.model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public abstract class Cliente {
     private int id;
     private String nome;
     private String email;
     private String senha;
-    private long telefone;
+    private String telefone;
+    private LocalDate dataNascimento;
+    private String cep;
 
     public String getNome() {
         return nome;
@@ -23,11 +28,11 @@ public abstract class Cliente {
         this.email = email;
     }
 
-    public long getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(long telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
@@ -45,5 +50,13 @@ public abstract class Cliente {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }

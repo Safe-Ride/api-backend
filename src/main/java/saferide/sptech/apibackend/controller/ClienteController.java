@@ -127,7 +127,14 @@ public class ClienteController {
 
         if (indice == -1) return ResponseEntity.status(404).build();
 
-        clientes.remove(indice);
+        Cliente cliente = clientes.get(indice);
+
+        // Remover um cliente que tenha dependentes associados
+        if (!((Responsavel) cliente).getDependentes().isEmpty()){
+            return ResponseEntity.status(400).build();
+        }
+
+        clientes.remove(cliente);
         return ResponseEntity.status(204).build();
     }
 

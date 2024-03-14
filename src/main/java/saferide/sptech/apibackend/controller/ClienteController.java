@@ -64,6 +64,7 @@ public class ClienteController {
 
         List<Dependente> dependentes = responsavel.getDependentes();
         if (!dependentes.isEmpty()) {
+            ordenarDependenterPorNome(dependentes);
             return ResponseEntity.status(200).body(dependentes);
         }
         return ResponseEntity.status(204).build();
@@ -145,6 +146,21 @@ public class ClienteController {
         if (Objects.isNull(dependente)) return ResponseEntity.status(404).build();
         dependentes.remove(dependente);
         return ResponseEntity.status(204).build();
+    }
+
+    private List<Dependente> ordenarDependenterPorNome(List<Dependente> dependentes){
+        for (int i = 0; i < dependentes.size(); i++) {
+            for (int j = 1; j < dependentes.size(); j++) {
+
+                if (dependentes.get(j).getNome().compareTo(dependentes.get(j-1).getNome()) < 0) {
+                    Dependente aux = dependentes.get(j);
+                    dependentes.set(j, dependentes.get(j-1));
+                    dependentes.set(j-1, aux);
+
+                }
+            }
+        }
+        return dependentes;
     }
 
     private Responsavel procurarResponsavel(int idResponsavel) {

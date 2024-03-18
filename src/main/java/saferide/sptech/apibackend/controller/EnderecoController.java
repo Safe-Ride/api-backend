@@ -44,6 +44,7 @@ public class EnderecoController {
         return ResponseEntity.status(204).build();
     }
 
+
     private List<Endereco> listarEnderecosOrdenadoPorNome(){
         int j = 0;
         for (int i = 1; i < enderecos.size(); i++) {

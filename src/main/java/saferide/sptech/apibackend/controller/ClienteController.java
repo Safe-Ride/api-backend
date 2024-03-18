@@ -44,7 +44,10 @@ public class ClienteController {
 
     @GetMapping
     public ResponseEntity<List<Cliente>> listarClientes() {
-        if (!clientes.isEmpty()) return ResponseEntity.status(200).body(clientes);
+        if (!clientes.isEmpty()){
+            ordenarClientePorNome(clientes);
+            return ResponseEntity.status(200).body(clientes);
+        }
 
         return ResponseEntity.status(204).build();
     }
@@ -161,6 +164,22 @@ public class ClienteController {
             }
         }
         return dependentes;
+    }
+
+    private List<Cliente> ordenarClientePorNome(List<Cliente> clientes){
+        for (int i = 0; i < clientes.size() - 1; i++) {
+            int indiceMinimo = i;
+
+            for (int j = i + 1; j < clientes.size(); j++) {
+                if (clientes.get(j).getNome().compareTo(clientes.get(indiceMinimo).getNome()) < 0) {
+                    indiceMinimo = j;
+                }
+            }
+            Cliente aux = clientes.get(indiceMinimo);
+            clientes.set(indiceMinimo, clientes.get(i));
+            clientes.set(i, aux);
+        }
+        return clientes;
     }
 
     private Responsavel procurarResponsavel(int idResponsavel) {

@@ -32,7 +32,7 @@ public class EnderecoController {
     @GetMapping
     public ResponseEntity<List<Endereco>> listar() {
         if (enderecos.isEmpty()) return ResponseEntity.status(204).build();
-        listarEnderecosOrdenadoPorNome();
+//        listarEnderecosOrdenadoPorNome();
         return ResponseEntity.status(200).body(enderecos);
     }
 
@@ -45,20 +45,20 @@ public class EnderecoController {
     }
 
 
-    private List<Endereco> listarEnderecosOrdenadoPorNome(){
-        int j = 0;
-        for (int i = 1; i < enderecos.size(); i++) {
-            Endereco endereco = enderecos.get(i);
-            j = i-1;
-            while (j>=0 && enderecos.get(j).getEndereco().compareTo(endereco.getEndereco())>0){
-                enderecos.set(j+1, enderecos.get(j));
-                j = j-1;
-            }
-            enderecos.set(j+1, endereco);
-        }
-
-        return enderecos;
-    }
+//    private List<Endereco> listarEnderecosOrdenadoPorNome(){
+//        int j = 0;
+//        for (int i = 1; i < enderecos.size(); i++) {
+//            Endereco endereco = enderecos.get(i);
+//            j = i-1;
+//            while (j>=0 && enderecos.get(j).getEndereco().compareTo(endereco.getEndereco())>0){
+//                enderecos.set(j+1, enderecos.get(j));
+//                j = j-1;
+//            }
+//            enderecos.set(j+1, endereco);
+//        }
+//
+//        return enderecos;
+//    }
 
     public Endereco idExistnte(int id) {
         return enderecos.stream()

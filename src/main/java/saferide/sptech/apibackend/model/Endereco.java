@@ -5,7 +5,9 @@ public class Endereco {
     private String dependente;
     private double latitude;
     private double longitude;
-    private String endereco;
+    private String cep;
+    private int numero;
+    private String complemento;
 
     public int getIdEndereco() {
         return idEndereco;
@@ -39,11 +41,27 @@ public class Endereco {
         this.longitude = longitude;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getCep() {
+        return cep;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }

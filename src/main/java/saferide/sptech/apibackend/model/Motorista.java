@@ -1,11 +1,19 @@
 package saferide.sptech.apibackend.model;
 
 public class Motorista extends Cliente {
+    private String placa;
     private String cnpj;
     private String cnh;
     private String crm;
     private String crmc;
-    private String placa;
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
     public String getCnpj() {
         return cnpj;
@@ -37,13 +45,5 @@ public class Motorista extends Cliente {
 
     public void setCrmc(String crmc) {
         this.crmc = crmc;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
     }
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Responsavel extends Cliente {
-    private String cpf;
     private List<Dependente> dependentes = new ArrayList();
 
     public void adicionarDependente(Dependente dependente) {

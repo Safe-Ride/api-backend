@@ -18,6 +18,13 @@ public class ClienteController {
     private int idCliente = 0;
     private int idDependente = 0;
 
+    @PostMapping
+    public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
+        cliente.setId(++idCliente);
+        clientes.add(cliente);
+        return ResponseEntity.status(201).body(cliente);
+    }
+
     @PostMapping("/motoristas")
     public ResponseEntity<Motorista> criarMotorista(@RequestBody Motorista motorista) {
         motorista.setId(++idCliente);
@@ -48,7 +55,6 @@ public class ClienteController {
             ordenarClientePorNome(clientes);
             return ResponseEntity.status(200).body(clientes);
         }
-
         return ResponseEntity.status(204).build();
     }
 

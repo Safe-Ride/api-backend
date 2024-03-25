@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Dependente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDependente;
+    private Integer id;
     private Integer fkResponsavel;
     private String nome;
     private LocalDate dataNascimento;
@@ -27,11 +27,11 @@ public class Dependente {
     }
 
     public Integer getId() {
-        return idDependente;
+        return id;
     }
 
     public void setId(int id) {
-        this.idDependente = id;
+        this.id = id;
     }
 
     public Integer getIdResponsavel() {

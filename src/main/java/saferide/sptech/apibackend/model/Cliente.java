@@ -12,7 +12,7 @@ import java.util.Date;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCliente;
+    private Integer id;
     private String nome;
     private String email;
     private String senha;
@@ -22,11 +22,11 @@ public class Cliente {
     private TipoCliente tipo;
 
     public Integer getId() {
-        return idCliente;
+        return id;
     }
 
     public void setId(int id) {
-        this.idCliente = id;
+        this.id = id;
     }
 
     public String getNome() {

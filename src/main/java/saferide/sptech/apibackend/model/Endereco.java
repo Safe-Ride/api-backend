@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEndereco;
+    private Integer id;
     private String dependente;
     private double latitude;
     private double longitude;
@@ -18,11 +18,11 @@ public class Endereco {
     private String complemento;
 
     public Integer getIdEndereco() {
-        return idEndereco;
+        return id;
     }
 
-    public void setIdEndereco(int idEndereco) {
-        this.idEndereco = idEndereco;
+    public void setIdEndereco(int id) {
+        this.id = id;
     }
 
     public String getDependente() {

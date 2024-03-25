@@ -17,7 +17,7 @@ public class TrajetoController {
 
     @PostMapping
     public ResponseEntity<Trajeto> criar(@RequestBody Trajeto trajeto){
-        Trajeto saveTrajeto = trajetoRepository.save(trajeto)
+        Trajeto saveTrajeto = trajetoRepository.save(trajeto);
         return ResponseEntity.status(201).body(saveTrajeto);
     }
 

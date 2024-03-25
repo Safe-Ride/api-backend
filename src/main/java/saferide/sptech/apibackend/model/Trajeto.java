@@ -11,16 +11,16 @@ import java.util.List;
 public class Trajeto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTrajeto;
+    private int id;
     private String escola;
     private int tipo;
 
     public int getIdTrajeto() {
-        return idTrajeto;
+        return id;
     }
 
-    public void setIdTrajeto(int idTrajeto) {
-        this.idTrajeto = idTrajeto;
+    public void setIdTrajeto(int id) {
+        this.id = id;
     }
 
     public String getEscola() {

@@ -1,10 +1,18 @@
 package saferide.sptech.apibackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 
+@Entity
 public class Dependente {
-    private int id;
-    private int idResponsavel;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idDependente;
+    private Integer fkResponsavel;
     private String nome;
     private LocalDate dataNascimento;
     private String escola;
@@ -18,20 +26,20 @@ public class Dependente {
         this.nome = nome;
     }
 
-    public int getId() {
-        return id;
+    public Integer getId() {
+        return idDependente;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idDependente = id;
     }
 
-    public int getIdResponsavel() {
-        return idResponsavel;
+    public Integer getIdResponsavel() {
+        return fkResponsavel;
     }
 
-    public void setIdResponsavel(int idResponsavel) {
-        this.idResponsavel = idResponsavel;
+    public void setIdResponsavel(int fkResponsavel) {
+        this.fkResponsavel = fkResponsavel;
     }
 
     public LocalDate getDataNascimento() {

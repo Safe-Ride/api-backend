@@ -1,12 +1,19 @@
 package saferide.sptech.apibackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.util.List;
 
+@Entity
 public class Trajeto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idTrajeto;
     private String escola;
     private int tipo;
-    private List<Endereco> enderecos;
 
     public int getIdTrajeto() {
         return idTrajeto;
@@ -32,11 +39,4 @@ public class Trajeto {
         this.tipo = tipo;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
 }

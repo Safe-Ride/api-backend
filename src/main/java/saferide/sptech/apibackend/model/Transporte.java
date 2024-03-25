@@ -1,11 +1,28 @@
 package saferide.sptech.apibackend.model;
 
-public class Motorista extends Cliente {
+import jakarta.persistence.*;
+
+@Entity
+public class Transporte {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String placa;
     private String cnpj;
     private String cnh;
     private String crm;
     private String crmc;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Integer fkMotorista;
+
+    public Integer getIdTransporte() {
+        return id;
+    }
+
+    public void setIdTransporte(Integer idTransporte) {
+        this.id = idTransporte;
+    }
 
     public String getPlaca() {
         return placa;
@@ -45,5 +62,13 @@ public class Motorista extends Cliente {
 
     public void setCrmc(String crmc) {
         this.crmc = crmc;
+    }
+
+    public Integer getFkMotorista() {
+        return fkMotorista;
+    }
+
+    public void setFkMotorista(Integer fkMotorista) {
+        this.fkMotorista = fkMotorista;
     }
 }

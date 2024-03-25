@@ -1,24 +1,32 @@
 package saferide.sptech.apibackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 import java.util.Date;
 
-public abstract class Cliente {
-    private int id;
+@Entity
+public class Cliente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idCliente;
     private String nome;
     private String email;
     private String senha;
     private String cpf;
     private String telefone;
     private LocalDate dataNascimento;
-    private int tipo;
+    private TipoCliente tipo;
 
-    public int getId() {
-        return id;
+    public Integer getId() {
+        return idCliente;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idCliente = id;
     }
 
     public String getNome() {
@@ -69,11 +77,11 @@ public abstract class Cliente {
         this.dataNascimento = dataNascimento;
     }
 
-    public int getTipo() {
+    public TipoCliente getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(TipoCliente tipo) {
         this.tipo = tipo;
     }
 }

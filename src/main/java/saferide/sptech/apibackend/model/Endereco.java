@@ -1,7 +1,15 @@
 package saferide.sptech.apibackend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Endereco {
-    private int idEndereco;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idEndereco;
     private String dependente;
     private double latitude;
     private double longitude;
@@ -9,7 +17,7 @@ public class Endereco {
     private int numero;
     private String complemento;
 
-    public int getIdEndereco() {
+    public Integer getIdEndereco() {
         return idEndereco;
     }
 

@@ -17,14 +17,11 @@ public class Dependente {
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
-    @ManyToOne
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
-    @ManyToMany
-    @JoinTable(name = "trajeto_dependente",
-            joinColumns = @JoinColumn(name = "dependente_id"),
-            inverseJoinColumns = @JoinColumn(name = "trajeto_id"))
-    private Set<Trajeto> trajetos = new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(name = "trajeto_dependente",
+//            joinColumns = @JoinColumn(name = "dependente_id"),
+//            inverseJoinColumns = @JoinColumn(name = "trajeto_id"))
+//    private Set<Trajeto> trajetos = new HashSet<>();
 
     public Integer getId() {
         return id;

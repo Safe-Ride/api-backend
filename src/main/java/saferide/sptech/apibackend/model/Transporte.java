@@ -14,14 +14,14 @@ public class Transporte {
     private String crmc;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    private Integer fkMotorista;
+    private Cliente motorista;
 
-    public Integer getIdTransporte() {
+    public Integer getId() {
         return id;
     }
 
-    public void setIdTransporte(Integer idTransporte) {
-        this.id = idTransporte;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getPlaca() {
@@ -64,11 +64,11 @@ public class Transporte {
         this.crmc = crmc;
     }
 
-    public Integer getFkMotorista() {
-        return fkMotorista;
+    public Cliente getMotorista() {
+        return motorista;
     }
 
-    public void setFkMotorista(Integer fkMotorista) {
-        this.fkMotorista = fkMotorista;
+    public void setMotorista(Cliente motorista) {
+        this.motorista = motorista;
     }
 }

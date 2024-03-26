@@ -10,7 +10,6 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String dependente;
     private double latitude;
     private double longitude;
     private String cep;
@@ -23,14 +22,6 @@ public class Endereco {
 
     public void setIdEndereco(int id) {
         this.id = id;
-    }
-
-    public String getDependente() {
-        return dependente;
-    }
-
-    public void setDependente(String dependente) {
-        this.dependente = dependente;
     }
 
     public double getLatitude() {

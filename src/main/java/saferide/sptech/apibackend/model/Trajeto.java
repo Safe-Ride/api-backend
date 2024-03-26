@@ -1,11 +1,10 @@
 package saferide.sptech.apibackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Trajeto {
@@ -14,6 +13,8 @@ public class Trajeto {
     private int id;
     private String escola;
     private int tipo;
+    @ManyToMany(mappedBy = "trajetos")
+    private Set<Dependente> dependentes = new HashSet<>();
 
     public int getIdTrajeto() {
         return id;

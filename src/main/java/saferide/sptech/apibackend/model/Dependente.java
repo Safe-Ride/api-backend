@@ -1,22 +1,46 @@
 package saferide.sptech.apibackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Dependente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer fkResponsavel;
+    @JoinColumn(name = "responsavel_id")
+    private Cliente responsavel;
     private String nome;
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
+    @ManyToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+    @ManyToMany
+    @JoinTable(name = "trajeto_dependente",
+            joinColumns = @JoinColumn(name = "dependente_id"),
+            inverseJoinColumns = @JoinColumn(name = "trajeto_id"))
+    private Set<Trajeto> trajetos = new HashSet<>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Cliente getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Cliente responsavel) {
+        this.responsavel = responsavel;
+    }
 
     public String getNome() {
         return nome;
@@ -24,22 +48,6 @@ public class Dependente {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getIdResponsavel() {
-        return fkResponsavel;
-    }
-
-    public void setIdResponsavel(int fkResponsavel) {
-        this.fkResponsavel = fkResponsavel;
     }
 
     public LocalDate getDataNascimento() {

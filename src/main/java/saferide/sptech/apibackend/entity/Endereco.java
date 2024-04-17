@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.model;
+package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

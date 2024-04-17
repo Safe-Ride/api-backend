@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.model;
+package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.*;
 
@@ -12,9 +12,6 @@ public class Transporte {
     private String cnh;
     private String crm;
     private String crmc;
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente motorista;
 
     public Integer getId() {
         return id;
@@ -62,13 +59,5 @@ public class Transporte {
 
     public void setCrmc(String crmc) {
         this.crmc = crmc;
-    }
-
-    public Cliente getMotorista() {
-        return motorista;
-    }
-
-    public void setMotorista(Cliente motorista) {
-        this.motorista = motorista;
     }
 }

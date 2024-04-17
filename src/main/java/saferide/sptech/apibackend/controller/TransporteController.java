@@ -3,9 +3,8 @@ package saferide.sptech.apibackend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saferide.sptech.apibackend.model.Trajeto;
-import saferide.sptech.apibackend.model.Transporte;
-import saferide.sptech.apibackend.repositories.TransporteRepository;
+import saferide.sptech.apibackend.entity.Transporte;
+import saferide.sptech.apibackend.repository.TransporteRepository;
 
 import java.util.List;
 import java.util.Optional;

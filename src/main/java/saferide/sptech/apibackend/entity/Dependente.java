@@ -1,10 +1,8 @@
-package saferide.sptech.apibackend.model;
+package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Dependente {
@@ -12,16 +10,11 @@ public class Dependente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @JoinColumn(name = "responsavel_id")
-    private Cliente responsavel;
+    private int idResponsavel;
     private String nome;
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
-//    @ManyToMany
-//    @JoinTable(name = "trajeto_dependente",
-//            joinColumns = @JoinColumn(name = "dependente_id"),
-//            inverseJoinColumns = @JoinColumn(name = "trajeto_id"))
-//    private Set<Trajeto> trajetos = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -31,12 +24,12 @@ public class Dependente {
         this.id = id;
     }
 
-    public Cliente getResponsavel() {
-        return responsavel;
+    public int getResponsavel() {
+        return idResponsavel;
     }
 
-    public void setResponsavel(Cliente responsavel) {
-        this.responsavel = responsavel;
+    public void setResponsavel(int idResponsavel) {
+        this.idResponsavel = idResponsavel;
     }
 
     public String getNome() {

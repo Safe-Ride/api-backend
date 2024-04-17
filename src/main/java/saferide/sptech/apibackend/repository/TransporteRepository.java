@@ -1,8 +1,7 @@
-package saferide.sptech.apibackend.repositories;
+package saferide.sptech.apibackend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import saferide.sptech.apibackend.model.Trajeto;
-import saferide.sptech.apibackend.model.Transporte;
+import saferide.sptech.apibackend.entity.Transporte;
 
 public interface TransporteRepository extends JpaRepository<Transporte, Integer> {
 

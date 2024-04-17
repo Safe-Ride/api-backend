@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.model;
+package saferide.sptech.apibackend.entity;
 
 public enum TipoCliente {
     MOTORISTA, RESPONSAVEL

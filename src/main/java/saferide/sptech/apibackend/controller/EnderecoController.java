@@ -3,11 +3,9 @@ package saferide.sptech.apibackend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saferide.sptech.apibackend.model.Cliente;
-import saferide.sptech.apibackend.model.Endereco;
-import saferide.sptech.apibackend.repositories.EnderecoRepository;
+import saferide.sptech.apibackend.entity.Endereco;
+import saferide.sptech.apibackend.repository.EnderecoRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

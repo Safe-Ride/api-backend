@@ -3,8 +3,8 @@ package saferide.sptech.apibackend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saferide.sptech.apibackend.model.Cliente;
-import saferide.sptech.apibackend.repositories.ClienteRepository;
+import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.repository.ClienteRepository;
 
 import java.util.List;
 import java.util.Optional;

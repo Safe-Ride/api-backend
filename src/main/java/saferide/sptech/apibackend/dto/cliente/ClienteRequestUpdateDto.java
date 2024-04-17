@@ -1,17 +1,14 @@
 package saferide.sptech.apibackend.dto.cliente;
 
-import saferide.sptech.apibackend.entity.TipoCliente;
-
 import java.time.LocalDate;
 
-public class ClienteCriacaoDto {
+public class ClienteRequestUpdateDto {
     private String nome;
     private String email;
     private String senha;
     private String cpf;
     private String telefone;
     private LocalDate dataNascimento;
-    private TipoCliente tipo;
 
     public String getNome() {
         return nome;
@@ -61,11 +58,4 @@ public class ClienteCriacaoDto {
         this.dataNascimento = dataNascimento;
     }
 
-    public TipoCliente getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoCliente tipo) {
-        this.tipo = tipo;
-    }
 }

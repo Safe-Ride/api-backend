@@ -1,10 +1,12 @@
 package saferide.sptech.apibackend.dto.cliente;
 
+import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.TipoCliente;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public class ClienteListagemDto {
+public class ClienteResponseDto {
     private int id;
     private String nome;
     private String email;
@@ -12,6 +14,7 @@ public class ClienteListagemDto {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
+    private List<Dependente> dependentes;
 
     public int getId() {
         return id;
@@ -67,5 +70,13 @@ public class ClienteListagemDto {
 
     public void setTipo(TipoCliente tipo) {
         this.tipo = tipo;
+    }
+
+    public List<Dependente> getDependentes() {
+        return dependentes;
+    }
+
+    public void setDependentes(List<Dependente> dependentes) {
+        this.dependentes = dependentes;
     }
 }

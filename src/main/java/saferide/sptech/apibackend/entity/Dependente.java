@@ -24,11 +24,11 @@ public class Dependente {
         this.id = id;
     }
 
-    public int getResponsavel() {
+    public int getIdResponsavel() {
         return idResponsavel;
     }
 
-    public void setResponsavel(int idResponsavel) {
+    public void setIdResponsavel(int idResponsavel) {
         this.idResponsavel = idResponsavel;
     }
 

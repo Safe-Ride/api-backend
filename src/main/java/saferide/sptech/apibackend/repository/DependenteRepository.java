@@ -6,6 +6,5 @@ import saferide.sptech.apibackend.entity.Dependente;
 import java.util.List;
 
 public interface DependenteRepository extends JpaRepository<Dependente, Integer> {
-    List<Dependente> findByIdResponsavel(int id);
 
 }

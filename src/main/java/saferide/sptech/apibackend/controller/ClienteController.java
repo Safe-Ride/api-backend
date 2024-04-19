@@ -1,69 +1,55 @@
 package saferide.sptech.apibackend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.ClienteConstants;
 import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdateDto;
 import saferide.sptech.apibackend.dto.cliente.ClienteRequestDto;
 import saferide.sptech.apibackend.dto.cliente.ClienteResponseDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteMapper;
-import saferide.sptech.apibackend.entity.Cliente;
 import saferide.sptech.apibackend.repository.ClienteRepository;
+import saferide.sptech.apibackend.repository.DependenteRepository;
+import saferide.sptech.apibackend.service.ClienteService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(ClienteConstants.BASE_PATH)
+@RequiredArgsConstructor
 public class ClienteController {
-    @Autowired
+
     private ClienteRepository clienteRepository;
+    private DependenteRepository dependenteRepository;
+    ClienteService clienteService = new ClienteService(clienteRepository, dependenteRepository);
 
     @PostMapping
     public ResponseEntity<ClienteResponseDto> criar(
-            @RequestBody ClienteRequestDto clienteCriacao) {
-        Cliente entity = ClienteMapper.toEntity(clienteCriacao);
-        Cliente saveCliente = clienteRepository.save(entity);
-        ClienteResponseDto dto = ClienteMapper.toDto(saveCliente);
-        return ResponseEntity.status(201).body(dto);
+            @Valid @RequestBody ClienteRequestDto body) {
+        return ResponseEntity.status(201).body(clienteService.criar(body));
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteResponseDto>> listar() {
-        List<Cliente> clientes = clienteRepository.findAll();
-        if (clientes.isEmpty()) return ResponseEntity.status(204).build();
-        List<ClienteResponseDto> dtos = ClienteMapper.toDto(clientes);
-        return ResponseEntity.status(200).body(dtos);
+    public ResponseEntity<List<ClienteResponseDto>> listar(){
+        return ResponseEntity.status(200).body(clienteService.listar());
     }
 
-    @GetMapping(ClienteConstants.ID_PATH)
+    @GetMapping(ClienteConstants.LIST_BY_ID_PATH)
     public ResponseEntity<ClienteResponseDto> listarPorId(
             @PathVariable int id) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        if (clienteOpt.isEmpty()) return ResponseEntity.status(404).build();
-        ClienteResponseDto dto = ClienteMapper.toDto(clienteOpt.get());
-        return ResponseEntity.status(200).body(dto);
+        return ResponseEntity.ok(clienteService.listarPorId(id));
     }
 
-    @PutMapping(ClienteConstants.ID_PATH)
+    @PutMapping(ClienteConstants.UPDATE_PATH)
     public ResponseEntity<ClienteResponseDto> atualizar(
             @PathVariable int id,
-            @RequestBody ClienteRequestUpdateDto clienteAtualizacao) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        if (clienteOpt.isEmpty()) return ResponseEntity.status(404).build();
-        Cliente entity = ClienteMapper.toEntityAtt(clienteAtualizacao,clienteOpt.get());
-        Cliente saveCliente = clienteRepository.save(entity);
-        ClienteResponseDto dto = ClienteMapper.toDto(saveCliente);
-        return ResponseEntity.status(200).body(dto);
-
+            @RequestBody ClienteRequestUpdateDto request) {
+        return ResponseEntity.ok(clienteService.atualizar(id, request));
     }
 
-    @DeleteMapping(ClienteConstants.ID_PATH)
+    @DeleteMapping(ClienteConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        if (!clienteRepository.existsById(id)) return ResponseEntity.status(400).build();
-        clienteRepository.deleteById(id);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.ok(clienteService.remover(id));
     }
 }

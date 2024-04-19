@@ -5,10 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.DependenteConstants;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdateDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteResponseDto;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
+import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
@@ -29,7 +27,7 @@ public class DependenteController {
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
             @Valid @RequestBody DependenteRequest request) {
-        return ResponseEntity.ok(dependenteService.criar(request));
+        return ResponseEntity.created(null).body(dependenteService.criar(request));
     }
 
     @GetMapping
@@ -43,12 +41,12 @@ public class DependenteController {
         return ResponseEntity.ok(dependenteService.listarPorId(id));
     }
 
-//    @PutMapping(DependenteConstants.UPDATE_PATH)
-//    public ResponseEntity<DependenteResponse> atualizar(
-//            @PathVariable int id,
-//            @RequestBody ClienteRequestUpdateDto request) {
-//        return ResponseEntity.ok(dependenteService.atualizar(id, request));
-//    }
+    @PutMapping(DependenteConstants.UPDATE_PATH)
+    public ResponseEntity<DependenteResponse> atualizar(
+            @PathVariable int id,
+            @RequestBody DependenteRequestUpdate request) {
+        return ResponseEntity.ok(dependenteService.atualizar(id, request));
+    }
 
     @DeleteMapping(DependenteConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(

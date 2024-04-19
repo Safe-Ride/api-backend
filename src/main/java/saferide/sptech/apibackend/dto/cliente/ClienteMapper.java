@@ -5,10 +5,10 @@ import saferide.sptech.apibackend.entity.Cliente;
 import java.util.List;
 
 public class ClienteMapper {
-    public static ClienteResponseDto toDto(Cliente entity){
+    public static ClienteResponse toDto(Cliente entity){
         if (entity == null) return null;
 
-        ClienteResponseDto dto = new ClienteResponseDto();
+        ClienteResponse dto = new ClienteResponse();
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
@@ -20,7 +20,7 @@ public class ClienteMapper {
 
     }
 
-    public static Cliente toEntity(ClienteRequestDto dto){
+    public static Cliente toEntity(ClienteRequest dto){
         if (dto == null) return null;
 
         Cliente entity = new Cliente();
@@ -34,7 +34,7 @@ public class ClienteMapper {
         return entity;
     }
 
-    public static Cliente toEntityAtt(ClienteRequestUpdateDto dto, Cliente entity){
+    public static Cliente toEntityAtt(ClienteRequestUpdate dto, Cliente entity){
         if (dto == null) return null;
 
         entity.setNome(dto.getNome());
@@ -46,7 +46,7 @@ public class ClienteMapper {
         return entity;
     }
 
-    public static List<ClienteResponseDto> toDto(List<Cliente> entities){
+    public static List<ClienteResponse> toDto(List<Cliente> entities){
         return entities.stream()
                 .map(ClienteMapper::toDto)
                 .toList();

@@ -2,20 +2,17 @@ package saferide.sptech.apibackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.cliente.ClienteMapper;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdateDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteResponseDto;
+import saferide.sptech.apibackend.dto.cliente.ClienteRequest;
+import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdate;
+import saferide.sptech.apibackend.dto.cliente.ClienteResponse;
 import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
-import javax.naming.NotContextException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,25 +28,25 @@ public class ClienteService {
         this.dependenteRepository = dependenteRepository;
     }
 
-    public ClienteResponseDto criar(ClienteRequestDto body) {
+    public ClienteResponse criar(ClienteRequest body) {
         Cliente entity = ClienteMapper.toEntity(body);
         Cliente saveCliente = clienteRepository.save(entity);
         return ClienteMapper.toDto(saveCliente);
     }
 
-    public List<ClienteResponseDto> listar() {
+    public List<ClienteResponse> listar() {
         List<Cliente> clientes = clienteRepository.findAll();
         if (clientes.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return ClienteMapper.toDto(clientes);
     }
 
-    public ClienteResponseDto listarPorId(int id) {
+    public ClienteResponse listarPorId(int id) {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return ClienteMapper.toDto(clienteOpt.get());
     }
 
-    public ClienteResponseDto atualizar(int id, ClienteRequestUpdateDto request) {
+    public ClienteResponse atualizar(int id, ClienteRequestUpdate request) {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Cliente entity = ClienteMapper.toEntityAtt(request,clienteOpt.get());
@@ -59,6 +56,8 @@ public class ClienteService {
 
     public Void remover(int id) {
         if (!clienteRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        List<Dependente> dependentes = dependenteRepository.findByClienteId(id);
+        if (!dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         clienteRepository.deleteById(id);
         return null;
     }

@@ -2,20 +2,15 @@ package saferide.sptech.apibackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.cliente.ClienteMapper;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdateDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteResponseDto;
 import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
 import saferide.sptech.apibackend.entity.Cliente;
 import saferide.sptech.apibackend.entity.Dependente;
+import saferide.sptech.apibackend.entity.TipoCliente;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
@@ -36,6 +31,7 @@ public class DependenteService {
 
     public DependenteResponse criar(DependenteRequest request) {
         Optional<Cliente> clienteOpt = clienteRepository.findById(request.getClienteId());
+        if (!clienteOpt.get().getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Dependente entity = DependenteMapper.toEntity(request, clienteOpt.get());
         Dependente saveCliente = dependenteRepository.save(entity);

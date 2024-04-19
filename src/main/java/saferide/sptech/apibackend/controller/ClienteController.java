@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.ClienteConstants;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdateDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteResponseDto;
+import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdate;
+import saferide.sptech.apibackend.dto.cliente.ClienteRequest;
+import saferide.sptech.apibackend.dto.cliente.ClienteResponse;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 import saferide.sptech.apibackend.service.ClienteService;
@@ -24,26 +24,26 @@ public class ClienteController {
     ClienteService clienteService = new ClienteService(clienteRepository, dependenteRepository);
 
     @PostMapping
-    public ResponseEntity<ClienteResponseDto> criar(
-            @Valid @RequestBody ClienteRequestDto body) {
-        return ResponseEntity.status(201).body(clienteService.criar(body));
+    public ResponseEntity<ClienteResponse> criar(
+            @Valid @RequestBody ClienteRequest body) {
+        return ResponseEntity.created(null).body(clienteService.criar(body));
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteResponseDto>> listar(){
-        return ResponseEntity.status(200).body(clienteService.listar());
+    public ResponseEntity<List<ClienteResponse>> listar(){
+        return ResponseEntity.ok(clienteService.listar());
     }
 
     @GetMapping(ClienteConstants.LIST_BY_ID_PATH)
-    public ResponseEntity<ClienteResponseDto> listarPorId(
+    public ResponseEntity<ClienteResponse> listarPorId(
             @PathVariable int id) {
         return ResponseEntity.ok(clienteService.listarPorId(id));
     }
 
     @PutMapping(ClienteConstants.UPDATE_PATH)
-    public ResponseEntity<ClienteResponseDto> atualizar(
+    public ResponseEntity<ClienteResponse> atualizar(
             @PathVariable int id,
-            @RequestBody ClienteRequestUpdateDto request) {
+            @RequestBody ClienteRequestUpdate request) {
         return ResponseEntity.ok(clienteService.atualizar(id, request));
     }
 

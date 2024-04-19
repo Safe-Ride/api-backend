@@ -1,7 +1,5 @@
 package saferide.sptech.apibackend.dto.dependente;
 
-import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdateDto;
-import saferide.sptech.apibackend.dto.cliente.ClienteResponseDto;
 import saferide.sptech.apibackend.entity.Cliente;
 import saferide.sptech.apibackend.entity.Dependente;
 

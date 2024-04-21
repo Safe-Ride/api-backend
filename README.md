@@ -1,3 +1,8 @@
+# Api Safe Ride
+
+## 📃 Diagrama de Classe: 
+![diagrama de classes](/docs/diagrama-de-classes.png)
+
 ## 📃 Dependências: 
 - **Spring Web:** https://mvnrepository.com/artifact/org.springframework/spring-web
 - **Spring Data JPA:** https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa

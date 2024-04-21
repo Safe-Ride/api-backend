@@ -1,5 +1,6 @@
 package saferide.sptech.apibackend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class ClienteController {
     ClienteService clienteService = new ClienteService(clienteRepository, dependenteRepository);
 
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ClienteResponse> criar(
             @Valid @RequestBody ClienteRequest body) {
         return ResponseEntity.created(null).body(clienteService.criar(body));

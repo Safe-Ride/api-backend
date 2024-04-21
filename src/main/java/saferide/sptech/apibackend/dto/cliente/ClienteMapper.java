@@ -1,6 +1,7 @@
 package saferide.sptech.apibackend.dto.cliente;
 
 import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.service.autentication.ClienteTokenDto;
 
 import java.util.List;
 
@@ -51,4 +52,16 @@ public class ClienteMapper {
                 .map(ClienteMapper::toDto)
                 .toList();
     }
+
+    public static ClienteTokenDto of(Cliente cliente, String token) {
+        ClienteTokenDto usuarioTokenDto = new ClienteTokenDto();
+
+        ClienteTokenDto.setUserId(cliente.getId());
+        ClienteTokenDto.setNome(cliente.getNome());
+        ClienteTokenDto.setToken(token);
+
+        return usuarioTokenDto;
+    }
+
+
 }

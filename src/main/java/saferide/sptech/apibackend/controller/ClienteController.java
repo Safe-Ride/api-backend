@@ -12,6 +12,8 @@ import saferide.sptech.apibackend.dto.cliente.ClienteResponse;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 import saferide.sptech.apibackend.service.ClienteService;
+import saferide.sptech.apibackend.service.autentication.ClienteLoginDto;
+import saferide.sptech.apibackend.service.autentication.ClienteTokenDto;
 
 import java.util.List;
 
@@ -54,4 +56,13 @@ public class ClienteController {
             @PathVariable int id) {
         return ResponseEntity.ok(clienteService.remover(id));
     }
+
+    @PostMapping("/login")
+public ResponseEntity<ClienteTokenDto> login(@RequestBody ClienteLoginDto clienteLoginDto){
+        ClienteTokenDto clienteToken = this.clienteService.autenticar(clienteLoginDto);
+    return ResponseEntity.status(200).body(clienteToken);
+    }
+
 }
+
+

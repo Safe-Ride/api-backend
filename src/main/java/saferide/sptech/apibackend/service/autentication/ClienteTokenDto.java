@@ -4,16 +4,16 @@ package saferide.sptech.apibackend.service.autentication;
 
 
 public class ClienteTokenDto {
-    private  Long userId;
+    private  int userId;
     private String nome;
     private String email;
     private String token;
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -37,7 +37,7 @@ public class ClienteTokenDto {
         return nome;
     }
 
-    public  void setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 }

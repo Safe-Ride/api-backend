@@ -54,13 +54,13 @@ public class ClienteMapper {
     }
 
     public static ClienteTokenDto of(Cliente cliente, String token) {
-        ClienteTokenDto usuarioTokenDto = new ClienteTokenDto();
+        ClienteTokenDto clienteTokenDto = new ClienteTokenDto();
 
-        ClienteTokenDto.setUserId(cliente.getId());
-        ClienteTokenDto.setNome(cliente.getNome());
-        ClienteTokenDto.setToken(token);
+        clienteTokenDto.setUserId(cliente.getId());
+        clienteTokenDto.setNome(cliente.getNome());
+        clienteTokenDto.setToken(token);
 
-        return usuarioTokenDto;
+        return clienteTokenDto;
     }
 
 

@@ -10,13 +10,10 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Transporte {
+public class Trajeto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String placa;
-    private String cnpj;
-    private String cnh;
-    private String crm;
-    private String crmc;
+    private String escola;
+    private TipoTrajeto tipo;
 }

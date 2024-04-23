@@ -1,6 +1,7 @@
 package saferide.sptech.apibackend.dto.cliente;
 
 import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.entity.Endereco;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class ClienteMapper {
         dto.setTelefone(entity.getTelefone());
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setTipo(entity.getTipo());
+        dto.setEndereco(entity.getEndereco());
         return dto;
 
     }
@@ -43,6 +45,11 @@ public class ClienteMapper {
         entity.setCpf(dto.getCpf());
         entity.setTelefone(dto.getTelefone());
         entity.setDataNascimento(dto.getDataNascimento());
+        return entity;
+    }
+
+    public static Cliente toEntityAttEndereco(Cliente entity, Endereco endereco){
+        entity.setEndereco(endereco);
         return entity;
     }
 

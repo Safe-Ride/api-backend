@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String nome;
     private String email;
     private String senha;
@@ -20,4 +20,6 @@ public class Cliente {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
+    @ManyToOne
+    private Endereco endereco;
 }

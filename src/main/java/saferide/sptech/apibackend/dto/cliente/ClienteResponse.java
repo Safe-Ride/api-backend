@@ -2,6 +2,7 @@ package saferide.sptech.apibackend.dto.cliente;
 
 import lombok.Getter;
 import lombok.Setter;
+import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.TipoCliente;
 
 import java.time.LocalDate;
@@ -16,4 +17,5 @@ public class ClienteResponse {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
+    private Endereco endereco;
 }

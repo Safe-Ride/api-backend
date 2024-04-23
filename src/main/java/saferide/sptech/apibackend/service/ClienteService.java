@@ -10,8 +10,11 @@ import saferide.sptech.apibackend.dto.cliente.ClienteRequestUpdate;
 import saferide.sptech.apibackend.dto.cliente.ClienteResponse;
 import saferide.sptech.apibackend.entity.Cliente;
 import saferide.sptech.apibackend.entity.Dependente;
+import saferide.sptech.apibackend.entity.Endereco;
+import saferide.sptech.apibackend.entity.TipoCliente;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
+import saferide.sptech.apibackend.repository.EnderecoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,15 +24,17 @@ public class ClienteService {
 
     private static ClienteRepository clienteRepository;
     private static DependenteRepository dependenteRepository;
+    private static EnderecoRepository enderecoRepository;
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository, DependenteRepository dependenteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, DependenteRepository dependenteRepository, EnderecoRepository enderecoRepository) {
         this.clienteRepository = clienteRepository;
         this.dependenteRepository = dependenteRepository;
+        this.enderecoRepository = enderecoRepository;
     }
 
-    public ClienteResponse criar(ClienteRequest body) {
-        Cliente entity = ClienteMapper.toEntity(body);
+    public ClienteResponse criar(ClienteRequest request) {
+        Cliente entity = ClienteMapper.toEntity(request);
         Cliente saveCliente = clienteRepository.save(entity);
         return ClienteMapper.toDto(saveCliente);
     }
@@ -50,6 +55,16 @@ public class ClienteService {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Cliente entity = ClienteMapper.toEntityAtt(request,clienteOpt.get());
+        Cliente saveCliente = clienteRepository.save(entity);
+        return ClienteMapper.toDto(saveCliente);
+    }
+
+    public ClienteResponse atualizarEndereco(int id, int enderecoId) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+        if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Optional<Endereco> enderecoOpt = enderecoRepository.findById(enderecoId);
+        if (enderecoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Cliente entity = ClienteMapper.toEntityAttEndereco(clienteOpt.get(), enderecoOpt.get());
         Cliente saveCliente = clienteRepository.save(entity);
         return ClienteMapper.toDto(saveCliente);
     }

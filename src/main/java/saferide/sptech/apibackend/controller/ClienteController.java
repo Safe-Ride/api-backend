@@ -10,6 +10,7 @@ import saferide.sptech.apibackend.dto.cliente.ClienteRequest;
 import saferide.sptech.apibackend.dto.cliente.ClienteResponse;
 import saferide.sptech.apibackend.repository.ClienteRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
+import saferide.sptech.apibackend.repository.EnderecoRepository;
 import saferide.sptech.apibackend.service.ClienteService;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public class ClienteController {
 
     private ClienteRepository clienteRepository;
     private DependenteRepository dependenteRepository;
-    ClienteService clienteService = new ClienteService(clienteRepository, dependenteRepository);
+    private EnderecoRepository enderecoRepository;
+    ClienteService clienteService = new ClienteService(clienteRepository, dependenteRepository, enderecoRepository);
 
     @PostMapping
     public ResponseEntity<ClienteResponse> criar(
@@ -45,6 +47,13 @@ public class ClienteController {
             @PathVariable int id,
             @RequestBody ClienteRequestUpdate request) {
         return ResponseEntity.ok(clienteService.atualizar(id, request));
+    }
+
+    @PatchMapping(ClienteConstants.UPDATE_ENDERECO_PATH)
+    public ResponseEntity<ClienteResponse> atualizar(
+            @PathVariable int id,
+            @RequestParam int endereco_id) {
+        return ResponseEntity.ok(clienteService.atualizarEndereco(id, endereco_id));
     }
 
     @DeleteMapping(ClienteConstants.REMOVE_PATH)

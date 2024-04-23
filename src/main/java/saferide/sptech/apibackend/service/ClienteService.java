@@ -89,7 +89,7 @@ public class ClienteService {
                                 () -> new ResponseStatusException(404,"Email do usuario não encontrado",null)
                         ) ;
         SecurityContextHolder.getContext().setAuthentication(authentication);
-    final String token = gerenciadorTokenJwt.generateToken(authentication);
+        final String token = gerenciadorTokenJwt.generateToken(authentication);
         return ClienteMapper.of(clienteAutenticado,token);
     }
 

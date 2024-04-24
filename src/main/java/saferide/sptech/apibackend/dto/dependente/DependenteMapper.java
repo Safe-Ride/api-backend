@@ -35,10 +35,10 @@ public class DependenteMapper {
     public static Dependente toEntityAtt(DependenteRequestUpdate dto, Dependente entity){
         if (dto == null) return null;
 
-        entity.setNome(dto.getNome());
-        entity.setDataNascimento(dto.getDataNascimento());
-        entity.setEscola(dto.getEscola());
-        entity.setSerie(dto.getSerie());
+        if (dto.getNome() != null) entity.setNome(dto.getNome());
+        if (dto.getNome() != null) entity.setDataNascimento(dto.getDataNascimento());
+        if (dto.getNome() != null) entity.setEscola(dto.getEscola());
+        if (dto.getNome() != null) entity.setSerie(dto.getSerie());
         return entity;
     }
 

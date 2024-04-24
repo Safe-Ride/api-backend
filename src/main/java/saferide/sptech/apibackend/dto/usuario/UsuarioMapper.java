@@ -37,12 +37,11 @@ public class UsuarioMapper {
     public static Usuario toEntityAtt(UsuarioRequestUpdate dto, Usuario entity){
         if (dto == null) return null;
 
-        entity.setNome(dto.getNome());
-        entity.setEmail(dto.getEmail());
-        entity.setSenha(dto.getSenha());
-        entity.setCpf(dto.getCpf());
-        entity.setTelefone(dto.getTelefone());
-        entity.setDataNascimento(dto.getDataNascimento());
+        if (dto.getNome() != null) entity.setNome(dto.getNome());
+        if (dto.getEmail() != null)entity.setEmail(dto.getEmail());
+        if (dto.getCpf() != null)entity.setCpf(dto.getCpf());
+        if (dto.getTelefone() != null)entity.setTelefone(dto.getTelefone());
+        if (dto.getDataNascimento() != null)entity.setDataNascimento(dto.getDataNascimento());
         return entity;
     }
 

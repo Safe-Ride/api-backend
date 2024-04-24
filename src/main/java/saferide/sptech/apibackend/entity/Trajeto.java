@@ -16,4 +16,5 @@ public class Trajeto {
     private Integer id;
     private String escola;
     private TipoTrajeto tipo;
+    private DiaSemana diaSemana;
 }

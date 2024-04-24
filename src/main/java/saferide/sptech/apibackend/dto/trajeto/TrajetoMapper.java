@@ -14,6 +14,7 @@ public class TrajetoMapper {
         dto.setId(entity.getId());
         dto.setEscola(entity.getEscola());
         dto.setTipo(entity.getTipo());
+        dto.setDiaSemana(entity.getDiaSemana());
         return dto;
 
     }
@@ -24,6 +25,7 @@ public class TrajetoMapper {
         Trajeto entity = new Trajeto();
         entity.setEscola(dto.getEscola());
         entity.setTipo(dto.getTipo());
+        entity.setDiaSemana(dto.getDiaSemana());
         return entity;
     }
 
@@ -32,6 +34,7 @@ public class TrajetoMapper {
 
         if (dto.getEscola() != null) entity.setEscola(dto.getEscola());
         if (dto.getTipo() != null) entity.setTipo(dto.getTipo());
+        if (dto.getDiaSemana() != null) entity.setDiaSemana(dto.getDiaSemana());
         return entity;
     }
 

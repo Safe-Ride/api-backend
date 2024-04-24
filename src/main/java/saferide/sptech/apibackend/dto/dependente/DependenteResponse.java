@@ -1,9 +1,8 @@
 package saferide.sptech.apibackend.dto.dependente;
 
-import jakarta.persistence.JoinColumn;
 import lombok.Getter;
 import lombok.Setter;
-import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.entity.Usuario;
 
 import java.time.LocalDate;
 
@@ -15,5 +14,5 @@ public class DependenteResponse {
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
-    private Cliente cliente;
+    private Usuario usuario;
 }

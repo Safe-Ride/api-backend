@@ -8,10 +8,10 @@ import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
-import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.TipoCliente;
-import saferide.sptech.apibackend.repository.ClienteRepository;
+import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
 import java.util.List;
@@ -21,21 +21,21 @@ import java.util.Optional;
 public class DependenteService {
 
     private static DependenteRepository dependenteRepository;
-    private static ClienteRepository clienteRepository;
+    private static UsuarioRepository usuarioRepository;
 
     @Autowired
-    public DependenteService(DependenteRepository dependenteRepository, ClienteRepository clienteRepository) {
+    public DependenteService(DependenteRepository dependenteRepository, UsuarioRepository usuarioRepository) {
         this.dependenteRepository = dependenteRepository;
-        this.clienteRepository = clienteRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public DependenteResponse criar(DependenteRequest request) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(request.getClienteId());
-        if (!clienteOpt.get().getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Dependente entity = DependenteMapper.toEntity(request, clienteOpt.get());
-        Dependente saveCliente = dependenteRepository.save(entity);
-        return DependenteMapper.toDto(saveCliente);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());
+        if (!usuarioOpt.get().getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (usuarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Dependente entity = DependenteMapper.toEntity(request, usuarioOpt.get());
+        Dependente saveDependente = dependenteRepository.save(entity);
+        return DependenteMapper.toDto(saveDependente);
     }
 
     public List<DependenteResponse> listar() {
@@ -54,8 +54,8 @@ public class DependenteService {
         Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Dependente entity = DependenteMapper.toEntityAtt(request,dependenteOpt.get());
-        Dependente saveCliente = dependenteRepository.save(entity);
-        return DependenteMapper.toDto(saveCliente);
+        Dependente saveDependente = dependenteRepository.save(entity);
+        return DependenteMapper.toDto(saveDependente);
     }
 
     public Void remover(int id) {

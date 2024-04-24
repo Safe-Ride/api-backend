@@ -20,5 +20,5 @@ public class Dependente {
     private String escola;
     private String serie;
     @ManyToOne
-    private Cliente cliente;
+    private Usuario usuario;
 }

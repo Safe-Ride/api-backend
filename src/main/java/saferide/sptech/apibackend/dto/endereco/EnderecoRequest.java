@@ -11,4 +11,5 @@ public class EnderecoRequest {
     private String cep;
     private Integer numero;
     private String complemento;
+    private Integer usuarioId;
 }

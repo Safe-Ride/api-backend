@@ -1,6 +1,7 @@
 package saferide.sptech.apibackend.dto.endereco;
 
 
+import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Endereco;
 
 import java.util.List;
@@ -16,11 +17,12 @@ public class EnderecoMapper {
         dto.setCep(entity.getCep());
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
+        dto.setUsuario(entity.getUsuario());
         return dto;
 
     }
 
-    public static Endereco toEntity(EnderecoRequest dto){
+    public static Endereco toEntity(EnderecoRequest dto, Usuario usuario){
         if (dto == null) return null;
 
         Endereco entity = new Endereco();
@@ -29,6 +31,7 @@ public class EnderecoMapper {
         entity.setCep(dto.getCep());
         entity.setNumero(dto.getNumero());
         entity.setComplemento(dto.getComplemento());
+        entity.setUsuario(usuario);
         return entity;
     }
 

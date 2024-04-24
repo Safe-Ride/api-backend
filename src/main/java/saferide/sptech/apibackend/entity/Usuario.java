@@ -1,21 +1,23 @@
-package saferide.sptech.apibackend.dto.cliente;
+package saferide.sptech.apibackend.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import saferide.sptech.apibackend.entity.Endereco;
-import saferide.sptech.apibackend.entity.TipoCliente;
 
 import java.time.LocalDate;
 
+@Entity
 @Getter
 @Setter
-public class ClienteResponse {
-    private int id;
+public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String nome;
     private String email;
+    private String senha;
     private String cpf;
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
-    private Endereco endereco;
 }

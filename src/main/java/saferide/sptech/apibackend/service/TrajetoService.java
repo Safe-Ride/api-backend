@@ -4,17 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.endereco.EnderecoMapper;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
-import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
-import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Trajeto;
-import saferide.sptech.apibackend.repository.EnderecoRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
 
 import java.util.List;

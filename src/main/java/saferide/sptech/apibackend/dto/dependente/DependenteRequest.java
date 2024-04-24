@@ -11,5 +11,5 @@ public class DependenteRequest {
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
-    private Integer clienteId;
+    private Integer usuarioId;
 }

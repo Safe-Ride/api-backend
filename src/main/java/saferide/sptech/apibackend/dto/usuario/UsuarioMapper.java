@@ -1,15 +1,14 @@
-package saferide.sptech.apibackend.dto.cliente;
+package saferide.sptech.apibackend.dto.usuario;
 
-import saferide.sptech.apibackend.entity.Cliente;
-import saferide.sptech.apibackend.entity.Endereco;
+import saferide.sptech.apibackend.entity.Usuario;
 
 import java.util.List;
 
-public class ClienteMapper {
-    public static ClienteResponse toDto(Cliente entity){
+public class UsuarioMapper {
+    public static UsuarioResponse toDto(Usuario entity){
         if (entity == null) return null;
 
-        ClienteResponse dto = new ClienteResponse();
+        UsuarioResponse dto = new UsuarioResponse();
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
@@ -17,15 +16,14 @@ public class ClienteMapper {
         dto.setTelefone(entity.getTelefone());
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setTipo(entity.getTipo());
-        dto.setEndereco(entity.getEndereco());
         return dto;
 
     }
 
-    public static Cliente toEntity(ClienteRequest dto){
+    public static Usuario toEntity(UsuarioRequest dto){
         if (dto == null) return null;
 
-        Cliente entity = new Cliente();
+        Usuario entity = new Usuario();
         entity.setNome(dto.getNome());
         entity.setEmail(dto.getEmail());
         entity.setSenha(dto.getSenha());
@@ -36,7 +34,7 @@ public class ClienteMapper {
         return entity;
     }
 
-    public static Cliente toEntityAtt(ClienteRequestUpdate dto, Cliente entity){
+    public static Usuario toEntityAtt(UsuarioRequestUpdate dto, Usuario entity){
         if (dto == null) return null;
 
         entity.setNome(dto.getNome());
@@ -48,14 +46,9 @@ public class ClienteMapper {
         return entity;
     }
 
-    public static Cliente toEntityAttEndereco(Cliente entity, Endereco endereco){
-        entity.setEndereco(endereco);
-        return entity;
-    }
-
-    public static List<ClienteResponse> toDto(List<Cliente> entities){
+    public static List<UsuarioResponse> toDto(List<Usuario> entities){
         return entities.stream()
-                .map(ClienteMapper::toDto)
+                .map(UsuarioMapper::toDto)
                 .toList();
     }
 }

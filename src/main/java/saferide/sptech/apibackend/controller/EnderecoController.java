@@ -8,7 +8,7 @@ import saferide.sptech.apibackend.constants.EnderecoConstants;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
 import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
-import saferide.sptech.apibackend.repository.ClienteRepository;
+import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.EnderecoRepository;
 import saferide.sptech.apibackend.service.EnderecoService;
 
@@ -21,8 +21,8 @@ import java.util.List;
 public class EnderecoController {
 
     private EnderecoRepository enderecoRepository;
-    private ClienteRepository clienteRepository;
-    EnderecoService enderecoService = new EnderecoService(enderecoRepository, clienteRepository);
+    private UsuarioRepository usuarioRepository;
+    EnderecoService enderecoService = new EnderecoService(enderecoRepository, usuarioRepository);
 
     @PostMapping
     public ResponseEntity<EnderecoResponse> criar(

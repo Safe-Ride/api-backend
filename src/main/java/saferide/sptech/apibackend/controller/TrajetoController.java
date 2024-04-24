@@ -5,15 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.TrajetoConstants;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
-import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
-import saferide.sptech.apibackend.repository.EnderecoRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
-import saferide.sptech.apibackend.service.EnderecoService;
 import saferide.sptech.apibackend.service.TrajetoService;
 
 import javax.naming.NotContextException;

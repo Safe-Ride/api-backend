@@ -1,11 +1,11 @@
-package saferide.sptech.apibackend.dto.cliente;
+package saferide.sptech.apibackend.dto.usuario;
 
 import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Getter
-public class ClienteRequestUpdate {
+public class UsuarioRequestUpdate {
     private String nome;
     private String email;
     private String senha;

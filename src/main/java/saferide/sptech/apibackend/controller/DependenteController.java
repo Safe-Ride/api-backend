@@ -8,7 +8,7 @@ import saferide.sptech.apibackend.constants.DependenteConstants;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
-import saferide.sptech.apibackend.repository.ClienteRepository;
+import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 import saferide.sptech.apibackend.service.DependenteService;
 
@@ -21,8 +21,8 @@ import java.util.List;
 public class DependenteController {
 
     private DependenteRepository dependenteRepository;
-    private ClienteRepository clienteRepository;
-    DependenteService dependenteService = new DependenteService(dependenteRepository, clienteRepository);
+    private UsuarioRepository usuarioRepository;
+    DependenteService dependenteService = new DependenteService(dependenteRepository, usuarioRepository);
 
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(

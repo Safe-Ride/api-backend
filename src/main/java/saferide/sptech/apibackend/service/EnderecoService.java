@@ -8,10 +8,9 @@ import saferide.sptech.apibackend.dto.endereco.EnderecoMapper;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
 import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
-import saferide.sptech.apibackend.entity.Cliente;
-import saferide.sptech.apibackend.entity.Dependente;
+import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Endereco;
-import saferide.sptech.apibackend.repository.ClienteRepository;
+import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.EnderecoRepository;
 
 import java.util.List;
@@ -21,17 +20,19 @@ import java.util.Optional;
 public class EnderecoService {
 
     private static EnderecoRepository enderecoRepository;
-    private static ClienteRepository clienteRepository;
+    private static UsuarioRepository usuarioRepository;
 
 
     @Autowired
-    public EnderecoService(EnderecoRepository enderecoRepository, ClienteRepository clienteRepository) {
+    public EnderecoService(EnderecoRepository enderecoRepository, UsuarioRepository usuarioRepository) {
         this.enderecoRepository = enderecoRepository;
-        this.clienteRepository = clienteRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public EnderecoResponse criar(EnderecoRequest request) {
-        Endereco entity = EnderecoMapper.toEntity(request);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());
+        if (usuarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Endereco entity = EnderecoMapper.toEntity(request, usuarioOpt.get());
         Endereco saveEndereco = enderecoRepository.save(entity);
         return EnderecoMapper.toDto(saveEndereco);
     }
@@ -58,8 +59,6 @@ public class EnderecoService {
 
     public Void remover(int id) {
         if (!enderecoRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        List<Cliente> clientes = clienteRepository.findByEnderecoId(id);
-        if (!clientes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         enderecoRepository.deleteById(id);
         return null;
     }

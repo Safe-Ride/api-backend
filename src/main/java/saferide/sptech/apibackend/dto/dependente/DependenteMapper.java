@@ -1,6 +1,6 @@
 package saferide.sptech.apibackend.dto.dependente;
 
-import saferide.sptech.apibackend.entity.Cliente;
+import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 
 import java.util.List;
@@ -15,12 +15,12 @@ public class DependenteMapper {
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setEscola(entity.getEscola());
         dto.setSerie(entity.getSerie());
-        dto.setCliente(entity.getCliente());
+        dto.setUsuario(entity.getUsuario());
         return dto;
 
     }
 
-    public static Dependente toEntity(DependenteRequest dto, Cliente cliente){
+    public static Dependente toEntity(DependenteRequest dto, Usuario usuario){
         if (dto == null) return null;
 
         Dependente entity = new Dependente();
@@ -28,7 +28,7 @@ public class DependenteMapper {
         entity.setDataNascimento(dto.getDataNascimento());
         entity.setEscola(dto.getEscola());
         entity.setSerie(dto.getSerie());
-        entity.setCliente(cliente);
+        entity.setUsuario(usuario);
         return entity;
     }
 

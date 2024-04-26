@@ -24,33 +24,33 @@ public class DependenteService {
     private final DependenteRepository dependenteRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public DependenteResponse criar(DependenteRequest request) {
+    public Dependente criar(DependenteRequest request) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());
         if (!usuarioOpt.get().getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         if (usuarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Dependente entity = DependenteMapper.toEntity(request, usuarioOpt.get());
         Dependente saveDependente = dependenteRepository.save(entity);
-        return DependenteMapper.toDto(saveDependente);
+        return saveDependente;
     }
 
-    public List<DependenteResponse> listar() {
+    public List<Dependente> listar() {
         List<Dependente> dependentes = dependenteRepository.findAll();
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return DependenteMapper.toDto(dependentes);
+        return dependentes;
     }
 
-    public DependenteResponse listarPorId(int id) {
+    public Dependente listarPorId(int id) {
         Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return DependenteMapper.toDto(dependenteOpt.get());
+        return dependenteOpt.get();
     }
 
-    public DependenteResponse atualizar(int id, DependenteRequestUpdate request) {
+    public Dependente atualizar(int id, DependenteRequestUpdate request) {
         Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Dependente entity = DependenteMapper.toEntityAtt(request,dependenteOpt.get());
         Dependente saveDependente = dependenteRepository.save(entity);
-        return DependenteMapper.toDto(saveDependente);
+        return saveDependente;
     }
 
     public Void remover(int id) {

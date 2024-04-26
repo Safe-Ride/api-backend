@@ -27,30 +27,30 @@ public class UsuarioService {
     private final DependenteRepository dependenteRepository;
     private final EnderecoRepository enderecoRepository;
 
-    public UsuarioResponse criar(UsuarioRequest request) {
+    public Usuario criar(UsuarioRequest request) {
         Usuario entity = UsuarioMapper.toEntity(request);
         Usuario saveUsuario = usuarioRepository.save(entity);
-        return UsuarioMapper.toDto(saveUsuario);
+        return saveUsuario;
     }
 
-    public List<UsuarioResponse> listar() {
+    public List<Usuario> listar() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         if (usuarios.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return UsuarioMapper.toDto(usuarios);
+        return usuarios;
     }
 
-    public UsuarioResponse listarPorId(int id) {
+    public Usuario listarPorId(int id) {
         Optional<Usuario> clienteOpt = usuarioRepository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return UsuarioMapper.toDto(clienteOpt.get());
+        return clienteOpt.get();
     }
 
-    public UsuarioResponse atualizar(int id, UsuarioRequestUpdate request) {
+    public Usuario atualizar(int id, UsuarioRequestUpdate request) {
         Optional<Usuario> clienteOpt = usuarioRepository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Usuario entity = UsuarioMapper.toEntityAtt(request,clienteOpt.get());
         Usuario saveUsuario = usuarioRepository.save(entity);
-        return UsuarioMapper.toDto(saveUsuario);
+        return saveUsuario;
     }
 
     public Void remover(int id) {

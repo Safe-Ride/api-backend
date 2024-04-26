@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.DependenteConstants;
+import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
 import saferide.sptech.apibackend.service.DependenteService;
 
-import javax.naming.NotContextException;
 import java.util.List;
 
 @RestController
@@ -23,25 +23,25 @@ public class DependenteController {
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
             @Valid @RequestBody DependenteRequest request) {
-        return ResponseEntity.created(null).body(dependenteService.criar(request));
+        return ResponseEntity.created(null).body(DependenteMapper.toDto(dependenteService.criar(request)));
     }
 
     @GetMapping
-    public ResponseEntity<List<DependenteResponse>> listar() throws NotContextException {
-        return ResponseEntity.ok(dependenteService.listar());
+    public ResponseEntity<List<DependenteResponse>> listar() {
+        return ResponseEntity.ok(DependenteMapper.toDto(dependenteService.listar()));
     }
 
     @GetMapping(DependenteConstants.LIST_BY_ID_PATH)
     public ResponseEntity<DependenteResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(dependenteService.listarPorId(id));
+        return ResponseEntity.ok(DependenteMapper.toDto(dependenteService.listarPorId(id)));
     }
 
     @PutMapping(DependenteConstants.UPDATE_PATH)
     public ResponseEntity<DependenteResponse> atualizar(
             @PathVariable int id,
             @RequestBody DependenteRequestUpdate request) {
-        return ResponseEntity.ok(dependenteService.atualizar(id, request));
+        return ResponseEntity.ok(DependenteMapper.toDto(dependenteService.atualizar(id, request)));
     }
 
     @DeleteMapping(DependenteConstants.REMOVE_PATH)

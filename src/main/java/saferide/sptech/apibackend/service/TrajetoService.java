@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
 import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
 
@@ -20,30 +19,30 @@ public class TrajetoService {
 
     private final TrajetoRepository trajetoRepository;
 
-    public TrajetoResponse criar(TrajetoRequest request) {
+    public Trajeto criar(TrajetoRequest request) {
         Trajeto entity = TrajetoMapper.toEntity(request);
         Trajeto saveTrajeto = trajetoRepository.save(entity);
-        return TrajetoMapper.toDto(saveTrajeto);
+        return saveTrajeto;
     }
 
-    public List<TrajetoResponse> listar() {
+    public List<Trajeto> listar() {
         List<Trajeto> trajetos = trajetoRepository.findAll();
         if (trajetos.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return TrajetoMapper.toDto(trajetos);
+        return trajetos;
     }
 
-    public TrajetoResponse listarPorId(int id) {
+    public Trajeto listarPorId(int id) {
         Optional<Trajeto> trajetoOpt = trajetoRepository.findById(id);
         if (trajetoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return TrajetoMapper.toDto(trajetoOpt.get());
+        return trajetoOpt.get();
     }
 
-    public TrajetoResponse atualizar(int id, TrajetoRequestUpdate request) {
+    public Trajeto atualizar(int id, TrajetoRequestUpdate request) {
         Optional<Trajeto> trajetoOpt = trajetoRepository.findById(id);
         if (trajetoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Trajeto entity = TrajetoMapper.toEntityAtt(request, trajetoOpt.get());
         Trajeto saveEndereco = trajetoRepository.save(entity);
-        return TrajetoMapper.toDto(saveEndereco);
+        return saveEndereco;
     }
 
     public Void remover(int id) {

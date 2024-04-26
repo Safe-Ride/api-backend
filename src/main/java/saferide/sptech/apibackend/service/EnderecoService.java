@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.endereco.EnderecoMapper;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
-import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
@@ -23,32 +22,32 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public EnderecoResponse criar(EnderecoRequest request) {
+    public Endereco criar(EnderecoRequest request) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());
         if (usuarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Endereco entity = EnderecoMapper.toEntity(request, usuarioOpt.get());
         Endereco saveEndereco = enderecoRepository.save(entity);
-        return EnderecoMapper.toDto(saveEndereco);
+        return saveEndereco;
     }
 
-    public List<EnderecoResponse> listar() {
+    public List<Endereco> listar() {
         List<Endereco> enderecos = enderecoRepository.findAll();
         if (enderecos.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return EnderecoMapper.toDto(enderecos);
+        return enderecos;
     }
 
-    public EnderecoResponse listarPorId(int id) {
+    public Endereco listarPorId(int id) {
         Optional<Endereco> enderecoOpt = enderecoRepository.findById(id);
         if (enderecoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return EnderecoMapper.toDto(enderecoOpt.get());
+        return enderecoOpt.get();
     }
 
-    public EnderecoResponse atualizar(int id, EnderecoRequestUpdate request) {
+    public Endereco atualizar(int id, EnderecoRequestUpdate request) {
         Optional<Endereco> enderecoOpt = enderecoRepository.findById(id);
         if (enderecoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Endereco entity = EnderecoMapper.toEntityAtt(request, enderecoOpt.get());
         Endereco saveEndereco = enderecoRepository.save(entity);
-        return EnderecoMapper.toDto(saveEndereco);
+        return saveEndereco;
     }
 
     public Void remover(int id) {

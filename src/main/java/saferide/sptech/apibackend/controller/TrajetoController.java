@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.TrajetoConstants;
+import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
 import saferide.sptech.apibackend.service.TrajetoService;
 
-import javax.naming.NotContextException;
 import java.util.List;
 
 @RestController
@@ -23,25 +23,25 @@ public class TrajetoController {
     @PostMapping
     public ResponseEntity<TrajetoResponse> criar(
             @Valid @RequestBody TrajetoRequest request) {
-        return ResponseEntity.created(null).body(trajetoService.criar(request));
+        return ResponseEntity.created(null).body(TrajetoMapper.toDto(trajetoService.criar(request)));
     }
 
     @GetMapping
-    public ResponseEntity<List<TrajetoResponse>> listar() throws NotContextException {
-        return ResponseEntity.ok(trajetoService.listar());
+    public ResponseEntity<List<TrajetoResponse>> listar() {
+        return ResponseEntity.ok(TrajetoMapper.toDto(trajetoService.listar()));
     }
 
     @GetMapping(TrajetoConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TrajetoResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(trajetoService.listarPorId(id));
+        return ResponseEntity.ok(TrajetoMapper.toDto(trajetoService.listarPorId(id)));
     }
 
     @PutMapping(TrajetoConstants.UPDATE_PATH)
     public ResponseEntity<TrajetoResponse> atualizar(
             @PathVariable int id,
             @RequestBody TrajetoRequestUpdate request) {
-        return ResponseEntity.ok(trajetoService.atualizar(id, request));
+        return ResponseEntity.ok(TrajetoMapper.toDto(trajetoService.atualizar(id, request)));
     }
 
     @DeleteMapping(TrajetoConstants.REMOVE_PATH)

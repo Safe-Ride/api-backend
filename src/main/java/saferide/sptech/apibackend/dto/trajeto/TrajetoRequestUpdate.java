@@ -6,7 +6,9 @@ import saferide.sptech.apibackend.entity.TipoTrajeto;
 
 @Data
 public class TrajetoRequestUpdate {
+
     private String escola;
     private TipoTrajeto tipo;
     private DiaSemana diaSemana;
+
 }

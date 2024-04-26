@@ -8,8 +8,6 @@ import saferide.sptech.apibackend.constants.DependenteConstants;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
-import saferide.sptech.apibackend.repository.UsuarioRepository;
-import saferide.sptech.apibackend.repository.DependenteRepository;
 import saferide.sptech.apibackend.service.DependenteService;
 
 import javax.naming.NotContextException;
@@ -20,9 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DependenteController {
 
-    private DependenteRepository dependenteRepository;
-    private UsuarioRepository usuarioRepository;
-    DependenteService dependenteService = new DependenteService(dependenteRepository, usuarioRepository);
+    private final DependenteService dependenteService;
 
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(

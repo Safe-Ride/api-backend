@@ -6,6 +6,7 @@ import saferide.sptech.apibackend.entity.Dependente;
 import java.util.List;
 
 public class DependenteMapper {
+
     public static DependenteResponse toDto(Dependente entity){
         if (entity == null) return null;
 
@@ -15,9 +16,15 @@ public class DependenteMapper {
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setEscola(entity.getEscola());
         dto.setSerie(entity.getSerie());
-        dto.setUsuario(entity.getUsuario());
+        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
         return dto;
 
+    }
+
+    public static List<DependenteResponse> toDto(List<Dependente> entities){
+        return entities.stream()
+                .map(DependenteMapper::toDto)
+                .toList();
     }
 
     public static Dependente toEntity(DependenteRequest dto, Usuario usuario){
@@ -42,9 +49,24 @@ public class DependenteMapper {
         return entity;
     }
 
-    public static List<DependenteResponse> toDto(List<Dependente> entities){
+    public static DependenteUsuarioResponse toUsuarioDto(Usuario entity) {
+        if (entity == null) return null;
+
+        DependenteUsuarioResponse dto = new DependenteUsuarioResponse();
+        dto.setId(entity.getId());
+        dto.setNome(entity.getNome());
+        dto.setEmail(entity.getEmail());
+        dto.setCpf(entity.getCpf());
+        dto.setTelefone(entity.getTelefone());
+        dto.setDataNascimento(entity.getDataNascimento());
+        dto.setTipo(entity.getTipo());
+        return dto;
+    }
+
+    public static List<DependenteUsuarioResponse> toUsuarioDto(List<Usuario> entities) {
         return entities.stream()
-                .map(DependenteMapper::toDto)
+                .map(DependenteMapper::toUsuarioDto)
                 .toList();
     }
+
 }

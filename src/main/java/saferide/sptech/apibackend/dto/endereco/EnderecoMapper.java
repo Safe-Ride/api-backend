@@ -1,12 +1,12 @@
 package saferide.sptech.apibackend.dto.endereco;
 
-
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Endereco;
 
 import java.util.List;
 
 public class EnderecoMapper {
+
     public static EnderecoResponse toDto(Endereco entity){
         if (entity == null) return null;
 
@@ -17,9 +17,14 @@ public class EnderecoMapper {
         dto.setCep(entity.getCep());
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
-        dto.setUsuario(entity.getUsuario());
+        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
         return dto;
+    }
 
+    public static List<EnderecoResponse> toDto(List<Endereco> entities){
+        return entities.stream()
+                .map(EnderecoMapper::toDto)
+                .toList();
     }
 
     public static Endereco toEntity(EnderecoRequest dto, Usuario usuario){
@@ -46,9 +51,19 @@ public class EnderecoMapper {
         return entity;
     }
 
-    public static List<EnderecoResponse> toDto(List<Endereco> entities){
+    public static EnderecoUsuarioResponse toUsuarioDto(Usuario entity){
+        if (entity == null) return null;
+
+        EnderecoUsuarioResponse dto = new EnderecoUsuarioResponse();
+        dto.setId(entity.getId());
+        dto.setNome(entity.getNome());
+        return dto;
+    }
+
+    public static List<EnderecoUsuarioResponse> toUsuarioDto(List<Usuario> entities){
         return entities.stream()
-                .map(EnderecoMapper::toDto)
+                .map(EnderecoMapper::toUsuarioDto)
                 .toList();
     }
+
 }

@@ -8,8 +8,6 @@ import saferide.sptech.apibackend.constants.EnderecoConstants;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
 import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
-import saferide.sptech.apibackend.repository.UsuarioRepository;
-import saferide.sptech.apibackend.repository.EnderecoRepository;
 import saferide.sptech.apibackend.service.EnderecoService;
 
 import javax.naming.NotContextException;
@@ -20,9 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EnderecoController {
 
-    private EnderecoRepository enderecoRepository;
-    private UsuarioRepository usuarioRepository;
-    EnderecoService enderecoService = new EnderecoService(enderecoRepository, usuarioRepository);
+    private final EnderecoService enderecoService;
 
     @PostMapping
     public ResponseEntity<EnderecoResponse> criar(

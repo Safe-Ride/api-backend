@@ -11,10 +11,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Trajeto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String escola;
     private TipoTrajeto tipo;
     private DiaSemana diaSemana;
+
 }

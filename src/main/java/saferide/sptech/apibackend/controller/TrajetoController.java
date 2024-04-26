@@ -8,7 +8,6 @@ import saferide.sptech.apibackend.constants.TrajetoConstants;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
-import saferide.sptech.apibackend.repository.TrajetoRepository;
 import saferide.sptech.apibackend.service.TrajetoService;
 
 import javax.naming.NotContextException;
@@ -19,8 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrajetoController {
 
-    private TrajetoRepository trajetoRepository;
-    TrajetoService trajetoService = new TrajetoService(trajetoRepository);
+    private final TrajetoService trajetoService;
 
     @PostMapping
     public ResponseEntity<TrajetoResponse> criar(

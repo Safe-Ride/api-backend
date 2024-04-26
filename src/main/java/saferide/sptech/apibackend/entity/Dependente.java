@@ -1,17 +1,16 @@
 package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class Dependente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,4 +20,5 @@ public class Dependente {
     private String serie;
     @ManyToOne
     private Usuario usuario;
+
 }

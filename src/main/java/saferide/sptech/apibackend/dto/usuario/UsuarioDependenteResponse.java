@@ -1,17 +1,16 @@
-package saferide.sptech.apibackend.dto.dependente;
+package saferide.sptech.apibackend.dto.usuario;
 
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class DependenteResponse {
+public class UsuarioDependenteResponse {
 
     private Integer id;
     private String nome;
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
-    private DependenteUsuarioResponse usuario;
 
 }

@@ -6,8 +6,10 @@ import java.time.LocalDate;
 
 @Data
 public class DependenteRequestUpdate {
+
     private String nome;
     private LocalDate dataNascimento;
     private String escola;
     private String serie;
+
 }

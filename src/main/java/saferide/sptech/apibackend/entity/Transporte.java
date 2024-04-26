@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Transporte {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,4 +20,5 @@ public class Transporte {
     private String cnh;
     private String crm;
     private String crmc;
+
 }

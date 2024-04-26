@@ -1,6 +1,6 @@
 package saferide.sptech.apibackend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,14 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TrajetoService {
 
-    private static TrajetoRepository trajetoRepository;
-
-    @Autowired
-    public TrajetoService(TrajetoRepository trajetoRepository) {
-        this.trajetoRepository = trajetoRepository;
-    }
+    private final TrajetoRepository trajetoRepository;
 
     public TrajetoResponse criar(TrajetoRequest request) {
         Trajeto entity = TrajetoMapper.toEntity(request);

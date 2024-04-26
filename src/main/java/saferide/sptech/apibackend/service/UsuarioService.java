@@ -1,5 +1,7 @@
 package saferide.sptech.apibackend.service;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,18 +20,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-    private static UsuarioRepository usuarioRepository;
-    private static DependenteRepository dependenteRepository;
-    private static EnderecoRepository enderecoRepository;
-
-    @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, DependenteRepository dependenteRepository, EnderecoRepository enderecoRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.dependenteRepository = dependenteRepository;
-        this.enderecoRepository = enderecoRepository;
-    }
+    private final UsuarioRepository usuarioRepository;
+    private final DependenteRepository dependenteRepository;
+    private final EnderecoRepository enderecoRepository;
 
     public UsuarioResponse criar(UsuarioRequest request) {
         Usuario entity = UsuarioMapper.toEntity(request);

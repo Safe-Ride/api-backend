@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,4 +21,9 @@ public class Usuario {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
+    @OneToMany(mappedBy = "usuario")
+    private List<Dependente> dependentes;
+    @OneToMany(mappedBy = "usuario")
+    private List<Endereco> enderecos;
+
 }

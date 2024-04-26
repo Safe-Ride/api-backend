@@ -1,14 +1,14 @@
 package saferide.sptech.apibackend.dto.usuario;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import saferide.sptech.apibackend.entity.TipoCliente;
 
 import java.time.LocalDate;
+import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class UsuarioResponse {
+
     private int id;
     private String nome;
     private String email;
@@ -16,4 +16,7 @@ public class UsuarioResponse {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
+    private List<UsuarioDependenteResponse> dependentes;
+    private List<UsuarioEnderecoResponse> enderecos;
+
 }

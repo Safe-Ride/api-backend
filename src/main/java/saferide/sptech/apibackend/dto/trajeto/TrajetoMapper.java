@@ -1,12 +1,11 @@
 package saferide.sptech.apibackend.dto.trajeto;
 
-
-import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Trajeto;
 
 import java.util.List;
 
 public class TrajetoMapper {
+
     public static TrajetoResponse toDto(Trajeto entity){
         if (entity == null) return null;
 
@@ -16,7 +15,12 @@ public class TrajetoMapper {
         dto.setTipo(entity.getTipo());
         dto.setDiaSemana(entity.getDiaSemana());
         return dto;
+    }
 
+    public static List<TrajetoResponse> toDto(List<Trajeto> entities){
+        return entities.stream()
+                .map(TrajetoMapper::toDto)
+                .toList();
     }
 
     public static Trajeto toEntity(TrajetoRequest dto){
@@ -38,9 +42,4 @@ public class TrajetoMapper {
         return entity;
     }
 
-    public static List<TrajetoResponse> toDto(List<Trajeto> entities){
-        return entities.stream()
-                .map(TrajetoMapper::toDto)
-                .toList();
-    }
 }

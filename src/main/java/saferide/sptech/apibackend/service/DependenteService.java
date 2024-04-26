@@ -1,6 +1,6 @@
 package saferide.sptech.apibackend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,16 +18,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DependenteService {
 
-    private static DependenteRepository dependenteRepository;
-    private static UsuarioRepository usuarioRepository;
-
-    @Autowired
-    public DependenteService(DependenteRepository dependenteRepository, UsuarioRepository usuarioRepository) {
-        this.dependenteRepository = dependenteRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
+    private final DependenteRepository dependenteRepository;
+    private final UsuarioRepository usuarioRepository;
 
     public DependenteResponse criar(DependenteRequest request) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());

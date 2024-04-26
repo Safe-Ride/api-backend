@@ -8,9 +8,6 @@ import saferide.sptech.apibackend.constants.UsuarioConstants;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequest;
 import saferide.sptech.apibackend.dto.usuario.UsuarioResponse;
-import saferide.sptech.apibackend.repository.UsuarioRepository;
-import saferide.sptech.apibackend.repository.DependenteRepository;
-import saferide.sptech.apibackend.repository.EnderecoRepository;
 import saferide.sptech.apibackend.service.UsuarioService;
 
 import java.util.List;
@@ -20,10 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private UsuarioRepository usuarioRepository;
-    private DependenteRepository dependenteRepository;
-    private EnderecoRepository enderecoRepository;
-    UsuarioService usuarioService = new UsuarioService(usuarioRepository, dependenteRepository, enderecoRepository);
+    private final UsuarioService usuarioService;
 
     @PostMapping
     public ResponseEntity<UsuarioResponse> criar(

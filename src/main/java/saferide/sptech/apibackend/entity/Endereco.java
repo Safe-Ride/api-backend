@@ -4,20 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Entity
 @Getter
 @Setter
-public class Dependente {
+public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private LocalDate dataNascimento;
-    private String escola;
-    private String serie;
+    private Double latitude;
+    private Double longitude;
+    private String cep;
+    private Integer numero;
+    private String complemento;
     @ManyToOne
     private Usuario usuario;
 

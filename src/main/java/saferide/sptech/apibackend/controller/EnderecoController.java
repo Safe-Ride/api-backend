@@ -5,12 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.EnderecoConstants;
-import saferide.sptech.apibackend.dto.endereco.EnderecoMapper;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
-import saferide.sptech.apibackend.dto.endereco.EnderecoResponse;
+import saferide.sptech.apibackend.dto.endereco.*;
 import saferide.sptech.apibackend.service.EnderecoService;
+import saferide.sptech.apibackend.service.ViaCepService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -48,5 +47,23 @@ public class EnderecoController {
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
         return ResponseEntity.ok(enderecoService.remover(id));
+    }
+
+    @GetMapping(EnderecoConstants.SEARCH_CEP)
+    public ResponseEntity<ViaCepResponse> buscarCep(
+            @PathVariable String cep
+    ) {
+        ViaCepService viaCepService = new ViaCepService();
+        try {
+            ViaCepResponse viaCep = viaCepService.getEndereco(cep);
+
+            if (viaCep.getCep() == null) return ResponseEntity.notFound().build();
+
+            return ResponseEntity.ok(viaCep);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

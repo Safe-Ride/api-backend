@@ -11,6 +11,8 @@ import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequest;
 import saferide.sptech.apibackend.dto.usuario.UsuarioResponse;
 import saferide.sptech.apibackend.service.UsuarioService;
+import saferide.sptech.apibackend.service.autentication.UsuarioLoginDto;
+import saferide.sptech.apibackend.service.autentication.UsuarioTokenDto;
 
 import java.util.List;
 
@@ -50,5 +52,10 @@ public class UsuarioController {
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
         return ResponseEntity.ok(usuarioService.remover(id));
+    }
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto){
+        UsuarioTokenDto usuarioTokenDto = this.usuarioService.autenticar(usuarioLoginDto);
+        return  ResponseEntity.status(200).body(usuarioTokenDto);
     }
 }

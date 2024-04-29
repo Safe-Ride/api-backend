@@ -4,8 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
+import saferide.sptech.apibackend.dto.api.controller.security.jwt.GerenciadorTokenJwt;
 import saferide.sptech.apibackend.dto.usuario.UsuarioMapper;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequest;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;
@@ -15,6 +24,8 @@ import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 import saferide.sptech.apibackend.repository.EnderecoRepository;
+import saferide.sptech.apibackend.service.autentication.UsuarioLoginDto;
+import saferide.sptech.apibackend.service.autentication.UsuarioTokenDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +33,25 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private GerenciadorTokenJwt gerenciadorTokenJwt;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     private final UsuarioRepository usuarioRepository;
     private final DependenteRepository dependenteRepository;
     private final EnderecoRepository enderecoRepository;
 
+
+
+
     public Usuario criar(UsuarioRequest request) {
         Usuario entity = UsuarioMapper.toEntity(request);
+        String senhaCriptografada = passwordEncoder.encode(entity.getSenha());
+        entity.setSenha(senhaCriptografada);
         Usuario saveUsuario = usuarioRepository.save(entity);
         return saveUsuario;
     }
@@ -60,4 +83,21 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
         return null;
     }
+    public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLoginDto){
+        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
+                usuarioLoginDto.getEmail(),usuarioLoginDto.getSenha());
+
+        final  Authentication authentication = this.authenticationManager.authenticate(credentials);
+
+        Usuario usuarioAutenticado =
+                usuarioRepository.findByEmail(usuarioLoginDto.getEmail())
+                        .orElseThrow(
+                                () -> new ResponseStatusException(404,"Email do usuário não cadastrado", null)
+                        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = gerenciadorTokenJwt.generateToken(authentication);
+        return UsuarioMapper.of(usuarioAutenticado,token);
+    }
+
+
 }

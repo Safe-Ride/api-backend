@@ -13,7 +13,7 @@ import java.util.List;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String nome;
     private String email;
     private String senha;

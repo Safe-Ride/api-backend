@@ -24,7 +24,6 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponse> criar(
             @Valid @RequestBody UsuarioRequest body) {
         return ResponseEntity.created(null).body(UsuarioMapper.toDto(usuarioService.criar(body)));
@@ -53,6 +52,7 @@ public class UsuarioController {
             @PathVariable int id) {
         return ResponseEntity.ok(usuarioService.remover(id));
     }
+
     @PostMapping("/login")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLoginDto){
         UsuarioTokenDto usuarioTokenDto = this.usuarioService.autenticar(usuarioLoginDto);

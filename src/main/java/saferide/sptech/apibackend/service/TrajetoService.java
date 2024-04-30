@@ -11,6 +11,7 @@ import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.repository.EscolaRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
+import saferide.sptech.apibackend.service.utils.Ordenacao;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class TrajetoService {
     public List<Trajeto> listar() {
         List<Trajeto> trajetos = trajetoRepository.findAll();
         if (trajetos.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return trajetos;
+        return Ordenacao.quickSort(trajetos, 0, trajetos.size()-1);
     }
 
     public Trajeto listarPorId(int id) {

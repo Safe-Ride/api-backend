@@ -1,5 +1,6 @@
 package saferide.sptech.apibackend.dto.dependente;
 
+import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 
@@ -14,9 +15,9 @@ public class DependenteMapper {
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setDataNascimento(entity.getDataNascimento());
-        dto.setEscola(entity.getEscola());
         dto.setSerie(entity.getSerie());
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setEscola(toEscolaDto(entity.getEscola()));
         return dto;
 
     }
@@ -27,15 +28,15 @@ public class DependenteMapper {
                 .toList();
     }
 
-    public static Dependente toEntity(DependenteRequest dto, Usuario usuario){
+    public static Dependente toEntity(DependenteRequest dto, Usuario usuario, Escola escola){
         if (dto == null) return null;
 
         Dependente entity = new Dependente();
         entity.setNome(dto.getNome());
         entity.setDataNascimento(dto.getDataNascimento());
-        entity.setEscola(dto.getEscola());
         entity.setSerie(dto.getSerie());
         entity.setUsuario(usuario);
+        entity.setEscola(escola);
         return entity;
     }
 
@@ -44,7 +45,6 @@ public class DependenteMapper {
 
         if (dto.getNome() != null) entity.setNome(dto.getNome());
         if (dto.getNome() != null) entity.setDataNascimento(dto.getDataNascimento());
-        if (dto.getNome() != null) entity.setEscola(dto.getEscola());
         if (dto.getNome() != null) entity.setSerie(dto.getSerie());
         return entity;
     }
@@ -68,5 +68,21 @@ public class DependenteMapper {
                 .map(DependenteMapper::toUsuarioDto)
                 .toList();
     }
+
+    public static DependenteEscolaResponse toEscolaDto(Escola entity) {
+        if (entity == null) return null;
+
+        DependenteEscolaResponse dto = new DependenteEscolaResponse();
+        dto.setId(entity.getId());
+        dto.setNome(entity.getNome());
+        return dto;
+    }
+
+    public static List<DependenteEscolaResponse> toEscolaDto(List<Escola> entities) {
+        return entities.stream()
+                .map(DependenteMapper::toEscolaDto)
+                .toList();
+    }
+
 
 }

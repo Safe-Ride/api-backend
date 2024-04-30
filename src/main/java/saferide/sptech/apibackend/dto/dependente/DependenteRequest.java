@@ -9,8 +9,8 @@ public class DependenteRequest {
 
     private String nome;
     private LocalDate dataNascimento;
-    private String escola;
     private String serie;
     private Integer usuarioId;
+    private Integer escolaId;
 
 }

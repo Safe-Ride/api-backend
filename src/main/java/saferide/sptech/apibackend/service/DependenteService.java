@@ -8,9 +8,11 @@ import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
+import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.TipoCliente;
+import saferide.sptech.apibackend.repository.EscolaRepository;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
@@ -23,12 +25,15 @@ public class DependenteService {
 
     private final DependenteRepository dependenteRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EscolaRepository escolaRepository;
 
     public Dependente criar(DependenteRequest request) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());
         if (!usuarioOpt.get().getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         if (usuarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Dependente entity = DependenteMapper.toEntity(request, usuarioOpt.get());
+        Optional<Escola> escolaOpt = escolaRepository.findById(request.getEscolaId());
+        if (escolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Dependente entity = DependenteMapper.toEntity(request, usuarioOpt.get(), escolaOpt.get());
         Dependente saveDependente = dependenteRepository.save(entity);
         return saveDependente;
     }

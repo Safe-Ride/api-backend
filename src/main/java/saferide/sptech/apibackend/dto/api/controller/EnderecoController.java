@@ -1,5 +1,6 @@
 package saferide.sptech.apibackend.dto.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class EnderecoController {
             @PathVariable int id) {
         return ResponseEntity.ok(enderecoService.remover(id));
     }
-
+    @SecurityRequirement(name = "Bearer")
     @GetMapping(EnderecoConstants.SEARCH_CEP)
     public ResponseEntity<ViaCepResponse> buscarCep(
             @PathVariable String cep

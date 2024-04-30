@@ -1,24 +1,19 @@
 package saferide.sptech.apibackend.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.api.controller.security.jwt.GerenciadorTokenJwt;
 import saferide.sptech.apibackend.dto.usuario.UsuarioMapper;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequest;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;
-import saferide.sptech.apibackend.dto.usuario.UsuarioResponse;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
@@ -36,7 +31,7 @@ public class UsuarioService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
     @Autowired
-    private GerenciadorTokenJwt gerenciadorTokenJwt;
+    private final GerenciadorTokenJwt gerenciadorTokenJwt;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -100,4 +95,7 @@ public class UsuarioService {
     }
 
 
+    public void logoff(String token) {
+        gerenciadorTokenJwt.invalidateToken(token);
+    }
 }

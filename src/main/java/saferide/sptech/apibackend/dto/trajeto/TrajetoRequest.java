@@ -10,5 +10,6 @@ public class TrajetoRequest {
     private String escola;
     private TipoTrajeto tipo;
     private DiaSemana diaSemana;
+    private Integer escolaId;
 
 }

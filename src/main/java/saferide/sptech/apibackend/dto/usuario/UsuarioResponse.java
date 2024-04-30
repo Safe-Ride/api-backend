@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class UsuarioResponse {
+public class    UsuarioResponse {
 
     private int id;
     private String nome;

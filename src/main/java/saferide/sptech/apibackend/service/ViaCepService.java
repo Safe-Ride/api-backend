@@ -14,7 +14,6 @@ import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import java.io.IOException;
 
 public class ViaCepService {
-@SecurityRequirement(name = "Bearer")
     public ViaCepResponse getEndereco(String cep) throws ClientProtocolException, IOException{
          ViaCepResponse endereco = null;
 

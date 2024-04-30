@@ -16,9 +16,10 @@ public class Dependente {
     private Integer id;
     private String nome;
     private LocalDate dataNascimento;
-    private String escola;
     private String serie;
     @ManyToOne
     private Usuario usuario;
+    @ManyToOne
+    private Escola escola;
 
 }

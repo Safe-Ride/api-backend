@@ -10,8 +10,8 @@ public class DependenteResponse {
     private Integer id;
     private String nome;
     private LocalDate dataNascimento;
-    private String escola;
     private String serie;
     private DependenteUsuarioResponse usuario;
+    private DependenteEscolaResponse escola;
 
 }

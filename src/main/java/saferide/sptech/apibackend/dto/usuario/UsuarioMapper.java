@@ -67,7 +67,6 @@ public class UsuarioMapper {
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setDataNascimento(entity.getDataNascimento());
-        dto.setEscola(entity.getEscola());
         dto.setSerie(entity.getSerie());
         return dto;
     }

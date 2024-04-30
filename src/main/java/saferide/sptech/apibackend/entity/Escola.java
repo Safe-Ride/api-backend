@@ -9,17 +9,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Transporte {
-
+public class Escola {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String placa;
-    private String cnpj;
-    private String cnh;
-    private String crm;
-    private String crmc;
-//    @OneToMany(mappedBy = "transportes" )
-//    private List<Escola> escolas;
-
+    private String nome;
+//    @OneToMany(mappedBy = "escolas")
+//    private List<Transporte> transportes;
+    @ManyToOne
+    private Endereco endereco;
 }

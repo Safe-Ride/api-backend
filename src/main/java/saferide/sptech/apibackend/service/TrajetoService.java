@@ -7,7 +7,9 @@ import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
+import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
+import saferide.sptech.apibackend.repository.EscolaRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.Optional;
 public class TrajetoService {
 
     private final TrajetoRepository trajetoRepository;
+    private final EscolaRepository escolaRepository;
 
     public Trajeto criar(TrajetoRequest request) {
-        Trajeto entity = TrajetoMapper.toEntity(request);
+        Optional<Escola> escolaOpt = escolaRepository.findById(request.getEscolaId());
+        if (escolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Trajeto entity = TrajetoMapper.toEntity(request, escolaOpt.get());
         Trajeto saveTrajeto = trajetoRepository.save(entity);
         return saveTrajeto;
     }

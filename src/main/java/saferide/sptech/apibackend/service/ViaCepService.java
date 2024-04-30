@@ -1,6 +1,7 @@
 package saferide.sptech.apibackend.service;
 
 import com.google.gson.Gson;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,7 +14,7 @@ import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import java.io.IOException;
 
 public class ViaCepService {
-
+@SecurityRequirement(name = "Bearer")
     public ViaCepResponse getEndereco(String cep) throws ClientProtocolException, IOException{
          ViaCepResponse endereco = null;
 

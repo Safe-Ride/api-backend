@@ -53,10 +53,11 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
             new AntPathRequestMatcher("/usuarios/login/**"),
-            new AntPathRequestMatcher("/usuarios/   **"),
+            new AntPathRequestMatcher("/usuarios/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
-            new AntPathRequestMatcher("/error/**")
+            new AntPathRequestMatcher("/error/**"),
+
     };
 
     @Bean

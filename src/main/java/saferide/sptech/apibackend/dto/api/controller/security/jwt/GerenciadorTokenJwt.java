@@ -21,23 +21,23 @@ public class GerenciadorTokenJwt {
     @Value("${jwt.validity}")
     private long jwtTokenValidity;
 
-    public String getUsernameFromToken(String token){
-        return  getClaimForToken(token, Claims::getSubject);
+    public String getUsernameFromToken(String token) {
+        return getClaimForToken(token, Claims::getSubject);
     }
-    public  Date getExpirationDateFromToken(String token){
+
+    public Date getExpirationDateFromToken(String token) {
         return getClaimForToken(token, Claims::getExpiration);
     }
 
-    public  String generateToken(final Authentication authentication){
+    public String generateToken(final Authentication authentication) {
+
+        // Para verificacoes de permissões;
         final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        return Jwts.builder()
-                .setSubject(authentication.getName())
-                .signWith(parseSecret())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_00))
-                .compact();
+        return Jwts.builder().setSubject(authentication.getName())
+                .signWith(parseSecret()).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_000)).compact();
     }
 
     public <T> T getClaimForToken(String token, Function<Claims, T> claimsResolver) {
@@ -46,12 +46,12 @@ public class GerenciadorTokenJwt {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(userDetails.getUsername());
+        String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
-        final Date expirationDate = getExpirationDateFromToken(token);
+        Date expirationDate = getExpirationDateFromToken(token);
         return expirationDate.before(new Date(System.currentTimeMillis()));
     }
 
@@ -66,5 +66,3 @@ public class GerenciadorTokenJwt {
         return Keys.hmacShaKeyFor(this.secret.getBytes(StandardCharsets.UTF_8));
     }
 }
-
-

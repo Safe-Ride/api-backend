@@ -19,36 +19,37 @@ import java.util.List;
 public class EnderecoController {
 
     private final EnderecoService enderecoService;
-
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<EnderecoResponse> criar(
             @Valid @RequestBody EnderecoRequest request) {
         return ResponseEntity.created(null).body(EnderecoMapper.toDto(enderecoService.criar(request)));
     }
-
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<EnderecoResponse>> listar() {
         return ResponseEntity.ok(EnderecoMapper.toDto(enderecoService.listar()));
     }
-
+    @SecurityRequirement(name = "Bearer")
     @GetMapping(EnderecoConstants.LIST_BY_ID_PATH)
     public ResponseEntity<EnderecoResponse> listarPorId(
             @PathVariable int id) {
         return ResponseEntity.ok(EnderecoMapper.toDto(enderecoService.listarPorId(id)));
     }
-
+    @SecurityRequirement(name = "Bearer")
     @PutMapping(EnderecoConstants.UPDATE_PATH)
     public ResponseEntity<EnderecoResponse> atualizar(
             @PathVariable int id,
             @RequestBody EnderecoRequestUpdate request) {
         return ResponseEntity.ok(EnderecoMapper.toDto(enderecoService.atualizar(id, request)));
     }
-
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping(EnderecoConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
         return ResponseEntity.ok(enderecoService.remover(id));
     }
+
     @SecurityRequirement(name = "Bearer")
     @GetMapping(EnderecoConstants.SEARCH_CEP)
     public ResponseEntity<ViaCepResponse> buscarCep(

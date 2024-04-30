@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,9 @@ public class GerenciadorTokenJwt {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
+        if (isTokenInvalid(token)) {
+            return false; // Token inválido
+        }
         String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
@@ -65,4 +70,14 @@ public class GerenciadorTokenJwt {
     private SecretKey parseSecret() {
         return Keys.hmacShaKeyFor(this.secret.getBytes(StandardCharsets.UTF_8));
     }
+
+    private Set<String> invalidTokens = new HashSet<>();
+
+    public boolean invalidateToken(String token) {
+        return invalidTokens.add(token);
+    }
+    private boolean isTokenInvalid(String token) {
+        return invalidTokens.contains(token);
+    }
+
 }

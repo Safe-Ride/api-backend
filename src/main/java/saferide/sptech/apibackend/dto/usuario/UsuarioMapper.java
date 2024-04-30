@@ -3,6 +3,7 @@ package saferide.sptech.apibackend.dto.usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Usuario;
+import saferide.sptech.apibackend.service.autentication.UsuarioTokenDto;
 
 import java.util.List;
 
@@ -95,5 +96,18 @@ public class UsuarioMapper {
                 .map(UsuarioMapper::toEnderecoDto)
                 .toList();
     }
+
+    public static UsuarioTokenDto of(Usuario usuario, String token){
+        UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
+
+        usuarioTokenDto.setUserId(usuario.getId());
+        usuarioTokenDto.setEmail(usuario.getEmail());
+        usuarioTokenDto.setNome(usuario.getNome());
+        usuarioTokenDto.setToken(token);
+
+        return usuarioTokenDto;
+    }
+
+
 
 }

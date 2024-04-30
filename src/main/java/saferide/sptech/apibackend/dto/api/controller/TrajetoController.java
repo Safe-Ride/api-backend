@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.controller;
+package saferide.sptech.apibackend.dto.api.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

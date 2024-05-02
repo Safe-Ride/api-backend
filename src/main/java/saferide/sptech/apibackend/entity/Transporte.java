@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -21,7 +19,5 @@ public class Transporte {
     private String crmc;
     @ManyToOne
     private Usuario usuario;
-//    @OneToMany(mappedBy = "transportes" )
-//    private List<Escola> escolas;
 
 }

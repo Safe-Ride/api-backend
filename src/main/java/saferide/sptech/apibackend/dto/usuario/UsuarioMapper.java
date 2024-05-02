@@ -2,6 +2,7 @@ package saferide.sptech.apibackend.dto.usuario;
 
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Endereco;
+import saferide.sptech.apibackend.entity.TipoCliente;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.service.autentication.UsuarioTokenDto;
 
@@ -9,10 +10,11 @@ import java.util.List;
 
 public class UsuarioMapper {
 
-    public static UsuarioResponse toDto(Usuario entity){
+    public static UsuarioResponse toDto(Usuario entity) {
         if (entity == null) return null;
 
         UsuarioResponse dto = new UsuarioResponse();
+
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
@@ -20,16 +22,12 @@ public class UsuarioMapper {
         dto.setTelefone(entity.getTelefone());
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setTipo(entity.getTipo());
-        if (entity.getDependentes() != null) {
-            dto.setDependentes(toDependenteDto(entity.getDependentes()));
-        }
-        if (entity.getEnderecos() != null) {
-            dto.setEnderecos(toEnderecoDto(entity.getEnderecos()));
-        }
+        if (entity.getDependentes() != null) dto.setDependentes(toDependenteDto(entity.getDependentes()));
+        if (entity.getDependentes() != null) dto.setEnderecos(toEnderecoDto(entity.getEnderecos()));
         return dto;
     }
 
-    public static List<UsuarioResponse> toDto(List<Usuario> entities){
+    public static List<UsuarioResponse> toDto(List<Usuario> entities) {
         return entities.stream()
                 .map(UsuarioMapper::toDto)
                 .toList();

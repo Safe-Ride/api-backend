@@ -1,6 +1,5 @@
 package saferide.sptech.apibackend.dto.rota;
 
-import lombok.RequiredArgsConstructor;
 import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
 import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;

@@ -19,6 +19,8 @@ public class Transporte {
     private String cnh;
     private String crm;
     private String crmc;
+    @ManyToOne
+    private Usuario usuario;
 //    @OneToMany(mappedBy = "transportes" )
 //    private List<Escola> escolas;
 

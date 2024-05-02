@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.api.controller.security.jwt.GerenciadorTokenJwt;
+import saferide.sptech.apibackend.controller.security.jwt.GerenciadorTokenJwt;
 import saferide.sptech.apibackend.dto.usuario.UsuarioMapper;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequest;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;

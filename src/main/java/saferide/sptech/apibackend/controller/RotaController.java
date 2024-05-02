@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller;
+package saferide.sptech.apibackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

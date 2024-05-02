@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller.security;
+package saferide.sptech.apibackend.controller.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

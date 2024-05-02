@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller.security.jwt;
+package saferide.sptech.apibackend.controller.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

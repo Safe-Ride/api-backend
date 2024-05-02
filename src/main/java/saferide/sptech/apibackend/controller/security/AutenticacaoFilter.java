@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller.security;
+package saferide.sptech.apibackend.controller.security;
 
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import saferide.sptech.apibackend.dto.api.controller.security.jwt.GerenciadorTokenJwt;
+import saferide.sptech.apibackend.controller.security.jwt.GerenciadorTokenJwt;
 import saferide.sptech.apibackend.service.autentication.AutenticacaoService;
 
 

@@ -5,4 +5,7 @@ public class RotaConstants {
     public final static String LIST_BY_ID_PATH = "/{id}";
     public final static String UPDATE_PATH = "/{id}";
     public final static String REMOVE_PATH = "/{id}";
+
+    public final static String ENTITY = "Rota";
+
 }

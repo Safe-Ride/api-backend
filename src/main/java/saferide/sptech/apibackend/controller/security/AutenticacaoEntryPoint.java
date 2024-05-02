@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller.security;
+package saferide.sptech.apibackend.controller.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

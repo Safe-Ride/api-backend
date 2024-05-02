@@ -7,4 +7,8 @@ public class EnderecoConstants {
     public final static String UPDATE_PATH = "/{id}";
     public final static String REMOVE_PATH = "/{id}";
     public final static String SEARCH_CEP = "/buscar-cep/{cep}";
+
+    public final static String ENTITY = "Endereco";
+
+
 }

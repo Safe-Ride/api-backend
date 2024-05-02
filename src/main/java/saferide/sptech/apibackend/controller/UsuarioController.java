@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller;
+package saferide.sptech.apibackend.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

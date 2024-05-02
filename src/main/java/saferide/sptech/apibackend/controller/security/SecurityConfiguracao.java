@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.api.controller.security;
+package saferide.sptech.apibackend.controller.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import saferide.sptech.apibackend.dto.api.controller.security.jwt.GerenciadorTokenJwt;
+import saferide.sptech.apibackend.controller.security.jwt.GerenciadorTokenJwt;
 import saferide.sptech.apibackend.service.autentication.AutenticacaoService;
 
 

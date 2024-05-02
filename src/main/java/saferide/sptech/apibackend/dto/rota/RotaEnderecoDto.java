@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class RotaEnderecoDto {
+
     private Integer id;
     private Double latitude;
     private Double longitude;
@@ -14,4 +15,5 @@ public class RotaEnderecoDto {
     private String bairro;
     private String localidade;
     private String uf;
+
 }

@@ -13,10 +13,7 @@ public class Trajeto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
     private TipoTrajeto tipo;
-
-    @Enumerated(EnumType.STRING)
     private DiaSemana diaSemana;
 
     @ManyToOne

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -19,7 +17,7 @@ public class Transporte {
     private String cnh;
     private String crm;
     private String crmc;
-//    @OneToMany(mappedBy = "transportes" )
-//    private List<Escola> escolas;
+    @ManyToOne
+    private Usuario usuario;
 
 }

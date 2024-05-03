@@ -5,14 +5,20 @@ import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
 import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
+import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Rota;
+import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.entity.id.RotaId;
 
 public class RotaMapper {
 
     public static Rota toEntity(RotaRequest request) {
         Rota rota = new Rota();
+        rota.setDependente(Dependente.builder().id(request.getDependenteId()).build());
+        rota.setTrajeto(Trajeto.builder().id(request.getTrajetoId()).build());
+        rota.setEndereco(Endereco.builder().id(request.getEnderecoId()).build());
+
         RotaId id = new RotaId();
         id.setDependenteId(request.getDependenteId());
         id.setTrajetoId(request.getTrajetoId());

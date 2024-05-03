@@ -1,12 +1,17 @@
 package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import saferide.sptech.apibackend.entity.id.RotaId;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Rota {
+
     @EmbeddedId
     private RotaId id;
 

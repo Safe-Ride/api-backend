@@ -1,13 +1,7 @@
 package saferide.sptech.apibackend.dto.transporteEscola;
 
-import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
-import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
-import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import saferide.sptech.apibackend.dto.escola.EscolaMapper;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
 import saferide.sptech.apibackend.entity.*;
-import saferide.sptech.apibackend.entity.id.RotaId;
 import saferide.sptech.apibackend.entity.id.TransporteEscolaId;
 
 import java.util.List;
@@ -18,6 +12,9 @@ public class TransporteEscolaMapper {
         if (request == null) return null;
 
         TransporteEscola entity = new TransporteEscola();
+        entity.setTransporte(Transporte.builder().id(request.getTransporteId()).build());
+        entity.setEscola(Escola.builder().id(request.getEscolaId()).build());
+
         TransporteEscolaId id = new TransporteEscolaId();
         id.setTransporteId(request.getTransporteId());
         id.setEscolaId(request.getEscolaId());

@@ -16,8 +16,9 @@ public class DependenteMapper {
         dto.setNome(entity.getNome());
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setSerie(entity.getSerie());
-        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setResponsavel(toResponsavelDto(entity.getResponsavel()));
         dto.setEscola(toEscolaDto(entity.getEscola()));
+        dto.setMotorista(toMotoristaDto(entity.getMotorista()));
         return dto;
 
     }
@@ -28,14 +29,14 @@ public class DependenteMapper {
                 .toList();
     }
 
-    public static Dependente toEntity(DependenteRequest dto, Usuario usuario, Escola escola){
+    public static Dependente toEntity(DependenteRequest dto, Usuario responsavel, Escola escola){
         if (dto == null) return null;
 
         Dependente entity = new Dependente();
         entity.setNome(dto.getNome());
         entity.setDataNascimento(dto.getDataNascimento());
         entity.setSerie(dto.getSerie());
-        entity.setUsuario(usuario);
+        entity.setResponsavel(responsavel);
         entity.setEscola(escola);
         return entity;
     }
@@ -49,23 +50,22 @@ public class DependenteMapper {
         return entity;
     }
 
-    public static DependenteUsuarioResponse toUsuarioDto(Usuario entity) {
+    public static DependenteResponsavelResponse toResponsavelDto(Usuario entity) {
         if (entity == null) return null;
 
-        DependenteUsuarioResponse dto = new DependenteUsuarioResponse();
+        DependenteResponsavelResponse dto = new DependenteResponsavelResponse();
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
         dto.setCpf(entity.getCpf());
         dto.setTelefone(entity.getTelefone());
         dto.setDataNascimento(entity.getDataNascimento());
-        dto.setTipo(entity.getTipo());
         return dto;
     }
 
-    public static List<DependenteUsuarioResponse> toUsuarioDto(List<Usuario> entities) {
+    public static List<DependenteResponsavelResponse> toResponsavelDto(List<Usuario> entities) {
         return entities.stream()
-                .map(DependenteMapper::toUsuarioDto)
+                .map(DependenteMapper::toResponsavelDto)
                 .toList();
     }
 
@@ -84,5 +84,23 @@ public class DependenteMapper {
                 .toList();
     }
 
+    public static DependenteMotoristaResponse toMotoristaDto(Usuario entity) {
+        if (entity == null) return null;
+
+        DependenteMotoristaResponse dto = new DependenteMotoristaResponse();
+        dto.setId(entity.getId());
+        dto.setNome(entity.getNome());
+        dto.setEmail(entity.getEmail());
+        dto.setCpf(entity.getCpf());
+        dto.setTelefone(entity.getTelefone());
+        dto.setDataNascimento(entity.getDataNascimento());
+        return dto;
+    }
+
+    public static List<DependenteMotoristaResponse> toMotoristaDto(List<Usuario> entities) {
+        return entities.stream()
+                .map(DependenteMapper::toMotoristaDto)
+                .toList();
+    }
 
 }

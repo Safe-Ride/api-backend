@@ -73,7 +73,7 @@ public class UsuarioService {
 
     public Void remover(int id) {
         if (!usuarioRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        List<Dependente> dependentes = dependenteRepository.findByUsuarioId(id);
+        List<Dependente> dependentes = dependenteRepository.findByResponsavelId(id);
         if (!dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         usuarioRepository.deleteById(id);
         return null;

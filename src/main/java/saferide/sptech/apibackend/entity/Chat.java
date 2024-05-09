@@ -3,27 +3,24 @@ package saferide.sptech.apibackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Dependente {
+public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private LocalDate dataNascimento;
-    private String serie;
     @ManyToOne
     private Usuario responsavel;
     @ManyToOne
-    private Escola escola;
-    @ManyToOne
     private Usuario motorista;
+    @OneToMany(mappedBy = "chat")
+    private List<Mensagem> mensagens;
 
 }

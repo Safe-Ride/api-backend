@@ -1,12 +1,11 @@
 package saferide.sptech.apibackend.dto.dependente;
 
 import lombok.Data;
-import saferide.sptech.apibackend.entity.TipoCliente;
 
 import java.time.LocalDate;
 
 @Data
-public class DependenteUsuarioResponse {
+public class DependenteMotoristaResponse {
 
     private int id;
     private String nome;
@@ -14,6 +13,5 @@ public class DependenteUsuarioResponse {
     private String cpf;
     private String telefone;
     private LocalDate dataNascimento;
-    private TipoCliente tipo;
 
 }

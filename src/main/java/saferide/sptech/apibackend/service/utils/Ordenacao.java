@@ -1,5 +1,6 @@
 package saferide.sptech.apibackend.service.utils;
 
+import saferide.sptech.apibackend.entity.Mensagem;
 import saferide.sptech.apibackend.entity.Trajeto;
 
 import java.util.List;
@@ -30,4 +31,5 @@ public class Ordenacao {
         }
         return v;
     }
+
 }

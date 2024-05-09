@@ -23,7 +23,8 @@ public class UsuarioMapper {
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setTipo(entity.getTipo());
         if (entity.getDependentes() != null) dto.setDependentes(toDependenteDto(entity.getDependentes()));
-        if (entity.getDependentes() != null) dto.setEnderecos(toEnderecoDto(entity.getEnderecos()));
+        if (entity.getEnderecos() != null) dto.setEnderecos(toEnderecoDto(entity.getEnderecos()));
+        if (entity.getClientes() != null) dto.setClientes(toDependenteDto(entity.getClientes()));
         return dto;
     }
 

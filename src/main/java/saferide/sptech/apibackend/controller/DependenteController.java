@@ -23,7 +23,7 @@ public class DependenteController {
     @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
-            @Valid @RequestBody DependenteRequest request) {
+            @RequestBody DependenteRequest request) {
         return ResponseEntity.created(null).body(DependenteMapper.toDto(dependenteService.criar(request)));
     }
     @SecurityRequirement(name = "Bearer")
@@ -44,6 +44,14 @@ public class DependenteController {
             @RequestBody DependenteRequestUpdate request) {
         return ResponseEntity.ok(DependenteMapper.toDto(dependenteService.atualizar(id, request)));
     }
+
+    @PatchMapping(DependenteConstants.LINK_DEPENDENTE_WITH_MOTORISTA_PATH)
+    public ResponseEntity<DependenteResponse> vincularMotorista(
+            @PathVariable int dependenteId,
+            @PathVariable int motoristaId) {
+        return ResponseEntity.ok().body(DependenteMapper.toDto(dependenteService.vincularMotorista(dependenteId, motoristaId)));
+    }
+
     @SecurityRequirement(name = "Bearer")
     @DeleteMapping(DependenteConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(

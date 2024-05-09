@@ -1,8 +1,7 @@
 package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,6 +9,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +23,11 @@ public class Usuario {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "responsavel")
     private List<Dependente> dependentes;
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos;
+    @OneToMany(mappedBy = "motorista")
+    private List<Dependente> clientes;
 
 }

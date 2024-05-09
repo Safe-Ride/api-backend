@@ -20,5 +20,6 @@ public class UsuarioResponse {
     private TipoCliente tipo;
     private List<UsuarioDependenteResponse> dependentes;
     private List<UsuarioEnderecoResponse> enderecos;
+    private List<UsuarioDependenteResponse> clientes;
 
 }

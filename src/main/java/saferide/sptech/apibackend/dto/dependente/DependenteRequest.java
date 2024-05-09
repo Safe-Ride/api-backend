@@ -10,7 +10,7 @@ public class DependenteRequest {
     private String nome;
     private LocalDate dataNascimento;
     private String serie;
-    private Integer usuarioId;
+    private Integer responsavelId;
     private Integer escolaId;
 
 }

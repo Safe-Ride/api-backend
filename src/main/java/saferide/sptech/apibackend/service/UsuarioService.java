@@ -27,14 +27,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-
 public class UsuarioService {
-    @Autowired
+
     private final PasswordEncoder passwordEncoder;
-    @Autowired
     private final GerenciadorTokenJwt gerenciadorTokenJwt;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     private final UsuarioRepository repository;
     private final DependenteRepository dependenteRepository;

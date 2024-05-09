@@ -21,6 +21,6 @@ public class Chat {
     @ManyToOne
     private Usuario motorista;
     @OneToMany(mappedBy = "chat")
-    private List<Mensagem> mensagems;
+    private List<Mensagem> mensagens;
 
 }

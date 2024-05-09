@@ -16,7 +16,7 @@ public class ChatMapper {
         dto.setId(entity.getId());
         dto.setResponsavel(toUsuarioDto(entity.getResponsavel()));
         dto.setMotorista(toUsuarioDto(entity.getMotorista()));
-        if (entity.getMensagems() != null) dto.setMensagems(toMensagemDto(entity.getMensagems()));
+        if (entity.getMensagens() != null) dto.setMensagems(toMensagemDto(entity.getMensagens()));
         return dto;
     }
 

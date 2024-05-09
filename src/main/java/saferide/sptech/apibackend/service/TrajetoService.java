@@ -1,6 +1,6 @@
 package saferide.sptech.apibackend.service;
 
-import lombok.RequiredArgsConstructor;
+import  lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,8 +9,10 @@ import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
+import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.repository.EscolaRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
+import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.service.utils.Ordenacao;
 
 import java.util.List;
@@ -22,11 +24,14 @@ public class TrajetoService {
 
     private final TrajetoRepository trajetoRepository;
     private final EscolaRepository escolaRepository;
+    private final UsuarioRepository usuarioRepository;
 
     public Trajeto criar(TrajetoRequest request) {
         Optional<Escola> escolaOpt = escolaRepository.findById(request.getEscolaId());
         if (escolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Trajeto entity = TrajetoMapper.toEntity(request, escolaOpt.get());
+        Optional<Usuario> motoristaOpt = usuarioRepository.findById(request.getMotoristaId());
+        if (motoristaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Trajeto entity = TrajetoMapper.toEntity(request, escolaOpt.get(), motoristaOpt.get());
         Trajeto saveTrajeto = trajetoRepository.save(entity);
         return saveTrajeto;
     }

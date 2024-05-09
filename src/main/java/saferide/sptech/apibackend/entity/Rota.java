@@ -24,4 +24,5 @@ public class Rota {
     @ManyToOne
     @MapsId("enderecoId")
     private Endereco endereco;
+
 }

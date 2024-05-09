@@ -11,5 +11,6 @@ public class TrajetoRequest {
     private TipoTrajeto tipo;
     private DiaSemana diaSemana;
     private Integer escolaId;
+    private Integer motoristaId;
 
 }

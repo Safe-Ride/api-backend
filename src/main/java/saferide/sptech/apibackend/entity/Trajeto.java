@@ -20,5 +20,7 @@ public class Trajeto {
 
     @ManyToOne
     private Escola escola;
+    @ManyToOne
+    private Usuario motorista;
 
 }

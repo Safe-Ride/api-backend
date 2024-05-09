@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Escola {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,4 +21,5 @@ public class Escola {
 //    private List<Transporte> transportes;
     @ManyToOne
     private Endereco endereco;
+
 }

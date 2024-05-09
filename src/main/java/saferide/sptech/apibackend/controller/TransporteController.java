@@ -5,8 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import saferide.sptech.apibackend.constants.TrajetoConstants;
-import saferide.sptech.apibackend.constants.TransporteConstants;
+import saferide.sptech.apibackend.constants.ControllerConstants;
 import saferide.sptech.apibackend.dto.transporte.TransporteMapper;
 import saferide.sptech.apibackend.dto.transporte.TransporteRequest;
 import saferide.sptech.apibackend.dto.transporte.TransporteRequestUpdate;
@@ -16,39 +15,45 @@ import saferide.sptech.apibackend.service.TransporteService;
 import java.util.List;
 
 @RestController
-@RequestMapping(TransporteConstants.BASE_PATH)
+@RequestMapping(ControllerConstants.TRANSPORTE_BASE_PATH)
 @RequiredArgsConstructor
 public class TransporteController {
 
-    private final TransporteService transporteService;
-    @SecurityRequirement(name = "Bearer")
+    private final TransporteService service;
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<TransporteResponse> criar(
             @Valid @RequestBody TransporteRequest request) {
-        return ResponseEntity.created(null).body(TransporteMapper.toDto(transporteService.criar(request)));
+        return ResponseEntity.created(null).body(TransporteMapper.toDto(service.criar(request)));
     }
-    @SecurityRequirement(name = "Bearer")
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<TransporteResponse>> listar() {
-        return ResponseEntity.ok(TransporteMapper.toDto(transporteService.listar()));
+        return ResponseEntity.ok(TransporteMapper.toDto(service.listar()));
     }
-    @SecurityRequirement(name = "Bearer")
-    @GetMapping(TrajetoConstants.LIST_BY_ID_PATH)
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TransporteResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(TransporteMapper.toDto(transporteService.listarPorId(id)));
+        return ResponseEntity.ok(TransporteMapper.toDto(service.listarPorId(id)));
     }
-    @SecurityRequirement(name = "Bearer")
-    @PutMapping(TrajetoConstants.UPDATE_PATH)
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PutMapping(ControllerConstants.UPDATE_PATH)
     public ResponseEntity<TransporteResponse> atualizar(
             @PathVariable int id,
             @RequestBody TransporteRequestUpdate request) {
-        return ResponseEntity.ok(TransporteMapper.toDto(transporteService.atualizar(id, request)));
+        return ResponseEntity.ok(TransporteMapper.toDto(service.atualizar(id, request)));
     }
-    @SecurityRequirement(name = "Bearer")
-    @DeleteMapping(TrajetoConstants.REMOVE_PATH)
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(transporteService.remover(id));
+        return ResponseEntity.ok(service.remover(id));
     }
+
 }

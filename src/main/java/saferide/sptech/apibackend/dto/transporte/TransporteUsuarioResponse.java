@@ -1,9 +1,6 @@
 package saferide.sptech.apibackend.dto.transporte;
 
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import saferide.sptech.apibackend.entity.TipoCliente;
-import saferide.sptech.apibackend.entity.Usuario;
 
 import java.time.LocalDate;
 

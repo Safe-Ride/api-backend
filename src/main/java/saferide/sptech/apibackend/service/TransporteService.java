@@ -10,7 +10,6 @@ import saferide.sptech.apibackend.dto.transporte.TransporteRequestUpdate;
 import saferide.sptech.apibackend.entity.Transporte;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.repository.TransporteRepository;
-import saferide.sptech.apibackend.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,40 +18,37 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TransporteService {
 
-    private final TransporteRepository transporteRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final TransporteRepository repository;
+    private final UsuarioService usuarioService;
 
     public Transporte criar(TransporteRequest request) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(request.getUsuarioId());
-        if (usuarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Transporte entity = TransporteMapper.toEntity(request, usuarioOpt.get());
-        Transporte saveTransporte = transporteRepository.save(entity);
-        return saveTransporte;
+        Usuario usuario = usuarioService.listarPorId(request.getUsuarioId());
+        Transporte entity = TransporteMapper.toEntity(request, usuario);
+        return repository.save(entity);
     }
 
     public List<Transporte> listar() {
-        List<Transporte> transportes = transporteRepository.findAll();
+        List<Transporte> transportes = repository.findAll();
         if (transportes.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return transportes;
     }
 
     public Transporte listarPorId(int id) {
-        Optional<Transporte> transporteOpt = transporteRepository.findById(id);
+        Optional<Transporte> transporteOpt = repository.findById(id);
         if (transporteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return transporteOpt.get();
     }
 
     public Transporte atualizar(int id, TransporteRequestUpdate request) {
-        Optional<Transporte> transporteOpt = transporteRepository.findById(id);
+        Optional<Transporte> transporteOpt = repository.findById(id);
         if (transporteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Transporte entity = TransporteMapper.toEntityAtt(request, transporteOpt.get());
-        Transporte saveTransporte = transporteRepository.save(entity);
-        return saveTransporte;
+        return repository.save(entity);
     }
 
     public Void remover(int id) {
-        if (!transporteRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        transporteRepository.deleteById(id);
+        if (!repository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        repository.deleteById(id);
         return null;
     }
 }

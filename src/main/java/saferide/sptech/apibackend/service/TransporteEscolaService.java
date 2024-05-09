@@ -9,9 +9,7 @@ import saferide.sptech.apibackend.dto.transporteEscola.TransporteEscolaRequest;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Transporte;
 import saferide.sptech.apibackend.entity.TransporteEscola;
-import saferide.sptech.apibackend.repository.EscolaRepository;
 import saferide.sptech.apibackend.repository.TransporteEscolaRepository;
-import saferide.sptech.apibackend.repository.TransporteRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,35 +18,32 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TransporteEscolaService {
 
-    private final TransporteEscolaRepository transporteEscolaRepository;
-    private final TransporteRepository transporteRepository;
-    private final EscolaRepository escolaRepository;
+    private final TransporteEscolaRepository repository;
+    private final TransporteService transporteService;
+    private final EscolaService escolaService;
 
     public TransporteEscola criar(TransporteEscolaRequest request) {
-        Optional<Transporte> transporteOpt = transporteRepository.findById(request.getTransporteId());
-        if (transporteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Optional<Escola> escolaOpt = escolaRepository.findById(request.getEscolaId());
-        if (escolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Transporte transporte = transporteService.listarPorId(request.getTransporteId());
+        Escola escola = escolaService.listarPorId(request.getEscolaId());
         TransporteEscola entity = TransporteEscolaMapper.toEntity(request);
-        TransporteEscola saveTransporteEscola = transporteEscolaRepository.save(entity);
-        return saveTransporteEscola;
+        return repository.save(entity);
     }
 
     public List<TransporteEscola> listar() {
-        List<TransporteEscola> transportesEscolas = transporteEscolaRepository.findAll();
+        List<TransporteEscola> transportesEscolas = repository.findAll();
         if (transportesEscolas.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return transportesEscolas;
     }
 
     public TransporteEscola listarPorId(int id) {
-        Optional<TransporteEscola> transporteEscolaOpt = transporteEscolaRepository.findById(id);
+        Optional<TransporteEscola> transporteEscolaOpt = repository.findById(id);
         if (transporteEscolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return transporteEscolaOpt.get();
     }
 
     public Void remover(int id) {
-        if (!transporteEscolaRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        transporteEscolaRepository.deleteById(id);
+        if (!repository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        repository.deleteById(id);
         return null;
     }
 }

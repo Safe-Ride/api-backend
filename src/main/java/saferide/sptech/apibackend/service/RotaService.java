@@ -17,20 +17,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RotaService {
 
-    private final RotaRepository rotaRepository;
+    private final RotaRepository repository;
 
     private final ViaCepService viaCepService = new ViaCepService();
 
     public RotaResponse criar(RotaRequest request) throws IOException {
         Rota rota = RotaMapper.toEntity(request);
-        rota = rotaRepository.save(rota);
+        rota = repository.save(rota);
         ViaCepResponse viaCepResponse = viaCepService.getEndereco(rota.getEndereco().getCep());
 
         return RotaMapper.toDto(rota, viaCepResponse);
     }
 
     public List<RotaResponse> listarRotasPorDependente(int dependenteId) {
-        List<Rota> rotas = rotaRepository.findByDependenteId(dependenteId);
+        List<Rota> rotas = repository.findByDependenteId(dependenteId);
 
         List<RotaResponse> rotaResponses = new ArrayList<>();
 
@@ -48,4 +48,5 @@ public class RotaService {
 
         return rotaResponses;
     }
+
 }

@@ -1,7 +1,6 @@
 package saferide.sptech.apibackend.dto.dependente;
 
 import lombok.Data;
-import saferide.sptech.apibackend.entity.TipoCliente;
 
 import java.time.LocalDate;
 

@@ -27,6 +27,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class UsuarioService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
@@ -35,49 +36,43 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository repository;
     private final DependenteRepository dependenteRepository;
-    private final EnderecoRepository enderecoRepository;
-
-
-
 
     public Usuario criar(UsuarioRequest request) {
         Usuario entity = UsuarioMapper.toEntity(request);
         String senhaCriptografada = passwordEncoder.encode(entity.getSenha());
         entity.setSenha(senhaCriptografada);
-        Usuario saveUsuario = usuarioRepository.save(entity);
-        return saveUsuario;
+        return repository.save(entity);
     }
 
     public List<Usuario> listar() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<Usuario> usuarios = repository.findAll();
         if (usuarios.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return usuarios;
     }
 
     public Usuario listarPorId(int id) {
-        Optional<Usuario> clienteOpt = usuarioRepository.findById(id);
+        Optional<Usuario> clienteOpt = repository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return clienteOpt.get();
     }
 
     public Usuario atualizar(int id, UsuarioRequestUpdate request) {
-        Optional<Usuario> clienteOpt = usuarioRepository.findById(id);
+        Optional<Usuario> clienteOpt = repository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Usuario entity = UsuarioMapper.toEntityAtt(request,clienteOpt.get());
-        Usuario saveUsuario = usuarioRepository.save(entity);
-        return saveUsuario;
+        return repository.save(entity);
     }
 
     public Void remover(int id) {
-        if (!usuarioRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (!repository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         List<Dependente> dependentes = dependenteRepository.findByResponsavelId(id);
         if (!dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        usuarioRepository.deleteById(id);
+        repository.deleteById(id);
         return null;
     }
+
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLoginDto){
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
                 usuarioLoginDto.getEmail(),usuarioLoginDto.getSenha());
@@ -85,7 +80,7 @@ public class UsuarioService {
         final  Authentication authentication = this.authenticationManager.authenticate(credentials);
 
         Usuario usuarioAutenticado =
-                usuarioRepository.findByEmail(usuarioLoginDto.getEmail())
+                repository.findByEmail(usuarioLoginDto.getEmail())
                         .orElseThrow(
                                 () -> new ResponseStatusException(404,"Email do usuário não cadastrado", null)
                         );
@@ -94,8 +89,8 @@ public class UsuarioService {
         return UsuarioMapper.of(usuarioAutenticado,token);
     }
 
-
     public void logoff(String token) {
         gerenciadorTokenJwt.invalidateToken(token);
     }
+
 }

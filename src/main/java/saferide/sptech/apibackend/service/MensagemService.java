@@ -2,20 +2,16 @@ package saferide.sptech.apibackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.mensagem.MensagemMapper;
 import saferide.sptech.apibackend.dto.mensagem.MensagemRequest;
-import saferide.sptech.apibackend.entity.Chat;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Mensagem;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.repository.MensagemRepository;
 
-import javax.swing.text.html.Option;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +32,5 @@ public class MensagemService {
         Mensagem entity = MensagemMapper.toEntity(request, dependente);
         return repository.save(entity);
     }
-
 
 }

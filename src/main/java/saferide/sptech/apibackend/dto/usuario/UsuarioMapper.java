@@ -2,7 +2,6 @@ package saferide.sptech.apibackend.dto.usuario;
 
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Endereco;
-import saferide.sptech.apibackend.entity.TipoCliente;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.service.autentication.UsuarioTokenDto;
 

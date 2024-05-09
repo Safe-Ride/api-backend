@@ -12,8 +12,6 @@ import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.TipoCliente;
-import saferide.sptech.apibackend.repository.EscolaRepository;
-import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
 import java.util.List;
@@ -23,60 +21,58 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DependenteService {
 
-    private final DependenteRepository dependenteRepository;
-    private final UsuarioRepository usuarioRepository;
-    private final EscolaRepository escolaRepository;
+    private final DependenteRepository repository;
+    private final UsuarioService usuarioService;
+    private final EscolaService escolaService;
     private final ChatService chatService;
 
     public Dependente criar(DependenteRequest request) {
-        Optional<Usuario> responsavelOpt = usuarioRepository.findById(request.getResponsavelId());
-//        if (responsavelOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        if (!responsavelOpt.get().getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Optional<Escola> escolaOpt = escolaRepository.findById(request.getEscolaId());
-        if (escolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Dependente entity = DependenteMapper.toEntity(request, responsavelOpt.get(), escolaOpt.get());
-        return dependenteRepository.save(entity);
+        Usuario responsavel = usuarioService.listarPorId(request.getResponsavelId());
+        if (!responsavel.getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Escola escola = escolaService.listarPorId(request.getEscolaId());
+        Dependente entity = DependenteMapper.toEntity(request, responsavel, escola);
+        return repository.save(entity);
     }
 
     public List<Dependente> listar() {
-        List<Dependente> dependentes = dependenteRepository.findAll();
+        List<Dependente> dependentes = repository.findAll();
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return dependentes;
     }
 
     public Dependente listarPorId(int id) {
-        Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
+        Optional<Dependente> dependenteOpt = repository.findById(id);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return dependenteOpt.get();
     }
 
     public Dependente atualizar(int id, DependenteRequestUpdate request) {
-        Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
+        Optional<Dependente> dependenteOpt = repository.findById(id);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Dependente entity = DependenteMapper.toEntityAtt(request,dependenteOpt.get());
-        return dependenteRepository.save(entity);
+        return repository.save(entity);
     }
 
     public Dependente vincularMotorista(int dependenteId, int motoristaId) {
 
-        Optional<Usuario> motoristaOpt = usuarioRepository.findById(motoristaId);
-        if (motoristaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        if (!motoristaOpt.get().getTipo().equals(TipoCliente.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Usuario motorista = usuarioService.listarPorId(motoristaId);
+        if (motorista.getTipo().equals(TipoCliente.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        Optional<Dependente> dependenteOpt = dependenteRepository.findById(dependenteId);
+        Optional<Dependente> dependenteOpt = repository.findById(dependenteId);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         Dependente entity = dependenteOpt.get();
-        entity.setMotorista(motoristaOpt.get());
+        entity.setMotorista(motorista);
 
-        chatService.criar(new ChatRequest(dependenteOpt.get().getResponsavel().getId(), motoristaOpt.get().getId()));
+        chatService.criar(new ChatRequest(dependenteOpt.get().getResponsavel().getId(), motorista.getId()));
 
-        return dependenteRepository.save(entity);
+        return repository.save(entity);
     }
 
     public Void remover(int id) {
-        if (!dependenteRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        dependenteRepository.deleteById(id);
+        if (!repository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        repository.deleteById(id);
         return null;
     }
+
 }

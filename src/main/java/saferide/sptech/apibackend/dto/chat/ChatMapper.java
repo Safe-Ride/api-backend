@@ -1,7 +1,6 @@
 package saferide.sptech.apibackend.dto.chat;
 
 import saferide.sptech.apibackend.entity.Chat;
-import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Mensagem;
 import saferide.sptech.apibackend.entity.Usuario;
 

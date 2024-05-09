@@ -1,7 +1,6 @@
 package saferide.sptech.apibackend.dto.escola;
 
 import lombok.Data;
-import saferide.sptech.apibackend.entity.Endereco;
 
 @Data
 public class EscolaEnderecoResponse {

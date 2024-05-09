@@ -10,9 +10,7 @@ import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.entity.Usuario;
-import saferide.sptech.apibackend.repository.EscolaRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
-import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.service.utils.Ordenacao;
 
 import java.util.List;
@@ -22,43 +20,40 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TrajetoService {
 
-    private final TrajetoRepository trajetoRepository;
-    private final EscolaRepository escolaRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final TrajetoRepository repository;
+    private final EscolaService escolaService;
+    private final UsuarioService usuarioService;
 
     public Trajeto criar(TrajetoRequest request) {
-        Optional<Escola> escolaOpt = escolaRepository.findById(request.getEscolaId());
-        if (escolaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Optional<Usuario> motoristaOpt = usuarioRepository.findById(request.getMotoristaId());
-        if (motoristaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Trajeto entity = TrajetoMapper.toEntity(request, escolaOpt.get(), motoristaOpt.get());
-        Trajeto saveTrajeto = trajetoRepository.save(entity);
-        return saveTrajeto;
+        Escola escola = escolaService.listarPorId(request.getEscolaId());
+        Usuario motorista = usuarioService.listarPorId(request.getMotoristaId());
+        Trajeto entity = TrajetoMapper.toEntity(request, escola, motorista);
+        return repository.save(entity);
     }
 
     public List<Trajeto> listar() {
-        List<Trajeto> trajetos = trajetoRepository.findAll();
+        List<Trajeto> trajetos = repository.findAll();
         if (trajetos.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return Ordenacao.quickSort(trajetos, 0, trajetos.size()-1);
     }
 
     public Trajeto listarPorId(int id) {
-        Optional<Trajeto> trajetoOpt = trajetoRepository.findById(id);
+        Optional<Trajeto> trajetoOpt = repository.findById(id);
         if (trajetoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return trajetoOpt.get();
     }
 
     public Trajeto atualizar(int id, TrajetoRequestUpdate request) {
-        Optional<Trajeto> trajetoOpt = trajetoRepository.findById(id);
+        Optional<Trajeto> trajetoOpt = repository.findById(id);
         if (trajetoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Trajeto entity = TrajetoMapper.toEntityAtt(request, trajetoOpt.get());
-        Trajeto saveEndereco = trajetoRepository.save(entity);
-        return saveEndereco;
+        return repository.save(entity);
     }
 
     public Void remover(int id) {
-        if (!trajetoRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        trajetoRepository.deleteById(id);
+        if (!repository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        repository.deleteById(id);
         return null;
     }
+
 }

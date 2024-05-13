@@ -26,8 +26,14 @@ public class TransporteEscolaMapper {
     public static TransporteEscolaResponse toDto(TransporteEscola entity) {
         TransporteEscolaResponse dto = new TransporteEscolaResponse();
 
-        dto.setTransporte(toTransporteDto(entity.getTransporte()));
-        dto.setEscola(toEscolaDto(entity.getEscola()));
+        dto.setTransporte(TransporteEscolaResponse.Transporte.builder()
+                .id(entity.getTransporte().getId())
+                .morotistaId(entity.getTransporte().getUsuario().getId())
+                .build());
+        dto.setEscola(TransporteEscolaResponse.Escola.builder()
+                .id(entity.getEscola().getId())
+                .nome(entity.getEscola().getNome())
+                .build());
 
         return dto;
     }
@@ -36,31 +42,6 @@ public class TransporteEscolaMapper {
         return entities.stream()
                 .map(TransporteEscolaMapper::toDto)
                 .toList();
-    }
-
-    public static TransporteEscolaTransporteResponse toTransporteDto(Transporte entity) {
-        TransporteEscolaTransporteResponse dto = new TransporteEscolaTransporteResponse();
-
-        dto.setId(entity.getId());
-        dto.setPlaca(entity.getPlaca());
-        dto.setCnpj(entity.getCnpj());
-        dto.setCnh(entity.getCnh());
-        dto.setCrm(entity.getCrm());
-        dto.setCrmc(entity.getCrmc());
-
-        return dto;
-
-    }
-
-    public static TransporteEscolaEscolaResponse toEscolaDto(Escola entity) {
-        TransporteEscolaEscolaResponse dto = new TransporteEscolaEscolaResponse();
-
-        dto.setId(entity.getId());
-        dto.setNome(entity.getNome());
-        dto.setEndereco(EscolaMapper.toEnderecoDto(entity.getEndereco()));
-
-        return dto;
-
     }
 
 }

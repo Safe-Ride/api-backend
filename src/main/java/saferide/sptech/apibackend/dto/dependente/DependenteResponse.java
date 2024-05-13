@@ -1,6 +1,7 @@
 package saferide.sptech.apibackend.dto.dependente;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -13,8 +14,28 @@ public class DependenteResponse {
     private String nome;
     private LocalDate dataNascimento;
     private String serie;
-    private DependenteResponsavelResponse responsavel;
-    private DependenteEscolaResponse escola;
-    private DependenteMotoristaResponse motorista;
+    private Usuario responsavel;
+    private Escola escola;
+    private Usuario motorista;
+
+    @Data
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Usuario {
+
+        private Integer id;
+        private String nome;
+
+    }
+
+    @Data
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Escola {
+
+        private Integer id;
+        private String nome;
+
+    }
 
 }

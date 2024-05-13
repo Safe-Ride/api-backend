@@ -2,7 +2,6 @@ package saferide.sptech.apibackend.dto.escola;
 
 import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Escola;
-import saferide.sptech.apibackend.entity.Transporte;
 
 import java.util.List;
 
@@ -14,7 +13,10 @@ public class EscolaMapper {
         EscolaResponse dto = new EscolaResponse();
         dto.setId(entity.getId());
         dto.setNome(entity.getNome());
-        dto.setEndereco(toEnderecoDto(entity.getEndereco()));
+        dto.setEndereco(EscolaResponse.Endereco.builder()
+                .id(entity.getEndereco().getId())
+                .cep(entity.getEndereco().getCep())
+                .build());
 //        dto.setTrasportes(toTransporteDto(entity.getTransportes()));
         return dto;
     }
@@ -39,40 +41,6 @@ public class EscolaMapper {
 
         if (dto.getNome() != null) entity.setNome(dto.getNome());
         return entity;
-    }
-
-    public static EscolaEnderecoResponse toEnderecoDto(Endereco entity){
-        if (entity == null) return null;
-
-        EscolaEnderecoResponse dto = new EscolaEnderecoResponse();
-        dto.setId(entity.getId());
-        dto.setLatitude(entity.getLatitude());
-        dto.setLongitude(entity.getLongitude());
-        dto.setCep(entity.getCep());
-        dto.setNumero(entity.getNumero());
-        dto.setComplemento(entity.getComplemento());
-        return dto;
-    }
-
-    public static List<EscolaEnderecoResponse> toEnderecoDto(List<Endereco> entities){
-        return entities.stream()
-                .map(EscolaMapper::toEnderecoDto)
-                .toList();
-    }
-
-    public static EscolaTransporteResponse toTransporteDto(Transporte entity){
-        if (entity == null) return null;
-
-        EscolaTransporteResponse dto = new EscolaTransporteResponse();
-        dto.setId(entity.getId());
-        dto.setPlaca(entity.getPlaca());
-        return dto;
-    }
-
-    public static List<EscolaTransporteResponse> toTransporteDto(List<Transporte> entities){
-        return entities.stream()
-                .map(EscolaMapper::toTransporteDto)
-                .toList();
     }
 
 }

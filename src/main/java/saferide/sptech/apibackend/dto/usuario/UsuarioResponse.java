@@ -1,6 +1,7 @@
 package saferide.sptech.apibackend.dto.usuario;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 import saferide.sptech.apibackend.entity.TipoCliente;
 
@@ -18,8 +19,41 @@ public class UsuarioResponse {
     private String telefone;
     private LocalDate dataNascimento;
     private TipoCliente tipo;
-    private List<UsuarioDependenteResponse> dependentes;
-    private List<UsuarioEnderecoResponse> enderecos;
-    private List<UsuarioDependenteResponse> clientes;
+    private List<Dependente> dependentes;
+    private List<Endereco> enderecos;
+    private List<Dependente> clientes;
+
+    @Data
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Dependente {
+
+        private Integer id;
+        private String nome;
+        private LocalDate dataNascimento;
+        private Escola escola;
+        private String serie;
+
+        @Data
+        @Builder
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public static class Escola {
+
+            private Integer id;
+            private String nome;
+
+        }
+
+    }
+
+    @Data
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Endereco {
+
+        private Integer id;
+        private String cep;
+
+    }
 
 }

@@ -1,11 +1,10 @@
 package saferide.sptech.apibackend.dto.usuario;
 
-import saferide.sptech.apibackend.entity.Dependente;
-import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.service.autentication.UsuarioTokenDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsuarioMapper {
 
@@ -21,9 +20,42 @@ public class UsuarioMapper {
         dto.setTelefone(entity.getTelefone());
         dto.setDataNascimento(entity.getDataNascimento());
         dto.setTipo(entity.getTipo());
-        if (entity.getDependentes() != null) dto.setDependentes(toDependenteDto(entity.getDependentes()));
-        if (entity.getEnderecos() != null) dto.setEnderecos(toEnderecoDto(entity.getEnderecos()));
-        if (entity.getClientes() != null) dto.setClientes(toDependenteDto(entity.getClientes()));
+        if (entity.getDependentes() != null) {
+            dto.setDependentes(entity.getDependentes().stream()
+                    .map(s -> UsuarioResponse.Dependente.builder()
+                            .id(s.getId())
+                            .nome(s.getNome())
+                            .dataNascimento(s.getDataNascimento())
+                            .escola(UsuarioResponse.Dependente.Escola.builder()
+                                    .id(s.getEscola().getId())
+                                    .nome(s.getEscola().getNome())
+                                    .build())
+                            .serie(s.getSerie())
+                            .build())
+                    .collect(Collectors.toList()));
+        }
+        if (entity.getEnderecos() != null) {
+            dto.setEnderecos(entity.getEnderecos().stream()
+                    .map(s -> UsuarioResponse.Endereco.builder()
+                            .id(s.getId())
+                            .cep(s.getCep())
+                            .build())
+                    .collect(Collectors.toList()));
+        }
+        if (entity.getClientes() != null) {
+            dto.setClientes(entity.getClientes().stream()
+                    .map(s -> UsuarioResponse.Dependente.builder()
+                            .id(s.getId())
+                            .nome(s.getNome())
+                            .dataNascimento(s.getDataNascimento())
+                            .escola(UsuarioResponse.Dependente.Escola.builder()
+                                    .id(s.getEscola().getId())
+                                    .nome(s.getEscola().getNome())
+                                    .build())
+                            .serie(s.getSerie())
+                            .build())
+                    .collect(Collectors.toList()));
+        }
         return dto;
     }
 
@@ -58,42 +90,6 @@ public class UsuarioMapper {
         return entity;
     }
 
-    public static UsuarioDependenteResponse toDependenteDto(Dependente entity){
-        if (entity == null) return null;
-
-        UsuarioDependenteResponse dto = new UsuarioDependenteResponse();
-        dto.setId(entity.getId());
-        dto.setNome(entity.getNome());
-        dto.setDataNascimento(entity.getDataNascimento());
-        dto.setSerie(entity.getSerie());
-        return dto;
-    }
-
-    public static List<UsuarioDependenteResponse> toDependenteDto(List<Dependente> entities){
-        return entities.stream()
-                .map(UsuarioMapper::toDependenteDto)
-                .toList();
-    }
-
-    public static UsuarioEnderecoResponse toEnderecoDto(Endereco entity){
-        if (entity == null) return null;
-
-        UsuarioEnderecoResponse dto = new UsuarioEnderecoResponse();
-        dto.setId(entity.getId());
-        dto.setLatitude(entity.getLatitude());
-        dto.setLongitude(entity.getLongitude());
-        dto.setCep(entity.getCep());
-        dto.setNumero(entity.getNumero());
-        dto.setComplemento(entity.getComplemento());
-        return dto;
-    }
-
-    public static List<UsuarioEnderecoResponse> toEnderecoDto(List<Endereco> entities){
-        return entities.stream()
-                .map(UsuarioMapper::toEnderecoDto)
-                .toList();
-    }
-
     public static UsuarioTokenDto of(Usuario usuario, String token){
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
@@ -104,7 +100,5 @@ public class UsuarioMapper {
 
         return usuarioTokenDto;
     }
-
-
 
 }

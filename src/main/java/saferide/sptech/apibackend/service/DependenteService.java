@@ -56,7 +56,7 @@ public class DependenteService {
     public Dependente vincularMotorista(int dependenteId, int motoristaId) {
 
         Usuario motorista = usuarioService.listarPorId(motoristaId);
-        if (motorista.getTipo().equals(TipoCliente.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (!motorista.getTipo().equals(TipoCliente.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         Optional<Dependente> dependenteOpt = repository.findById(dependenteId);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);

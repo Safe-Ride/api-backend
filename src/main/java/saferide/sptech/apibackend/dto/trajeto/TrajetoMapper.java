@@ -1,6 +1,5 @@
 package saferide.sptech.apibackend.dto.trajeto;
 
-import saferide.sptech.apibackend.dto.escola.EscolaMapper;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.entity.Usuario;
@@ -16,7 +15,14 @@ public class TrajetoMapper {
         dto.setId(entity.getId());
         dto.setTipo(entity.getTipo());
         dto.setDiaSemana(entity.getDiaSemana());
-        dto.setEscola(toEscolaDto(entity.getEscola()));
+        dto.setEscola(TrajetoResponse.Escola.builder()
+                .id(entity.getEscola().getId())
+                .nome(entity.getEscola().getNome())
+                .endereco(TrajetoResponse.Escola.Endereco.builder()
+                        .id(entity.getEscola().getEndereco().getId())
+                        .cep(entity.getEscola().getEndereco().getCep())
+                        .build())
+                .build());
         dto.setMotorista(toMotoristaDto(entity.getMotorista()));
         return dto;
     }
@@ -46,21 +52,6 @@ public class TrajetoMapper {
         return entity;
     }
 
-    public static TrajetoEscolaResponse toEscolaDto(Escola entity){
-        if (entity == null) return null;
-
-        TrajetoEscolaResponse dto = new TrajetoEscolaResponse();
-        dto.setId(entity.getId());
-        dto.setNome(entity.getNome());
-        dto.setEndereco(EscolaMapper.toEnderecoDto(entity.getEndereco()));
-        return dto;
-    }
-
-    public static List<TrajetoEscolaResponse> toEscolaDto(List<Escola> entities){
-        return entities.stream()
-                .map(TrajetoMapper::toEscolaDto)
-                .toList();
-    }
 
     public static TrajetoMotoristaResponse toMotoristaDto(Usuario entity){
         if (entity == null) return null;

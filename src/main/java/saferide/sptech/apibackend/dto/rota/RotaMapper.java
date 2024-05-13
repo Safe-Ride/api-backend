@@ -32,7 +32,18 @@ public class RotaMapper {
         RotaResponse dto = new RotaResponse();
         DependenteResponse dependenteResponse = DependenteMapper.toDto(entity.getDependente());
         TrajetoResponse trajetoResponse = TrajetoMapper.toDto(entity.getTrajeto());
-        RotaEnderecoDto enderecoResponse = toEnderecoDto(entity.getEndereco(), viaCepResponse);
+        RotaResponse.Endereco enderecoResponse = RotaResponse.Endereco.builder()
+                .id(entity.getEndereco().getId())
+                .latitude(entity.getEndereco().getLatitude())
+                .longitude(entity.getEndereco().getLongitude())
+                .cep(entity.getEndereco().getCep())
+                .numero(entity.getEndereco().getNumero())
+                .logradouro(viaCepResponse.getLogradouro())
+                .complemento(entity.getEndereco().getComplemento())
+                .bairro(viaCepResponse.getBairro())
+                .localidade(viaCepResponse.getLocalidade())
+                .uf(viaCepResponse.getUf())
+                .build();
 
         dto.setDependente(dependenteResponse);
         dto.setEndereco(enderecoResponse);
@@ -42,20 +53,4 @@ public class RotaMapper {
 
     }
 
-    private static RotaEnderecoDto toEnderecoDto(Endereco entity, ViaCepResponse viaCepResponse) {
-        RotaEnderecoDto dto = new RotaEnderecoDto();
-
-        dto.setId(entity.getId());
-        dto.setUf(viaCepResponse.getUf());
-        dto.setCep(viaCepResponse.getCep());
-        dto.setLogradouro(viaCepResponse.getLogradouro());
-        dto.setComplemento(entity.getComplemento());
-        dto.setNumero(entity.getNumero());
-        dto.setLatitude(entity.getLatitude());
-        dto.setLongitude(entity.getLongitude());
-        dto.setBairro(viaCepResponse.getBairro());
-        dto.setLocalidade(viaCepResponse.getLocalidade());
-
-        return dto;
-    }
 }

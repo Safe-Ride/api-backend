@@ -33,13 +33,13 @@ public class MensagemMapper {
         dto.setId(entity.getId());
         dto.setStatus(entity.getStatus());
         dto.setData(entity.getData());
-        dto.setChat(MensagemChatResponse.builder()
+        dto.setChat(MensagemResponse.Chat.builder()
                 .id(entity.getChat().getId())
                 .build());;
-        dto.setUsuario(MensagemUsuarioResponse.builder()
+        dto.setUsuario(MensagemResponse.Usuario.builder()
                 .id(entity.getUsuario().getId())
                 .build());
-        dto.setDependente(MensagemDependenteResponse.builder()
+        dto.setDependente(MensagemResponse.Dependente.builder()
                 .id(entity.getDependente().getId())
                 .nome(entity.getDependente().getNome())
                 .build());

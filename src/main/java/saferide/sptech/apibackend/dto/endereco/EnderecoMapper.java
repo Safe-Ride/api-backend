@@ -17,7 +17,10 @@ public class EnderecoMapper {
         dto.setCep(entity.getCep());
         dto.setNumero(entity.getNumero());
         dto.setComplemento(entity.getComplemento());
-        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setUsuario(EnderecoResponse.Usuario.builder()
+                .id(entity.getUsuario().getId())
+                .nome(entity.getUsuario().getNome())
+                .build());
         return dto;
     }
 
@@ -49,21 +52,6 @@ public class EnderecoMapper {
         if (dto.getNumero() != null) entity.setNumero(dto.getNumero());
         if (dto.getComplemento() != null) entity.setComplemento(dto.getComplemento());
         return entity;
-    }
-
-    public static EnderecoUsuarioResponse toUsuarioDto(Usuario entity){
-        if (entity == null) return null;
-
-        EnderecoUsuarioResponse dto = new EnderecoUsuarioResponse();
-        dto.setId(entity.getId());
-        dto.setNome(entity.getNome());
-        return dto;
-    }
-
-    public static List<EnderecoUsuarioResponse> toUsuarioDto(List<Usuario> entities){
-        return entities.stream()
-                .map(EnderecoMapper::toUsuarioDto)
-                .toList();
     }
 
 }

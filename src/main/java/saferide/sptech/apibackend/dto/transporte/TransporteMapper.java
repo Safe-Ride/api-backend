@@ -17,7 +17,10 @@ public class TransporteMapper {
         dto.setCnh(entity.getCnh());
         dto.setCrm(entity.getCrm());
         dto.setCrmc(entity.getCrmc());
-        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setUsuario(TransporteResponse.Usuario.builder()
+                .id(entity.getUsuario().getId())
+                .nome(entity.getUsuario().getNome())
+                .build());
         return dto;
     }
 
@@ -49,19 +52,6 @@ public class TransporteMapper {
         if (dto.getCrm() != null) entity.setCrm(dto.getCrm());
         if (dto.getCrmc() != null) entity.setCrmc(dto.getCrmc());
         return entity;
-    }
-
-    public static TransporteUsuarioResponse toUsuarioDto(Usuario entity) {
-        if (entity == null) return null;
-
-        TransporteUsuarioResponse dto = new TransporteUsuarioResponse();
-        dto.setId(entity.getId());
-        dto.setNome(entity.getNome());
-        dto.setEmail(entity.getEmail());
-        dto.setCpf(entity.getCpf());
-        dto.setTelefone(entity.getTelefone());
-        dto.setDataNascimento(entity.getDataNascimento());
-        return dto;
     }
 
 }

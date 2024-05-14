@@ -1,5 +1,5 @@
 package saferide.sptech.apibackend.entity;
 
-public enum TipoCliente {
+public enum TipoUsuario {
     MOTORISTA, RESPONSAVEL
 }

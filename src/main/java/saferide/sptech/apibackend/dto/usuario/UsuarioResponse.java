@@ -3,7 +3,7 @@ package saferide.sptech.apibackend.dto.usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import saferide.sptech.apibackend.entity.TipoCliente;
+import saferide.sptech.apibackend.entity.TipoUsuario;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +18,7 @@ public class UsuarioResponse {
     private String cpf;
     private String telefone;
     private LocalDate dataNascimento;
-    private TipoCliente tipo;
+    private TipoUsuario tipo;
     private List<Dependente> dependentes;
     private List<Endereco> enderecos;
     private List<Dependente> clientes;

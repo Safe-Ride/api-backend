@@ -11,7 +11,7 @@ import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
-import saferide.sptech.apibackend.entity.TipoCliente;
+import saferide.sptech.apibackend.entity.TipoUsuario;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class DependenteService {
 
     public Dependente criar(DependenteRequest request) {
         Usuario responsavel = usuarioService.listarPorId(request.getResponsavelId());
-        if (!responsavel.getTipo().equals(TipoCliente.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (!responsavel.getTipo().equals(TipoUsuario.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Escola escola = escolaService.listarPorId(request.getEscolaId());
         Dependente entity = DependenteMapper.toEntity(request, responsavel, escola);
         return repository.save(entity);
@@ -56,7 +56,7 @@ public class DependenteService {
     public Dependente vincularMotorista(int dependenteId, int motoristaId) {
 
         Usuario motorista = usuarioService.listarPorId(motoristaId);
-        if (!motorista.getTipo().equals(TipoCliente.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (!motorista.getTipo().equals(TipoUsuario.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         Optional<Dependente> dependenteOpt = repository.findById(dependenteId);
         if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);

@@ -23,7 +23,7 @@ public class Usuario {
     private String cpf;
     private String telefone;
     private LocalDate dataNascimento;
-    private TipoCliente tipo;
+    private TipoUsuario tipo;
     @OneToMany(mappedBy = "responsavel")
     private List<Dependente> dependentes;
     @OneToMany(mappedBy = "usuario")

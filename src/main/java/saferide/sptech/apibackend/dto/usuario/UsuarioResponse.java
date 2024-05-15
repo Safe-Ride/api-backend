@@ -22,6 +22,7 @@ public class UsuarioResponse {
     private List<Dependente> dependentes;
     private List<Endereco> enderecos;
     private List<Dependente> clientes;
+    private Imagem imagem;
 
     @Data
     @Builder
@@ -53,6 +54,16 @@ public class UsuarioResponse {
 
         private Integer id;
         private String cep;
+
+    }
+
+    @Data
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Imagem {
+
+        private Integer id;
+        private String caminho;
 
     }
 

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.chat.ChatRequest;
+import saferide.sptech.apibackend.dto.historico.HistoricoRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
@@ -24,7 +24,7 @@ public class DependenteService {
     private final DependenteRepository repository;
     private final UsuarioService usuarioService;
     private final EscolaService escolaService;
-    private final ChatService chatService;
+    private final HistoricoService historicoService;
 
     public Dependente criar(DependenteRequest request) {
         Usuario responsavel = usuarioService.listarPorId(request.getResponsavelId());
@@ -64,7 +64,7 @@ public class DependenteService {
         Dependente entity = dependenteOpt.get();
         entity.setMotorista(motorista);
 
-        chatService.criar(new ChatRequest(dependenteOpt.get().getResponsavel().getId(), motorista.getId()));
+        historicoService.criar(new HistoricoRequest(dependenteOpt.get().getResponsavel().getId(), motorista.getId()));
 
         return repository.save(entity);
     }

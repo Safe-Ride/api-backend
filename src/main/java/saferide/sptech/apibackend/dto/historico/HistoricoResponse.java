@@ -1,4 +1,4 @@
-package saferide.sptech.apibackend.dto.chat;
+package saferide.sptech.apibackend.dto.historico;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ChatResponse {
+public class HistoricoResponse {
 
     private Integer id;
     private Usuario responsavel;

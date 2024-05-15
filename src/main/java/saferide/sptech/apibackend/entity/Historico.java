@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Chat {
+public class Historico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Chat {
     private Usuario responsavel;
     @ManyToOne
     private Usuario motorista;
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "historico")
     private List<Mensagem> mensagens;
 
 }

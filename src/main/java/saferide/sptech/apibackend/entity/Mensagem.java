@@ -17,7 +17,7 @@ public class Mensagem {
     private LocalDateTime data;
     private Status status;
     @ManyToOne
-    private Chat chat;
+    private Historico historico;
     @ManyToOne
     private Usuario usuario;
     @ManyToOne

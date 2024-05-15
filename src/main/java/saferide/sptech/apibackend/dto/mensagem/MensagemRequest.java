@@ -6,7 +6,7 @@ import saferide.sptech.apibackend.entity.Status;
 @Data
 public class MensagemRequest {
 
-    private Integer chatId;
+    private Integer historicoId;
     private Integer usuarioId;
     private Integer dependenteId;
     private Status status;

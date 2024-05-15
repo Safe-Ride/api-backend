@@ -1,6 +1,6 @@
 package saferide.sptech.apibackend.dto.mensagem;
 
-import saferide.sptech.apibackend.entity.Chat;
+import saferide.sptech.apibackend.entity.Historico;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Mensagem;
 import saferide.sptech.apibackend.entity.Usuario;
@@ -14,8 +14,8 @@ public class MensagemMapper {
         if (dto == null) return null;
 
         Mensagem entity = new Mensagem();
-        entity.setChat(Chat.builder()
-                .id(dto.getChatId())
+        entity.setHistorico(Historico.builder()
+                .id(dto.getHistoricoId())
                 .build());
         entity.setUsuario(Usuario.builder()
                 .id(dto.getUsuarioId())
@@ -33,8 +33,8 @@ public class MensagemMapper {
         dto.setId(entity.getId());
         dto.setStatus(entity.getStatus());
         dto.setData(entity.getData());
-        dto.setChat(MensagemResponse.Chat.builder()
-                .id(entity.getChat().getId())
+        dto.setHistorico(MensagemResponse.Historico.builder()
+                .id(entity.getHistorico().getId())
                 .build());;
         dto.setUsuario(MensagemResponse.Usuario.builder()
                 .id(entity.getUsuario().getId())

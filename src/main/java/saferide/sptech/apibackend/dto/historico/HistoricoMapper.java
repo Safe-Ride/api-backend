@@ -1,35 +1,35 @@
-package saferide.sptech.apibackend.dto.chat;
+package saferide.sptech.apibackend.dto.historico;
 
-import saferide.sptech.apibackend.entity.Chat;
+import saferide.sptech.apibackend.entity.Historico;
 import saferide.sptech.apibackend.entity.Usuario;
 
 import java.util.stream.Collectors;
 
-public class ChatMapper {
+public class HistoricoMapper {
 
-    public static ChatResponse toDto(Chat entity) {
+    public static HistoricoResponse toDto(Historico entity) {
         if (entity == null) return null;
 
-        ChatResponse dto = new ChatResponse();
+        HistoricoResponse dto = new HistoricoResponse();
         dto.setId(entity.getId());
-        dto.setResponsavel(ChatResponse.Usuario.builder()
+        dto.setResponsavel(HistoricoResponse.Usuario.builder()
                 .id(entity.getResponsavel().getId())
                 .nome(entity.getResponsavel().getNome())
                 .telefone(entity.getResponsavel().getTelefone())
                 .build());
-        dto.setMotorista(ChatResponse.Usuario.builder()
+        dto.setMotorista(HistoricoResponse.Usuario.builder()
                 .id(entity.getMotorista().getId())
                 .nome(entity.getMotorista().getNome())
                 .telefone(entity.getMotorista().getTelefone())
                 .build());
         if (entity.getMensagens() != null) {
             dto.setMensagems(entity.getMensagens().stream()
-                    .map(s -> ChatResponse.Mensagem.builder()
+                    .map(s -> HistoricoResponse.Mensagem.builder()
                             .id(s.getId())
                             .data(s.getData())
                             .status(s.getStatus())
                             .usuarioId(s.getUsuario().getId())
-                            .dependente(ChatResponse.Mensagem.Dependente.builder()
+                            .dependente(HistoricoResponse.Mensagem.Dependente.builder()
                                     .id(s.getDependente().getId())
                                     .nome(s.getDependente().getNome())
                                     .build())
@@ -39,10 +39,10 @@ public class ChatMapper {
         return dto;
     }
 
-    public static Chat toEntity(ChatRequest dto) {
+    public static Historico toEntity(HistoricoRequest dto) {
         if (dto == null) return null;
 
-        Chat entity = new Chat();
+        Historico entity = new Historico();
         entity.setResponsavel(Usuario.builder()
                 .id(dto.getResponsavelId())
                 .build());

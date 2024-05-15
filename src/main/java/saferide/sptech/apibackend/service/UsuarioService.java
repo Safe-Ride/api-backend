@@ -14,6 +14,7 @@ import saferide.sptech.apibackend.controller.security.jwt.GerenciadorTokenJwt;
 import saferide.sptech.apibackend.dto.usuario.UsuarioMapper;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequest;
 import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;
+import saferide.sptech.apibackend.entity.Imagem;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
@@ -35,9 +36,11 @@ public class UsuarioService {
 
     private final UsuarioRepository repository;
     private final DependenteRepository dependenteRepository;
+    private final ImagemService imagemService;
 
     public Usuario criar(UsuarioRequest request) {
         Usuario entity = UsuarioMapper.toEntity(request);
+        entity.setImagem(imagemService.listarPorId(1));
         String senhaCriptografada = passwordEncoder.encode(entity.getSenha());
         entity.setSenha(senhaCriptografada);
         return repository.save(entity);

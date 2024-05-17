@@ -30,5 +30,7 @@ public class Usuario {
     private List<Endereco> enderecos;
     @OneToMany(mappedBy = "motorista")
     private List<Dependente> clientes;
+    @ManyToOne
+    private Imagem imagem;
 
 }

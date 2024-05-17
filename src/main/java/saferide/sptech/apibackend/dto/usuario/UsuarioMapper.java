@@ -56,6 +56,10 @@ public class UsuarioMapper {
                             .build())
                     .collect(Collectors.toList()));
         }
+        dto.setImagem(UsuarioResponse.Imagem.builder()
+                .id(entity.getImagem().getId())
+                .caminho(entity.getImagem().getCaminho())
+                .build());
         return dto;
     }
 

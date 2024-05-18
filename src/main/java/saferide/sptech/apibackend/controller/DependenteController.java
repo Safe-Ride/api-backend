@@ -1,5 +1,7 @@
 package saferide.sptech.apibackend.controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,10 @@ public class DependenteController {
 
     private final DependenteService service;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
@@ -28,12 +34,22 @@ public class DependenteController {
         return ResponseEntity.created(null).body(DependenteMapper.toDto(service.criar(request)));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "204", description = "Sem conteudo"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<DependenteResponse>> listar() {
         return ResponseEntity.ok(DependenteMapper.toDto(service.listar()));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<DependenteResponse> listarPorId(
@@ -41,6 +57,11 @@ public class DependenteController {
         return ResponseEntity.ok(DependenteMapper.toDto(service.listarPorId(id)));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PutMapping(ControllerConstants.UPDATE_PATH)
     public ResponseEntity<DependenteResponse> atualizar(
@@ -49,6 +70,10 @@ public class DependenteController {
         return ResponseEntity.ok(DependenteMapper.toDto(service.atualizar(id, request)));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+    })
     @PatchMapping(ControllerConstants.LINK_DEPENDENTE_WITH_MOTORISTA_PATH)
     public ResponseEntity<DependenteResponse> vincularMotorista(
             @PathVariable int dependenteId,
@@ -56,6 +81,11 @@ public class DependenteController {
         return ResponseEntity.ok().body(DependenteMapper.toDto(service.vincularMotorista(dependenteId, motoristaId)));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(

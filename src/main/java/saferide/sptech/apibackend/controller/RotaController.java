@@ -1,5 +1,7 @@
 package saferide.sptech.apibackend.controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,10 @@ public class RotaController {
 
     private final RotaService service;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<RotaResponse> criar(
@@ -27,6 +33,11 @@ public class RotaController {
         return ResponseEntity.created(null).body(service.criar(request));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<RotaResponse>> listarPorIdDependente(

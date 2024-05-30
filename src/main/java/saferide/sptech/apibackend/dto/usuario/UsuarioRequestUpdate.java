@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 public class UsuarioRequestUpdate {
 
-    @Size(min = 3, message = SafeRideConstants.USUARIO_INVALID_NOME)
+    @Size(min = 3, message = SafeRideConstants.USUARIO_INVALID_NAME)
     private String nome;
     private String email;
     private String cpf;

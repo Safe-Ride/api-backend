@@ -17,6 +17,7 @@ import saferide.sptech.apibackend.dto.usuario.UsuarioRequestUpdate;
 import saferide.sptech.apibackend.entity.Imagem;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Dependente;
+import saferide.sptech.apibackend.entity.exception.ConflictException;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 import saferide.sptech.apibackend.repository.EnderecoRepository;
@@ -40,6 +41,7 @@ public class UsuarioService {
 
     public Usuario criar(UsuarioRequest request) {
         Usuario entity = UsuarioMapper.toEntity(request);
+        if (!repository.findByEmail(entity.getEmail()).isEmpty()) throw new ConflictException("email");
         entity.setImagem(imagemService.listarPorId(1));
         String senhaCriptografada = passwordEncoder.encode(entity.getSenha());
         entity.setSenha(senhaCriptografada);

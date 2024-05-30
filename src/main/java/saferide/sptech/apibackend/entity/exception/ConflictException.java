@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ConflictException extends RuntimeException {
 
-    public ConflictException(String entidade) {
-        super(String.format("%s conflito!", entidade));
+    public ConflictException(String campo) {
+        super(String.format("O campo '%s' já existe!", campo));
     }
 
 }

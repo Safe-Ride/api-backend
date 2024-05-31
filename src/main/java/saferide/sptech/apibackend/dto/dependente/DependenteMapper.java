@@ -40,15 +40,13 @@ public class DependenteMapper {
                 .toList();
     }
 
-    public static Dependente toEntity(DependenteRequest dto, Usuario responsavel, Escola escola){
+    public static Dependente toEntity(DependenteRequest dto){
         if (dto == null) return null;
 
         Dependente entity = new Dependente();
         entity.setNome(dto.getNome());
         entity.setDataNascimento(dto.getDataNascimento());
         entity.setSerie(dto.getSerie());
-        entity.setResponsavel(responsavel);
-        entity.setEscola(escola);
         return entity;
     }
 

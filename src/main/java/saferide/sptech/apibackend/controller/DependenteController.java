@@ -12,6 +12,7 @@ import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
+import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.service.DependenteService;
 
 import java.util.List;
@@ -31,7 +32,12 @@ public class DependenteController {
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
             @Valid @RequestBody DependenteRequest request) {
-        return ResponseEntity.created(null).body(DependenteMapper.toDto(service.criar(request)));
+        var payload = DependenteMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getResponsavelId(),
+                request.getEscolaId());
+        return ResponseEntity.created(null).body(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.historico.HistoricoRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
-import saferide.sptech.apibackend.dto.dependente.DependenteRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Usuario;
@@ -26,12 +25,13 @@ public class DependenteService {
     private final EscolaService escolaService;
     private final HistoricoService historicoService;
 
-    public Dependente criar(DependenteRequest request) {
-        Usuario responsavel = usuarioService.listarPorId(request.getResponsavelId());
+    public Dependente criar(Dependente payload, int usuarioId, int escolaId) {
+        Usuario responsavel = usuarioService.listarPorId(usuarioId);
         if (!responsavel.getTipo().equals(TipoUsuario.RESPONSAVEL)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        Escola escola = escolaService.listarPorId(request.getEscolaId());
-        Dependente entity = DependenteMapper.toEntity(request, responsavel, escola);
-        return repository.save(entity);
+        Escola escola = escolaService.listarPorId(escolaId);
+        payload.setResponsavel(responsavel);
+        payload.setEscola(escola);
+        return repository.save(payload);
     }
 
     public List<Dependente> listar() {

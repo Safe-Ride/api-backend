@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
@@ -24,11 +23,15 @@ public class TrajetoService {
     private final EscolaService escolaService;
     private final UsuarioService usuarioService;
 
-    public Trajeto criar(TrajetoRequest request) {
-        Escola escola = escolaService.listarPorId(request.getEscolaId());
-        Usuario motorista = usuarioService.listarPorId(request.getMotoristaId());
-        Trajeto entity = TrajetoMapper.toEntity(request, escola, motorista);
-        return repository.save(entity);
+    public Trajeto criar(
+            Trajeto payload,
+            int motoristaId,
+            int escolaId) {
+        Usuario motorista = usuarioService.listarPorId(motoristaId);
+        Escola escola = escolaService.listarPorId(escolaId);
+        payload.setMotorista(motorista);
+        payload.setEscola(escola);
+        return repository.save(payload);
     }
 
     public List<Trajeto> listar() {

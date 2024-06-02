@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.ControllerConstants;
+import saferide.sptech.apibackend.dto.rota.RotaMapper;
 import saferide.sptech.apibackend.dto.rota.RotaRequest;
 import saferide.sptech.apibackend.dto.rota.RotaResponse;
 import saferide.sptech.apibackend.service.RotaService;
@@ -30,7 +31,9 @@ public class RotaController {
     @PostMapping
     public ResponseEntity<RotaResponse> criar(
             @Valid @RequestBody RotaRequest request) throws IOException {
-        return ResponseEntity.created(null).body(service.criar(request));
+        var payload = RotaMapper.toEntity(request);
+        var response = service.criar(payload);
+        return ResponseEntity.created(null).body(response);
     }
 
     @ApiResponses(value = {

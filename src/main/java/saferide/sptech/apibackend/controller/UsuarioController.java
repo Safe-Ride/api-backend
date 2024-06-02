@@ -31,13 +31,16 @@ public class UsuarioController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<UsuarioResponse>> listar(){
-        return ResponseEntity.ok(UsuarioMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
     }
 
     @PostMapping
     public ResponseEntity<UsuarioResponse> criar(
-            @Valid @RequestBody UsuarioRequest body) {
-        return ResponseEntity.created(null).body(UsuarioMapper.toDto(service.criar(body)));
+            @Valid @RequestBody UsuarioRequest request) {
+        var payload = UsuarioMapper.toEntity(request);
+        var response = service.criar(payload);
+        return ResponseEntity.created(null).body(UsuarioMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -49,7 +52,8 @@ public class UsuarioController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<UsuarioResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(UsuarioMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -62,7 +66,10 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponse> atualizar(
             @PathVariable int id,
             @RequestBody UsuarioRequestUpdate request) {
-        return ResponseEntity.ok(UsuarioMapper.toDto(service.atualizar(id, request)));
+        var response = service.atualizar(
+                id,
+                request);
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -74,7 +81,8 @@ public class UsuarioController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(service.remover(id));
+        var response = service.remover(id);
+        return ResponseEntity.ok(response);
     }
 
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)

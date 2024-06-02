@@ -29,7 +29,13 @@ public class MensagemController {
     @PostMapping
     public ResponseEntity<MensagemResponse> criar(
             @Valid @RequestBody MensagemRequest request) {
-        return ResponseEntity.created(null).body(MensagemMapper.toDto(service.criar(request)));
+        var payload = MensagemMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getHistoricoId(),
+                request.getUsuarioId(),
+                request.getDependenteId());
+        return ResponseEntity.created(null).body(MensagemMapper.toDto(response));
     }
 
 }

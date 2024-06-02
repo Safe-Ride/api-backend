@@ -7,10 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.historico.HistoricoRequest;
 import saferide.sptech.apibackend.dto.dependente.DependenteMapper;
 import saferide.sptech.apibackend.dto.dependente.DependenteRequestUpdate;
-import saferide.sptech.apibackend.entity.Escola;
-import saferide.sptech.apibackend.entity.Usuario;
-import saferide.sptech.apibackend.entity.Dependente;
-import saferide.sptech.apibackend.entity.TipoUsuario;
+import saferide.sptech.apibackend.entity.*;
 import saferide.sptech.apibackend.repository.DependenteRepository;
 
 import java.util.List;
@@ -58,15 +55,16 @@ public class DependenteService {
         Usuario motorista = usuarioService.listarPorId(motoristaId);
         if (!motorista.getTipo().equals(TipoUsuario.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        Optional<Dependente> dependenteOpt = repository.findById(dependenteId);
-        if (dependenteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Dependente dependente = listarPorId(dependenteId);
 
-        Dependente entity = dependenteOpt.get();
-        entity.setMotorista(motorista);
+        dependente.setMotorista(motorista);
 
-        historicoService.criar(new HistoricoRequest(dependenteOpt.get().getResponsavel().getId(), motorista.getId()));
+        historicoService.criar(
+                new Historico(),
+                dependente.getResponsavel().getId(),
+                motorista.getId());
 
-        return repository.save(entity);
+        return repository.save(dependente);
     }
 
     public Void remover(int id) {

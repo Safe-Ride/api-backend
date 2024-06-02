@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.imagem.ImagemMapper;
-import saferide.sptech.apibackend.dto.imagem.ImagemRequest;
 import saferide.sptech.apibackend.entity.Imagem;
 import saferide.sptech.apibackend.repository.ImagemRepository;
 
@@ -18,9 +16,8 @@ public class ImagemService {
 
     private final ImagemRepository repository;
 
-    public Imagem criar(ImagemRequest request) {
-        Imagem entity = ImagemMapper.toEntity(request);
-        return repository.save(entity);
+    public Imagem criar(Imagem payload) {
+        return repository.save(payload);
     }
 
     public List<Imagem> listar() {

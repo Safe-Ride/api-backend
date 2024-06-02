@@ -1,7 +1,6 @@
 package saferide.sptech.apibackend.dto.transporte;
 
 import saferide.sptech.apibackend.entity.Transporte;
-import saferide.sptech.apibackend.entity.Usuario;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class TransporteMapper {
                 .toList();
     }
 
-    public static Transporte toEntity(TransporteRequest dto, Usuario usuario){
+    public static Transporte toEntity(TransporteRequest dto){
         if (dto == null) return null;
 
         Transporte entity = new Transporte();
@@ -39,7 +38,6 @@ public class TransporteMapper {
         entity.setCnh(dto.getCnh());
         entity.setCrm(dto.getCrm());
         entity.setCrmc(dto.getCrmc());
-        entity.setUsuario(usuario);
         return entity;
     }
 

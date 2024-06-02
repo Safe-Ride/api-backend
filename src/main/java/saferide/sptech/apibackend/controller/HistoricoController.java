@@ -28,7 +28,12 @@ public class HistoricoController {
     @PostMapping
     public ResponseEntity<HistoricoResponse> criar(
             @Valid @RequestBody HistoricoRequest request) {
-        return ResponseEntity.created(null).body(HistoricoMapper.toDto(service.criar(request)));
+        var payload = HistoricoMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getResponsavelId(),
+                request.getMotoristaId());
+        return ResponseEntity.created(null).body(HistoricoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -41,7 +46,10 @@ public class HistoricoController {
     public ResponseEntity<HistoricoResponse> listar(
             @RequestParam int responsavelId,
             @RequestParam int motoristaId) {
-        return ResponseEntity.ok(HistoricoMapper.toDto(service.listar(responsavelId, motoristaId)));
+        var response = service.listar(
+                responsavelId,
+                motoristaId);
+        return ResponseEntity.ok(HistoricoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -53,7 +61,8 @@ public class HistoricoController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<HistoricoResponse> listar(
             @PathVariable int id) {
-        return ResponseEntity.ok(HistoricoMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(HistoricoMapper.toDto(response));
     }
 
 }

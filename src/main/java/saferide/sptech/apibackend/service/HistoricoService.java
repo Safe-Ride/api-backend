@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.historico.HistoricoMapper;
-import saferide.sptech.apibackend.dto.historico.HistoricoRequest;
 import saferide.sptech.apibackend.entity.Historico;
+import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.repository.HistoricoRepository;
 
 import java.util.List;
@@ -17,10 +16,17 @@ import java.util.Optional;
 public class HistoricoService {
 
     private final HistoricoRepository repository;
+    private final UsuarioService usuarioService;
 
-    public Historico criar(HistoricoRequest request) {
-        Historico entity = HistoricoMapper.toEntity(request);
-        return repository.save(entity);
+    public Historico criar(
+            Historico payload,
+            int responsavelId,
+            int motoristaId) {
+        Usuario responsavel = usuarioService.listarPorId(responsavelId);
+        Usuario motorista = usuarioService.listarPorId(motoristaId);
+        payload.setResponsavel(responsavel);
+        payload.setMotorista(motorista);
+        return repository.save(payload);
     }
 
     public Historico listar(

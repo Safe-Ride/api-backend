@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import saferide.sptech.apibackend.dto.rota.RotaMapper;
-import saferide.sptech.apibackend.dto.rota.RotaRequest;
 import saferide.sptech.apibackend.dto.rota.RotaResponse;
 import saferide.sptech.apibackend.entity.Rota;
 import saferide.sptech.apibackend.repository.RotaRepository;
@@ -21,12 +20,10 @@ public class RotaService {
 
     private final ViaCepService viaCepService = new ViaCepService();
 
-    public RotaResponse criar(RotaRequest request) throws IOException {
-        Rota rota = RotaMapper.toEntity(request);
-        rota = repository.save(rota);
-        ViaCepResponse viaCepResponse = viaCepService.getEndereco(rota.getEndereco().getCep());
-
-        return RotaMapper.toDto(rota, viaCepResponse);
+    public RotaResponse criar(Rota payload) throws IOException {
+        Rota entity = repository.save(payload);
+        ViaCepResponse viaCepResponse = viaCepService.getEndereco(entity.getEndereco().getCep());
+        return RotaMapper.toDto(entity, viaCepResponse);
     }
 
     public List<RotaResponse> listarRotasPorDependente(int dependenteId) {

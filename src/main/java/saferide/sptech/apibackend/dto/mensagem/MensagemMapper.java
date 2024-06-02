@@ -1,26 +1,16 @@
 package saferide.sptech.apibackend.dto.mensagem;
 
-import saferide.sptech.apibackend.entity.Historico;
-import saferide.sptech.apibackend.entity.Dependente;
 import saferide.sptech.apibackend.entity.Mensagem;
-import saferide.sptech.apibackend.entity.Usuario;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class MensagemMapper {
 
-    public static Mensagem toEntity(MensagemRequest dto, Dependente dependente){
+    public static Mensagem toEntity(MensagemRequest dto){
         if (dto == null) return null;
 
         Mensagem entity = new Mensagem();
-        entity.setHistorico(Historico.builder()
-                .id(dto.getHistoricoId())
-                .build());
-        entity.setUsuario(Usuario.builder()
-                .id(dto.getUsuarioId())
-                .build());
-        entity.setDependente(dependente);
         entity.setStatus(dto.getStatus());
         entity.setData(LocalDateTime.now());
         return entity;

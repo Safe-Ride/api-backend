@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.endereco.EnderecoMapper;
-import saferide.sptech.apibackend.dto.endereco.EnderecoRequest;
 import saferide.sptech.apibackend.dto.endereco.EnderecoRequestUpdate;
 import saferide.sptech.apibackend.entity.Usuario;
 import saferide.sptech.apibackend.entity.Endereco;
@@ -21,10 +20,10 @@ public class EnderecoService {
     private final EnderecoRepository repository;
     private final UsuarioService usuarioService;
 
-    public Endereco criar(EnderecoRequest request) {
-        Usuario usuario = usuarioService.listarPorId(request.getUsuarioId());
-        Endereco entity = EnderecoMapper.toEntity(request, usuario);
-        return repository.save(entity);
+    public Endereco criar(Endereco payload, int usuarioId) {
+        Usuario usuario = usuarioService.listarPorId(usuarioId);
+        payload.setUsuario(usuario);
+        return repository.save(payload);
     }
 
     public List<Endereco> listar() {

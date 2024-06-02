@@ -12,8 +12,6 @@ public class TransporteEscolaMapper {
         if (request == null) return null;
 
         TransporteEscola entity = new TransporteEscola();
-        entity.setTransporte(Transporte.builder().id(request.getTransporteId()).build());
-        entity.setEscola(Escola.builder().id(request.getEscolaId()).build());
 
         TransporteEscolaId id = new TransporteEscolaId();
         id.setTransporteId(request.getTransporteId());

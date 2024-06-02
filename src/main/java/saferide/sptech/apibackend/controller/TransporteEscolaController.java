@@ -31,7 +31,7 @@ public class TransporteEscolaController {
     public ResponseEntity<TransporteEscolaResponse> criar(
             @Valid @RequestBody TransporteEscolaRequest request) {
         var payload = TransporteEscolaMapper.toEntity(request);
-        var response = service.criar(payload);
+        var response = service.criar(payload, request.getTransporteId(), request.getEscolaId());
         return ResponseEntity.created(null).body(TransporteEscolaMapper.toDto(response));
     }
 

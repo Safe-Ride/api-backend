@@ -12,6 +12,7 @@ import saferide.sptech.apibackend.dto.rota.RotaMapper;
 import saferide.sptech.apibackend.dto.rota.RotaRequest;
 import saferide.sptech.apibackend.dto.rota.RotaResponse;
 import saferide.sptech.apibackend.service.RotaService;
+import saferide.sptech.apibackend.service.ViaCepService;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class RotaController {
 
     private final RotaService service;
+    private final ViaCepService viaCepService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "ok"),
@@ -32,8 +34,9 @@ public class RotaController {
     public ResponseEntity<RotaResponse> criar(
             @Valid @RequestBody RotaRequest request) throws IOException {
         var payload = RotaMapper.toEntity(request);
-        var response = service.criar(payload);
-        return ResponseEntity.created(null).body(response);
+        var response = service.criar(payload, request.getTrajetoId(), request.getDependenteId(), request.getEnderecoId());
+        var viaCepResponse = viaCepService.getEndereco(response.getEndereco().getCep());
+        return ResponseEntity.created(null).body(RotaMapper.toDto(response, viaCepResponse));
     }
 
     @ApiResponses(value = {

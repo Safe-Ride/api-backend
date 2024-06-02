@@ -20,9 +20,12 @@ public class TransporteEscolaService {
     private final TransporteService transporteService;
     private final EscolaService escolaService;
 
-    public TransporteEscola criar(TransporteEscola payload) {
-        Transporte transporte = transporteService.listarPorId(payload.getTransporte().getId());
-        Escola escola = escolaService.listarPorId(payload.getEscola().getId());
+    public TransporteEscola criar(TransporteEscola payload, int transporteId, int escolaId) {
+        Transporte transporte = transporteService.listarPorId(transporteId);
+        Escola escola = escolaService.listarPorId(escolaId);
+
+        payload.setTransporte(transporte);
+        payload.setEscola(escola);
         return repository.save(payload);
     }
 

@@ -8,17 +8,17 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import saferide.sptech.apibackend.entity.Imagem;
-import saferide.sptech.apibackend.entity.TipoUsuario;
-import saferide.sptech.apibackend.entity.Usuario;
+import org.springframework.web.server.ResponseStatusException;
+import saferide.sptech.apibackend.entity.*;
 import saferide.sptech.apibackend.entity.exception.ConflictException;
 import saferide.sptech.apibackend.repository.UsuarioRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UsuarioServiceTest {
@@ -149,6 +149,40 @@ public class UsuarioServiceTest {
         // ASSERT
         assertThrows(ConflictException.class, () -> service.criar(payload));
         Mockito.verify(repository, Mockito.times(1)).findByEmail("teste@gmail.com");
+    }
+
+    @Test
+    @DisplayName("Retorna lista de usuarios vazia")
+    void retornaListaVazia() {
+        // ARRANGE
+        List<Usuario> usuarios = new ArrayList<>();
+        Mockito.when(repository.findAll()).thenReturn(usuarios);
+
+        // ACT
+
+        // ASSERT
+        assertThrows(ResponseStatusException.class, () -> service.listar());
+        Mockito.verify(repository, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Deve retornar lista com 3 usuarios")
+    void deveRetornarListaComDependentes() {
+        // ARRANGE
+        List<Usuario> list = List.of(
+                new Usuario(),
+                new Usuario(),
+                new Usuario());
+        Mockito.when(repository.findAll()).thenReturn(list);
+
+        // ACT
+        List<Usuario> listReturn = service.listar();
+
+        // ASSERT
+        assertEquals(list.size(), listReturn.size());
+        assertEquals(3, listReturn.size());
+        assertFalse(listReturn.isEmpty());
+        Mockito.verify(repository, Mockito.times(1)).findAll();
     }
 
 }

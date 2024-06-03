@@ -37,7 +37,7 @@ public class TrajetoService {
     public List<Trajeto> listar() {
         List<Trajeto> trajetos = repository.findAll();
         if (trajetos.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return Ordenacao.quickSort(trajetos, 0, trajetos.size()-1);
+        return trajetos;
     }
 
     public Trajeto listarPorId(int id) {

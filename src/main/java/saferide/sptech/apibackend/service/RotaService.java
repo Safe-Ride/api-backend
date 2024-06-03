@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import saferide.sptech.apibackend.dto.rota.RotaMapper;
 import saferide.sptech.apibackend.dto.rota.RotaResponse;
+import saferide.sptech.apibackend.entity.Dependente;
+import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Rota;
+import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.repository.RotaRepository;
 
 import java.io.IOException;
@@ -17,13 +20,21 @@ import java.util.List;
 public class RotaService {
 
     private final RotaRepository repository;
+    private final TrajetoService trajetoService;
+    private final DependenteService dependenteService;
+    private final EnderecoService enderecoService;
 
     private final ViaCepService viaCepService = new ViaCepService();
 
-    public RotaResponse criar(Rota payload) throws IOException {
-        Rota entity = repository.save(payload);
-        ViaCepResponse viaCepResponse = viaCepService.getEndereco(entity.getEndereco().getCep());
-        return RotaMapper.toDto(entity, viaCepResponse);
+    public Rota criar(Rota payload, int trajetoId, int dependenteId, int enderecoId) {
+        Trajeto trajeto = trajetoService.listarPorId(trajetoId);
+        Dependente dependente = dependenteService.listarPorId(dependenteId);
+        Endereco endereco = enderecoService.listarPorId(enderecoId);
+
+        payload.setTrajeto(trajeto);
+        payload.setDependente(dependente);
+        payload.setEndereco(endereco);
+        return repository.save(payload);
     }
 
     public List<RotaResponse> listarRotasPorDependente(int dependenteId) {

@@ -78,7 +78,7 @@ public class DependenteServiceTest {
 
     @Test
     @DisplayName("Deve retornar o objeto salvo")
-    void testSalvaProduto() {
+    void testSalvaDependente() {
         // ARRANGE
         Usuario usuario = new Usuario();
         usuario.setId(1);

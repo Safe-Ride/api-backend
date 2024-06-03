@@ -13,6 +13,7 @@ import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
 import saferide.sptech.apibackend.service.TrajetoService;
+import saferide.sptech.apibackend.service.utils.Ordenacao;
 
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class TrajetoController {
     @GetMapping
     public ResponseEntity<List<TrajetoResponse>> listar() {
         var response = service.listar();
-        return ResponseEntity.ok(TrajetoMapper.toDto(response));
+        var responseQuickSort = Ordenacao.quickSort(response, 0, response.size()-1);
+        return ResponseEntity.ok(TrajetoMapper.toDto(responseQuickSort));
     }
 
     @ApiResponses(value = {

@@ -30,7 +30,11 @@ public class EnderecoController {
     @PostMapping
     public ResponseEntity<EnderecoResponse> criar(
             @Valid @RequestBody EnderecoRequest request) {
-        return ResponseEntity.created(null).body(EnderecoMapper.toDto(service.criar(request)));
+        var payload = EnderecoMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getUsuarioId());
+        return ResponseEntity.created(null).body(EnderecoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -41,7 +45,8 @@ public class EnderecoController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<EnderecoResponse>> listar() {
-        return ResponseEntity.ok(EnderecoMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(EnderecoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -53,7 +58,8 @@ public class EnderecoController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<EnderecoResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(EnderecoMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(EnderecoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -66,7 +72,10 @@ public class EnderecoController {
     public ResponseEntity<EnderecoResponse> atualizar(
             @PathVariable int id,
             @RequestBody EnderecoRequestUpdate request) {
-        return ResponseEntity.ok(EnderecoMapper.toDto(service.atualizar(id, request)));
+        var response = service.atualizar(
+                id,
+                request);
+        return ResponseEntity.ok(EnderecoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -78,7 +87,8 @@ public class EnderecoController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(service.remover(id));
+        var response = service.remover(id);
+        return ResponseEntity.ok(response);
     }
 
     @ApiResponses(value = {

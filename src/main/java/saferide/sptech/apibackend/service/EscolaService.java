@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.escola.EscolaMapper;
-import saferide.sptech.apibackend.dto.escola.EscolaRequest;
 import saferide.sptech.apibackend.dto.escola.EscolaRequestUpdate;
 import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Escola;
@@ -21,10 +20,10 @@ public class EscolaService {
     private final EscolaRepository repository;
     private final EnderecoService enderecoService;
 
-    public Escola criar(EscolaRequest request) {
-        Endereco endereco = enderecoService.listarPorId(request.getEnderecoId());
-        Escola entity = EscolaMapper.toEntity(request, endereco);
-        return repository.save(entity);
+    public Escola criar(Escola payload, int enderecoId) {
+        Endereco endereco = enderecoService.listarPorId(enderecoId);
+        payload.setEndereco(endereco);
+        return repository.save(payload);
     }
 
     public List<Escola> listar() {

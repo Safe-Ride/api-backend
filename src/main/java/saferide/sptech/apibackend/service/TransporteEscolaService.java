@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import saferide.sptech.apibackend.dto.transporteEscola.TransporteEscolaMapper;
-import saferide.sptech.apibackend.dto.transporteEscola.TransporteEscolaRequest;
 import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Transporte;
 import saferide.sptech.apibackend.entity.TransporteEscola;
@@ -22,11 +20,10 @@ public class TransporteEscolaService {
     private final TransporteService transporteService;
     private final EscolaService escolaService;
 
-    public TransporteEscola criar(TransporteEscolaRequest request) {
-        Transporte transporte = transporteService.listarPorId(request.getTransporteId());
-        Escola escola = escolaService.listarPorId(request.getEscolaId());
-        TransporteEscola entity = TransporteEscolaMapper.toEntity(request);
-        return repository.save(entity);
+    public TransporteEscola criar(TransporteEscola payload) {
+        Transporte transporte = transporteService.listarPorId(payload.getTransporte().getId());
+        Escola escola = escolaService.listarPorId(payload.getEscola().getId());
+        return repository.save(payload);
     }
 
     public List<TransporteEscola> listar() {

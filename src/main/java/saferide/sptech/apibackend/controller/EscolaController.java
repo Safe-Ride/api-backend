@@ -31,7 +31,11 @@ public class EscolaController {
     @PostMapping
     public ResponseEntity<EscolaResponse> criar(
             @Valid @RequestBody EscolaRequest request) {
-        return ResponseEntity.created(null).body(EscolaMapper.toDto(service.criar(request)));
+        var payload = EscolaMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getEnderecoId());
+        return ResponseEntity.created(null).body(EscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -42,7 +46,8 @@ public class EscolaController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<EscolaResponse>> listar() {
-        return ResponseEntity.ok(EscolaMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(EscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -54,7 +59,8 @@ public class EscolaController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<EscolaResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(EscolaMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(EscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -67,7 +73,10 @@ public class EscolaController {
     public ResponseEntity<EscolaResponse> atualizar(
             @PathVariable int id,
             @RequestBody EscolaRequestUpdate request) {
-        return ResponseEntity.ok(EscolaMapper.toDto(service.atualizar(id, request)));
+        var response = service.atualizar(
+                id,
+                request);
+        return ResponseEntity.ok(EscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -79,7 +88,8 @@ public class EscolaController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(service.remover(id));
+        var response = service.remover(id);
+        return ResponseEntity.ok(response);
     }
 
 }

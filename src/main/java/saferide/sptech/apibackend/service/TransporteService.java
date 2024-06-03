@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import saferide.sptech.apibackend.dto.transporte.TransporteMapper;
-import saferide.sptech.apibackend.dto.transporte.TransporteRequest;
 import saferide.sptech.apibackend.dto.transporte.TransporteRequestUpdate;
 import saferide.sptech.apibackend.entity.Transporte;
 import saferide.sptech.apibackend.entity.Usuario;
@@ -21,10 +20,12 @@ public class TransporteService {
     private final TransporteRepository repository;
     private final UsuarioService usuarioService;
 
-    public Transporte criar(TransporteRequest request) {
-        Usuario usuario = usuarioService.listarPorId(request.getUsuarioId());
-        Transporte entity = TransporteMapper.toEntity(request, usuario);
-        return repository.save(entity);
+    public Transporte criar(
+            Transporte payload,
+            int usuarioId) {
+        Usuario usuario = usuarioService.listarPorId(usuarioId);
+        payload.setUsuario(usuario);
+        return repository.save(payload);
     }
 
     public List<Transporte> listar() {

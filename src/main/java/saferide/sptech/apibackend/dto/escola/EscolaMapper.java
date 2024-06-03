@@ -1,6 +1,5 @@
 package saferide.sptech.apibackend.dto.escola;
 
-import saferide.sptech.apibackend.entity.Endereco;
 import saferide.sptech.apibackend.entity.Escola;
 
 import java.util.List;
@@ -27,12 +26,11 @@ public class EscolaMapper {
                 .toList();
     }
 
-    public static Escola toEntity(EscolaRequest dto, Endereco endereco){
+    public static Escola toEntity(EscolaRequest dto){
         if (dto == null) return null;
 
         Escola entity = new Escola();
         entity.setNome(dto.getNome());
-        entity.setEndereco(endereco);
         return entity;
     }
 

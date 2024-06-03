@@ -30,7 +30,9 @@ public class TransporteEscolaController {
     @PostMapping
     public ResponseEntity<TransporteEscolaResponse> criar(
             @Valid @RequestBody TransporteEscolaRequest request) {
-        return ResponseEntity.created(null).body(TransporteEscolaMapper.toDto(service.criar(request)));
+        var payload = TransporteEscolaMapper.toEntity(request);
+        var response = service.criar(payload);
+        return ResponseEntity.created(null).body(TransporteEscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -41,7 +43,8 @@ public class TransporteEscolaController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<TransporteEscolaResponse>> listar() {
-        return ResponseEntity.ok(TransporteEscolaMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(TransporteEscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -53,7 +56,8 @@ public class TransporteEscolaController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TransporteEscolaResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(TransporteEscolaMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(TransporteEscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -65,7 +69,8 @@ public class TransporteEscolaController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(service.remover(id));
+        var response = service.remover(id);
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -31,7 +31,12 @@ public class TrajetoController {
     @PostMapping
     public ResponseEntity<TrajetoResponse> criar(
             @Valid @RequestBody TrajetoRequest request) {
-        return ResponseEntity.created(null).body(TrajetoMapper.toDto(service.criar(request)));
+        var payload = TrajetoMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getMotoristaId(),
+                request.getEscolaId());
+        return ResponseEntity.created(null).body(TrajetoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -42,7 +47,8 @@ public class TrajetoController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<TrajetoResponse>> listar() {
-        return ResponseEntity.ok(TrajetoMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(TrajetoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -54,7 +60,8 @@ public class TrajetoController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TrajetoResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(TrajetoMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(TrajetoMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -67,7 +74,10 @@ public class TrajetoController {
     public ResponseEntity<TrajetoResponse> atualizar(
             @PathVariable int id,
             @RequestBody TrajetoRequestUpdate request) {
-        return ResponseEntity.ok(TrajetoMapper.toDto(service.atualizar(id, request)));
+        var response = service.atualizar(
+                id,
+                request);
+        return ResponseEntity.ok(TrajetoMapper.toDto(response));
     }
 
     @ApiResponses(value = {

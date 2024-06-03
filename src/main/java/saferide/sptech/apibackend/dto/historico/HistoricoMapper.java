@@ -1,7 +1,6 @@
 package saferide.sptech.apibackend.dto.historico;
 
 import saferide.sptech.apibackend.entity.Historico;
-import saferide.sptech.apibackend.entity.Usuario;
 
 import java.util.stream.Collectors;
 
@@ -42,14 +41,7 @@ public class HistoricoMapper {
     public static Historico toEntity(HistoricoRequest dto) {
         if (dto == null) return null;
 
-        Historico entity = new Historico();
-        entity.setResponsavel(Usuario.builder()
-                .id(dto.getResponsavelId())
-                .build());
-        entity.setMotorista(Usuario.builder()
-                .id(dto.getMotoristaId())
-                .build());
-        return entity;
+        return new Historico();
     }
 
 }

@@ -1,6 +1,5 @@
 package saferide.sptech.apibackend.dto.trajeto;
 
-import saferide.sptech.apibackend.entity.Escola;
 import saferide.sptech.apibackend.entity.Trajeto;
 import saferide.sptech.apibackend.entity.Usuario;
 
@@ -33,14 +32,12 @@ public class TrajetoMapper {
                 .toList();
     }
 
-    public static Trajeto toEntity(TrajetoRequest dto, Escola escola, Usuario motorista){
+    public static Trajeto toEntity(TrajetoRequest dto){
         if (dto == null) return null;
 
         Trajeto entity = new Trajeto();
         entity.setTipo(dto.getTipo());
         entity.setDiaSemana(dto.getDiaSemana());
-        entity.setEscola(escola);
-        entity.setMotorista(motorista);
         return entity;
     }
 

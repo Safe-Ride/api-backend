@@ -31,7 +31,12 @@ public class DependenteController {
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
             @Valid @RequestBody DependenteRequest request) {
-        return ResponseEntity.created(null).body(DependenteMapper.toDto(service.criar(request)));
+        var payload = DependenteMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getResponsavelId(),
+                request.getEscolaId());
+        return ResponseEntity.created(null).body(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -42,7 +47,8 @@ public class DependenteController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<DependenteResponse>> listar() {
-        return ResponseEntity.ok(DependenteMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -54,7 +60,8 @@ public class DependenteController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<DependenteResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(DependenteMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -67,7 +74,10 @@ public class DependenteController {
     public ResponseEntity<DependenteResponse> atualizar(
             @PathVariable int id,
             @RequestBody DependenteRequestUpdate request) {
-        return ResponseEntity.ok(DependenteMapper.toDto(service.atualizar(id, request)));
+        var response = service.atualizar(
+                id,
+                request);
+        return ResponseEntity.ok(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -78,7 +88,8 @@ public class DependenteController {
     public ResponseEntity<DependenteResponse> vincularMotorista(
             @PathVariable int dependenteId,
             @PathVariable int motoristaId) {
-        return ResponseEntity.ok().body(DependenteMapper.toDto(service.vincularMotorista(dependenteId, motoristaId)));
+        var response = service.vincularMotorista(dependenteId, motoristaId);
+        return ResponseEntity.ok().body(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -90,7 +101,8 @@ public class DependenteController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(service.remover(id));
+        var response = service.remover(id);
+        return ResponseEntity.ok(response);
     }
 
 }

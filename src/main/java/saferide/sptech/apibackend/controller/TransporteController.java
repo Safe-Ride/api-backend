@@ -31,7 +31,11 @@ public class TransporteController {
     @PostMapping
     public ResponseEntity<TransporteResponse> criar(
             @Valid @RequestBody TransporteRequest request) {
-        return ResponseEntity.created(null).body(TransporteMapper.toDto(service.criar(request)));
+        var payload = TransporteMapper.toEntity(request);
+        var response = service.criar(
+                payload,
+                request.getUsuarioId());
+        return ResponseEntity.created(null).body(TransporteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -42,7 +46,8 @@ public class TransporteController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<TransporteResponse>> listar() {
-        return ResponseEntity.ok(TransporteMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(TransporteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -54,7 +59,8 @@ public class TransporteController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TransporteResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(TransporteMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(TransporteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -67,7 +73,10 @@ public class TransporteController {
     public ResponseEntity<TransporteResponse> atualizar(
             @PathVariable int id,
             @RequestBody TransporteRequestUpdate request) {
-        return ResponseEntity.ok(TransporteMapper.toDto(service.atualizar(id, request)));
+        var response = service.atualizar(
+                id,
+                request);
+        return ResponseEntity.ok(TransporteMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -79,6 +88,7 @@ public class TransporteController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
+        var response = service.remover(id);
         return ResponseEntity.ok(service.remover(id));
     }
 

@@ -30,7 +30,9 @@ public class ImagemController {
     @PostMapping
     public ResponseEntity<ImagemResponse> criar(
             @Valid @RequestBody ImagemRequest request) {
-        return ResponseEntity.created(null).body(ImagemMapper.toDto(service.criar(request)));
+        var payload = ImagemMapper.toEntity(request);
+        var response = service.criar(payload);
+        return ResponseEntity.created(null).body(ImagemMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -41,7 +43,8 @@ public class ImagemController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<ImagemResponse>> listar() {
-        return ResponseEntity.ok(ImagemMapper.toDto(service.listar()));
+        var response = service.listar();
+        return ResponseEntity.ok(ImagemMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -53,7 +56,8 @@ public class ImagemController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<ImagemResponse> listarPorId(
             @PathVariable int id) {
-        return ResponseEntity.ok(ImagemMapper.toDto(service.listarPorId(id)));
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(ImagemMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -65,7 +69,8 @@ public class ImagemController {
     @DeleteMapping(ControllerConstants.REMOVE_PATH)
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
-        return ResponseEntity.ok(service.remover(id));
+        var response = service.remover(id);
+        return ResponseEntity.ok(response);
     }
 
 }

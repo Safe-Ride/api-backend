@@ -39,13 +39,12 @@ public class UsuarioService {
     private final DependenteRepository dependenteRepository;
     private final ImagemService imagemService;
 
-    public Usuario criar(UsuarioRequest request) {
-        Usuario entity = UsuarioMapper.toEntity(request);
-        if (!repository.findByEmail(entity.getEmail()).isEmpty()) throw new ConflictException("email");
-        entity.setImagem(imagemService.listarPorId(1));
-        String senhaCriptografada = passwordEncoder.encode(entity.getSenha());
-        entity.setSenha(senhaCriptografada);
-        return repository.save(entity);
+    public Usuario criar(Usuario payload) {
+        if (!repository.findByEmail(payload.getEmail()).isEmpty()) throw new ConflictException("email");
+        payload.setImagem(imagemService.listarPorId(1));
+        String senhaCriptografada = passwordEncoder.encode(payload.getSenha());
+        payload.setSenha(senhaCriptografada);
+        return repository.save(payload);
     }
 
     public List<Usuario> listar() {

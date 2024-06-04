@@ -8,10 +8,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.stereotype.Service;
 import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 
 import java.io.IOException;
 
+@Service
 public class ViaCepService {
 
     public ViaCepResponse getEndereco(String cep) throws ClientProtocolException, IOException{

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import saferide.sptech.apibackend.entity.DiaSemana;
+import saferide.sptech.apibackend.entity.Status;
 import saferide.sptech.apibackend.entity.TipoTrajeto;
 
 import java.time.LocalDate;
@@ -58,6 +59,7 @@ public class TrajetoResponse {
 
         private Integer id;
         private String nome;
+        private Status status;
         private LocalDate dataNascimento;
         private String serie;
         private Endereco endereco;

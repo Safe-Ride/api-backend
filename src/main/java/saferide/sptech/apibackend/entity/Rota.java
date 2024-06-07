@@ -2,7 +2,6 @@ package saferide.sptech.apibackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import saferide.sptech.apibackend.entity.id.RotaId;
 
 @Entity
 @Getter
@@ -12,17 +11,15 @@ import saferide.sptech.apibackend.entity.id.RotaId;
 @Builder
 public class Rota {
 
-    @EmbeddedId
-    private RotaId id;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @ManyToOne
-    @MapsId("trajetoId")
     private Trajeto trajeto;
     @ManyToOne
-    @MapsId("dependenteId")
     private Dependente dependente;
     @ManyToOne
-    @MapsId("enderecoId")
     private Endereco endereco;
+    private Status status;
 
 }

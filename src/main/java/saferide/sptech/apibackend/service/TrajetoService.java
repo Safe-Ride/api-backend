@@ -10,6 +10,8 @@ import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
 import saferide.sptech.apibackend.entity.*;
 import saferide.sptech.apibackend.repository.RotaRepository;
 import saferide.sptech.apibackend.repository.TrajetoRepository;
+import saferide.sptech.apibackend.service.utils.Operacao;
+import saferide.sptech.apibackend.service.utils.PilhaObj;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,11 @@ public class    TrajetoService {
     private final TrajetoRepository repository;
     private final EscolaService escolaService;
     private final UsuarioService usuarioService;
+//    private final RotaService rotaService;
     private final RotaRepository rotaRepository;
+
+    private PilhaObj<Operacao> pilhaObj = new PilhaObj<>(10);
+    ;
 
     public Trajeto criar(
             Trajeto payload,
@@ -67,16 +73,17 @@ public class    TrajetoService {
 
         List<TrajetoResponse.DependenteComEndereco> dependentesDTO = rotas.stream().map(
                 rota -> TrajetoResponse.DependenteComEndereco.builder()
-                .id(rota.getDependente().getId())
-                .nome(rota.getDependente().getNome())
-                .serie(rota.getDependente().getSerie())
-                .endereco(TrajetoResponse.DependenteComEndereco.Endereco.builder()
-                        .id(rota.getEndereco().getId())
-                        .cep(rota.getEndereco().getCep())
-                        .numero(rota.getEndereco().getNumero())
-                        .complemento(rota.getEndereco().getComplemento())
-                        .build())
-                .build()).collect(Collectors.toList());
+                        .id(rota.getDependente().getId())
+                        .nome(rota.getDependente().getNome())
+                        .status(rota.getStatus())
+                        .serie(rota.getDependente().getSerie())
+                        .endereco(TrajetoResponse.DependenteComEndereco.Endereco.builder()
+                                .id(rota.getEndereco().getId())
+                                .cep(rota.getEndereco().getCep())
+                                .numero(rota.getEndereco().getNumero())
+                                .complemento(rota.getEndereco().getComplemento())
+                                .build())
+                        .build()).collect(Collectors.toList());
 
         TrajetoResponse trajetoDTO = new TrajetoResponse();
         trajetoDTO.setId(trajeto.getId());
@@ -97,6 +104,30 @@ public class    TrajetoService {
         trajetoDTO.setDependentes(dependentesDTO);
 
         return trajetoDTO;
+    }
+
+    public TrajetoResponse atualizarStatus(Integer trajetoId, int dependenteId, int enderecoId, Status status) {
+
+        Optional<Rota> rota = rotaRepository.findByTrajetoIdAndDependenteIdAndEnderecoId(trajetoId, dependenteId, enderecoId);
+
+        pilhaObj.push(new Operacao("atualizarStatus", rota.get(), rota.get().getStatus()));
+
+        rota.get().setStatus(status);
+        rotaRepository.save(rota.get());
+
+
+        return listarTrajetoCompleto(trajetoId);
+    }
+
+    public TrajetoResponse desfazer() {
+
+        Operacao operacao = pilhaObj.pop();
+        Rota rota = operacao.getRota();
+
+        rota.setStatus(operacao.getStatusAlterado());
+        Rota rotaSalva = rotaRepository.save(rota);
+
+        return listarTrajetoCompleto(rotaSalva.getTrajeto().getId());
     }
 
 }

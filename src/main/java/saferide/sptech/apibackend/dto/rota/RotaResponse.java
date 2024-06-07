@@ -5,13 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import saferide.sptech.apibackend.dto.dependente.DependenteResponse;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
+import saferide.sptech.apibackend.entity.Status;
 
 @Data
 public class RotaResponse {
 
+    private Integer id;
     private DependenteResponse dependente;
     private TrajetoResponse trajeto;
     private Endereco endereco;
+    private Status status;
 
     @Data
     @Builder

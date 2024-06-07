@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import saferide.sptech.apibackend.constants.ControllerConstants;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoRequest;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoRequestUpdate;
-import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
+import saferide.sptech.apibackend.dto.trajeto.*;
 import saferide.sptech.apibackend.service.TrajetoService;
 import saferide.sptech.apibackend.service.utils.Ordenacao;
 
@@ -62,8 +59,8 @@ public class TrajetoController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TrajetoResponse> listarPorId(
             @PathVariable int id) {
-        var response = service.listarPorId(id);
-        return ResponseEntity.ok(TrajetoMapper.toDto(response));
+        var response = service.listarTrajetoCompleto(id);
+        return ResponseEntity.ok().body(response);
     }
 
     @ApiResponses(value = {
@@ -92,6 +89,23 @@ public class TrajetoController {
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
         return ResponseEntity.ok(service.remover(id));
+    }
+
+    @ApiResponses()
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PatchMapping("/status")
+    public ResponseEntity<TrajetoResponse> atualizarStatusPorId (
+            @RequestBody TrajetoStatusUpdate request) {
+        var response = service.atualizarStatus(request.getTrajetoId(), request.getDependenteId(), request.getEnderecoId(), request.getStatus());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @ApiResponses()
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PatchMapping("/desfazer")
+    public ResponseEntity<TrajetoResponse> desfazer () {
+        var response = service.desfazer();
+        return ResponseEntity.ok().body(response);
     }
 
 }

@@ -6,23 +6,15 @@ import saferide.sptech.apibackend.dto.endereco.ViaCepResponse;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoMapper;
 import saferide.sptech.apibackend.dto.trajeto.TrajetoResponse;
 import saferide.sptech.apibackend.entity.Rota;
-import saferide.sptech.apibackend.entity.id.RotaId;
 
 public class RotaMapper {
 
     public static Rota toEntity(RotaRequest request) {
-        Rota rota = new Rota();
-
-        RotaId id = new RotaId();
-        id.setDependenteId(request.getDependenteId());
-        id.setTrajetoId(request.getTrajetoId());
-        id.setEnderecoId(request.getEnderecoId());
-
-        rota.setId(id);
-        return rota;
+        if (request == null) return null;
+        return new Rota();
     }
 
-    public static RotaResponse toDto(Rota entity, ViaCepResponse viaCepResponse) {
+    public static RotaResponse toDtoViaCep(Rota entity, ViaCepResponse viaCepResponse) {
         RotaResponse dto = new RotaResponse();
         DependenteResponse dependenteResponse = DependenteMapper.toDto(entity.getDependente());
         TrajetoResponse trajetoResponse = TrajetoMapper.toDto(entity.getTrajeto());
@@ -39,12 +31,25 @@ public class RotaMapper {
                 .uf(viaCepResponse.getUf())
                 .build();
 
+        dto.setId(entity.getId());
         dto.setDependente(dependenteResponse);
         dto.setEndereco(enderecoResponse);
         dto.setTrajeto(trajetoResponse);
+        dto.setStatus(entity.getStatus());
 
         return dto;
+    }
 
+    public static RotaResponse toDto(Rota entity) {
+        RotaResponse dto = new RotaResponse();
+        DependenteResponse dependenteResponse = DependenteMapper.toDto(entity.getDependente());
+        TrajetoResponse trajetoResponse = TrajetoMapper.toDto(entity.getTrajeto());
+
+        dto.setId(entity.getId());
+        dto.setDependente(dependenteResponse);
+        dto.setTrajeto(trajetoResponse);
+        dto.setStatus(entity.getStatus());
+        return dto;
     }
 
 }

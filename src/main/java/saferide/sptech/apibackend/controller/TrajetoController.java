@@ -62,8 +62,8 @@ public class TrajetoController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TrajetoResponse> listarPorId(
             @PathVariable int id) {
-        var response = service.listarPorId(id);
-        return ResponseEntity.ok(TrajetoMapper.toDto(response));
+        var response = service.listarTrajetoCompleto(id);
+        return ResponseEntity.ok().body(response);
     }
 
     @ApiResponses(value = {

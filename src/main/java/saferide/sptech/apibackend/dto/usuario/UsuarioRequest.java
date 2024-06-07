@@ -1,9 +1,6 @@
 package saferide.sptech.apibackend.dto.usuario;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import saferide.sptech.apibackend.constants.SafeRideConstants;
 import saferide.sptech.apibackend.entity.TipoUsuario;
@@ -17,7 +14,7 @@ public class UsuarioRequest {
     @Size(min = 3, message = SafeRideConstants.USUARIO_INVALID_NAME)
     private String nome;
     @NotBlank(message = SafeRideConstants.USUARIO_INVALID_EMAIL)
-    @Pattern(regexp = SafeRideConstants.REGEX_EMAIL, message = SafeRideConstants.USUARIO_INVALID_EMAIL)
+    @Email (message = SafeRideConstants.USUARIO_INVALID_EMAIL)
     private String email;
     @NotBlank(message = SafeRideConstants.USUARIO_INVALID_PASSWORD)
     @Size(min = 4, message = SafeRideConstants.USUARIO_INVALID_PASSWORD)

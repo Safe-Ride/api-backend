@@ -8,6 +8,7 @@ public class ControllerConstants {
     public final static String HISTORICO_BASE_PATH = "/historicos";
     public final static String IMAGEM_BASE_PATH = "/imagens";
     public final static String MENSAGEM_BASE_PATH = "/mensagens";
+    public final static String PAGAMENTO_BASE_PATH = "/pagamentos";
     public final static String ROTA_BASE_PATH = "/rotas";
     public final static String TRAJETO_BASE_PATH = "/trajetos";
     public final static String TRANSPORTE_BASE_PATH = "/transportes";

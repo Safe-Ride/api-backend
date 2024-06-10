@@ -36,7 +36,7 @@ public class RotaController {
         var payload = RotaMapper.toEntity(request);
         var response = service.criar(payload, request.getTrajetoId(), request.getDependenteId(), request.getEnderecoId());
         var viaCepResponse = viaCepService.getEndereco(response.getEndereco().getCep());
-        return ResponseEntity.created(null).body(RotaMapper.toDto(response, viaCepResponse));
+        return ResponseEntity.created(null).body(RotaMapper.toDtoViaCep(response, viaCepResponse));
     }
 
     @ApiResponses(value = {

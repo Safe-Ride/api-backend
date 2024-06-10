@@ -1,7 +1,6 @@
 package saferide.sptech.apibackend.dto.trajeto;
 
 import saferide.sptech.apibackend.entity.Trajeto;
-import saferide.sptech.apibackend.entity.Usuario;
 
 import java.util.List;
 
@@ -22,7 +21,10 @@ public class TrajetoMapper {
                         .cep(entity.getEscola().getEndereco().getCep())
                         .build())
                 .build());
-        dto.setMotorista(toMotoristaDto(entity.getMotorista()));
+        dto.setMotorista(TrajetoResponse.Motorista.builder()
+                .id(entity.getMotorista().getId())
+                .nome(entity.getMotorista().getNome())
+                .build());
         return dto;
     }
 
@@ -47,22 +49,6 @@ public class TrajetoMapper {
         if (dto.getTipo() != null) entity.setTipo(dto.getTipo());
         if (dto.getDiaSemana() != null) entity.setDiaSemana(dto.getDiaSemana());
         return entity;
-    }
-
-
-    public static TrajetoMotoristaResponse toMotoristaDto(Usuario entity){
-        if (entity == null) return null;
-
-        TrajetoMotoristaResponse dto = new TrajetoMotoristaResponse();
-        dto.setId(entity.getId());
-        dto.setNome(entity.getNome());
-        return dto;
-    }
-
-    public static List<TrajetoMotoristaResponse> toMotoristaDto(List<Usuario> entities){
-        return entities.stream()
-                .map(TrajetoMapper::toMotoristaDto)
-                .toList();
     }
 
 }

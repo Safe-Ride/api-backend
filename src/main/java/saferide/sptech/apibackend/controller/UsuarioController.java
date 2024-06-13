@@ -110,4 +110,17 @@ public class UsuarioController {
         return ResponseEntity.ok("Logoff realizado com sucesso.");
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping("/perfil" + ControllerConstants.LIST_BY_ID_PATH)
+    public ResponseEntity<UsuarioResponse> listarPerfilPorId(
+            @PathVariable int id) {
+        var response = service.listarPerfilPorId(id);
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
 }

@@ -59,6 +59,12 @@ public class UsuarioService {
         return clienteOpt.get();
     }
 
+    public Usuario listarPerfilPorId(int id) {
+        Optional<Usuario> clienteOpt = repository.findById(id);
+        if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return clienteOpt.get();
+    }
+
     public Usuario atualizar(int id, UsuarioRequestUpdate request) {
         Optional<Usuario> clienteOpt = repository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);

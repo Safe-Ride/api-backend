@@ -27,7 +27,6 @@ public class DependenteController {
             @ApiResponse(responseCode = "200", description = "ok"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<DependenteResponse> criar(
             @Valid @RequestBody DependenteRequest request) {

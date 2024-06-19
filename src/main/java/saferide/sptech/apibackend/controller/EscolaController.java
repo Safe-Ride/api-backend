@@ -43,7 +43,6 @@ public class EscolaController {
             @ApiResponse(responseCode = "204", description = "Sem conteudo"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping
     public ResponseEntity<List<EscolaResponse>> listar() {
         var response = service.listar();

@@ -54,6 +54,11 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/actuator/*"),
             new AntPathRequestMatcher("/usuarios/login/**"),
             new AntPathRequestMatcher("/usuarios/**"),
+            new AntPathRequestMatcher("/dependentes/**"),
+            new AntPathRequestMatcher("/transportes/**"),
+            new AntPathRequestMatcher("/enderecos/**"),
+            new AntPathRequestMatcher("/enderecos/buscar-cep/**"),
+            new AntPathRequestMatcher("/escolas/**"),
             new AntPathRequestMatcher("/pagamentos/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
@@ -91,10 +96,6 @@ public class SecurityConfiguracao {
         return authenticationManagerBuilder.build();
     }
 
-    @Bean
-    public AutenticacaoEntryPoint jwtAuthenticationEntryPointBean() {
-        return new AutenticacaoEntryPoint();
-    }
 
     @Bean
     public AutenticacaoFilter jwtAuthenticationFilterBean() {

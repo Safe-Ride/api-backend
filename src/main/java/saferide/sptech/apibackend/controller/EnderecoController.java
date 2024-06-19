@@ -26,7 +26,6 @@ public class EnderecoController {
             @ApiResponse(responseCode = "200", description = "ok"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<EnderecoResponse> criar(
             @Valid @RequestBody EnderecoRequest request) {
@@ -96,7 +95,6 @@ public class EnderecoController {
             @ApiResponse(responseCode = "404", description = "Não encontrado"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping(ControllerConstants.SEARCH_CEP)
     public ResponseEntity<ViaCepResponse> buscarCep(
             @PathVariable String cep) {

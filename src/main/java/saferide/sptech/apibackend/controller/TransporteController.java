@@ -27,7 +27,6 @@ public class TransporteController {
             @ApiResponse(responseCode = "200", description = "ok"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<TransporteResponse> criar(
             @Valid @RequestBody TransporteRequest request) {

@@ -80,6 +80,36 @@ public class UsuarioService {
         return null;
     }
 
+    public Usuario atualizarNome(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarNome(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarEmail(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarEmail(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarCpf(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarCpf(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarTelefone(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarTelefone(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarDataNascimento(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarDataNascimento(id, alteracao);
+        return repository.findById(id).get();
+    }
+
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLoginDto){
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
                 usuarioLoginDto.getEmail(),usuarioLoginDto.getSenha());

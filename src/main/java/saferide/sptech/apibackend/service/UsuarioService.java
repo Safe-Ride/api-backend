@@ -59,6 +59,12 @@ public class UsuarioService {
         return clienteOpt.get();
     }
 
+    public Usuario listarPerfilPorId(int id) {
+        Optional<Usuario> clienteOpt = repository.findById(id);
+        if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return clienteOpt.get();
+    }
+
     public Usuario atualizar(int id, UsuarioRequestUpdate request) {
         Optional<Usuario> clienteOpt = repository.findById(id);
         if (clienteOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -72,6 +78,36 @@ public class UsuarioService {
         if (!dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         repository.deleteById(id);
         return null;
+    }
+
+    public Usuario atualizarNome(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarNome(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarEmail(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarEmail(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarCpf(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarCpf(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarTelefone(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarTelefone(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Usuario atualizarDataNascimento(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarDataNascimento(id, alteracao);
+        return repository.findById(id).get();
     }
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLoginDto){

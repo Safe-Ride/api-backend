@@ -110,4 +110,82 @@ public class UsuarioController {
         return ResponseEntity.ok("Logoff realizado com sucesso.");
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping("/perfil" + ControllerConstants.LIST_BY_ID_PATH)
+    public ResponseEntity<UsuarioResponse> listarPerfilPorId(
+            @PathVariable int id) {
+        var response = service.listarPerfilPorId(id);
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-nome")
+    public ResponseEntity<UsuarioResponse> atualizarNome(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarNome(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-email")
+    public ResponseEntity<UsuarioResponse> atualizarEmail(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarEmail(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-cpf")
+    public ResponseEntity<UsuarioResponse> atualizarCpf(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarCpf(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-telefone")
+    public ResponseEntity<UsuarioResponse> atualizarTelefone(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarTelefone(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-nascimento")
+    public ResponseEntity<UsuarioResponse> atualizarDataNascimento(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarDataNascimento(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
 }

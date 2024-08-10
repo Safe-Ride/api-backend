@@ -1,0 +1,134 @@
+package school.sptech.saferide.controller;
+
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import school.sptech.saferide.constants.ControllerConstants;
+import school.sptech.saferide.model.autentication.UsuarioLoginDto;
+import school.sptech.saferide.model.autentication.UsuarioTokenDto;
+import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
+import school.sptech.saferide.model.entity.usuario.UsuarioRequest;
+import school.sptech.saferide.model.entity.usuario.UsuarioResponse;
+import school.sptech.saferide.model.entity.usuario.UsuarioUpdate;
+import school.sptech.saferide.service.UsuarioService;
+
+@RestController
+@RequestMapping(ControllerConstants.USUARIO_BASE_PATH)
+@RequiredArgsConstructor
+public class UsuarioController {
+
+    private final UsuarioService service;
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Criado"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+    })
+    @PostMapping
+    public ResponseEntity<UsuarioResponse> criar(
+            @Valid @RequestBody UsuarioRequest request) {
+        var payload = UsuarioMapper.toEntity(request);
+        var response = service.criar(payload);
+        return ResponseEntity.created(null).body(UsuarioMapper.toDto(response));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioTokenDto> login(
+            @RequestBody UsuarioLoginDto usuarioLoginDto){
+        UsuarioTokenDto usuarioTokenDto = this.service.autenticar(usuarioLoginDto);
+        return  ResponseEntity.status(200).body(usuarioTokenDto);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
+    public ResponseEntity<UsuarioResponse> listarPorId(
+            @PathVariable int id) {
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-nome")
+    public ResponseEntity<UsuarioResponse> atualizarNome(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarNome(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-email")
+    public ResponseEntity<UsuarioResponse> atualizarEmail(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarEmail(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-cpf")
+    public ResponseEntity<UsuarioResponse> atualizarCpf(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarCpf(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping("/perfil/atualizar-telefone")
+    public ResponseEntity<UsuarioResponse> atualizarTelefone(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarTelefone(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    public ResponseEntity<UsuarioResponse> atualizarDataNascimento(
+            @RequestBody UsuarioUpdate request) {
+        var response = service.atualizarDataNascimento(request.getId(), request.getAlteracao());
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @DeleteMapping(ControllerConstants.REMOVE_PATH)
+    public ResponseEntity<Void> remover(
+            @PathVariable int id) {
+        var response = service.remover(id);
+        return ResponseEntity.noContent().build();
+    }
+}

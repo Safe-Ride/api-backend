@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import school.sptech.saferide.model.enums.DiaSemana;
+import school.sptech.saferide.model.enums.HorarioTrajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.enums.TipoTrajeto;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class TrajetoResponse {
     private Integer id;
     private TipoTrajeto tipo;
+    private HorarioTrajeto horario;
     private DiaSemana diaSemana;
     private Escola escola;
     private Motorista motorista;

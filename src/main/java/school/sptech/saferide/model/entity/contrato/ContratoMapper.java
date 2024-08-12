@@ -1,5 +1,6 @@
 package school.sptech.saferide.model.entity.contrato;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,16 +13,22 @@ public class ContratoMapper {
         dto.setMotorista(ContratoResponse.Usuario.builder()
                 .id(entity.getMotorista().getId())
                 .nome(entity.getMotorista().getNome())
+                .foto(entity.getMotorista().getImagem().getCaminho())
                 .build());
         dto.setResponsavel(ContratoResponse.Usuario.builder()
                 .id(entity.getResponsavel().getId())
                 .nome(entity.getResponsavel().getNome())
                 .build());
-        dto.setDependente(ContratoResponse.Dependente.builder()
-                .id(entity.getDependente().getId())
-                .nome(entity.getDependente().getNome())
-                .build());
+        if (entity.getDependentes() != null) {
+            dto.setDependentes(entity.getDependentes().stream()
+                    .map(d -> ContratoResponse.Dependente.builder()
+                            .id(d.getId())
+                            .nome(d.getNome())
+                            .build())
+                    .collect(Collectors.toList()));
+        }
         dto.setValor(entity.getValor());
+        dto.setData(entity.getData());
         if (entity.getPagamentos() != null) {
             dto.setPagamentos(entity.getPagamentos().stream()
                     .map(s -> ContratoResponse.Pagamento.builder()
@@ -32,7 +39,8 @@ public class ContratoMapper {
                             .status(s.getStatus())
                             .build())
                     .collect(Collectors.toList()));
-        }        return dto;
+        }
+        return dto;
     }
 
     public static List<ContratoResponse> toDto(List<Contrato> entities){

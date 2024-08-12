@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import school.sptech.saferide.model.entity.contrato.Contrato;
 import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.TipoUsuario;
+import school.sptech.saferide.model.exception.DependentBirthBeforeUserException;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.model.exception.NotRemoveWithRelationshipsException;
 import school.sptech.saferide.model.exception.TypeUserInvalidException;
@@ -28,6 +30,7 @@ public class DependenteService {
     public Dependente criar(Dependente payload, int usuarioId, int escolaId) {
         Usuario responsavel = usuarioService.listarPorId(usuarioId);
         if (!responsavel.getTipo().equals(TipoUsuario.RESPONSAVEL)) throw new TypeUserInvalidException(TipoUsuario.MOTORISTA.name());
+        if (payload.getDataNascimento().isBefore(responsavel.getDataNascimento())) throw new DependentBirthBeforeUserException();
         Escola escola = escolaService.listarPorId(escolaId);
         payload.setResponsavel(responsavel);
         payload.setEscola(escola);
@@ -53,6 +56,11 @@ public class DependenteService {
                 dependente.getResponsavel().getId(),
                 motorista.getId());
 
+        return repository.save(dependente);
+    }
+
+    public Dependente atualizarContrato(Dependente dependente, Contrato contrato) {
+        dependente.setContrato(contrato);
         return repository.save(dependente);
     }
 

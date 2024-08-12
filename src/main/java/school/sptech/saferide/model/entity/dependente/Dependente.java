@@ -2,6 +2,7 @@ package school.sptech.saferide.model.entity.dependente;
 
 import jakarta.persistence.*;
 import lombok.*;
+import school.sptech.saferide.model.entity.contrato.Contrato;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 
@@ -26,4 +27,6 @@ public class Dependente {
     private Escola escola;
     @ManyToOne
     private Usuario motorista;
+    @ManyToOne
+    private Contrato contrato;
 }

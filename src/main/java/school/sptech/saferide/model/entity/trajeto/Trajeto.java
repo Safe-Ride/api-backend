@@ -5,6 +5,7 @@ import lombok.*;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.DiaSemana;
+import school.sptech.saferide.model.enums.HorarioTrajeto;
 import school.sptech.saferide.model.enums.TipoTrajeto;
 
 @Entity
@@ -18,6 +19,7 @@ public class Trajeto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private TipoTrajeto tipo;
+    private HorarioTrajeto horario;
     private DiaSemana diaSemana;
     @ManyToOne
     private Escola escola;

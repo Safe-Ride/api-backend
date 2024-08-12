@@ -35,8 +35,15 @@ public class ContratoController {
                 payload,
                 request.getMotoristaId(),
                 request.getResponsavelId(),
-                request.getDependenteId());
+                request.getDependentesId());
         return ResponseEntity.created(null).body(ContratoMapper.toDto(response));
+    }
+
+    @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
+    public ResponseEntity<ContratoResponse> listarPorId(
+            @PathVariable int id) {
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok().body(ContratoMapper.toDto(response));
     }
 
     @GetMapping(ControllerConstants.CONTRATO_POR_MOTORISTA_BASE_PATH)
@@ -50,13 +57,6 @@ public class ContratoController {
     public ResponseEntity<List<ContratoResponse>> listarPorResponsavel(
             @PathVariable int responsavelId) {
         var response = service.listarPorResponsavel(responsavelId);
-        return ResponseEntity.ok().body(ContratoMapper.toDto(response));
-    }
-
-    @GetMapping(ControllerConstants.CONTRATO_POR_DEPENDENTE_BASE_PATH)
-    public ResponseEntity<ContratoResponse> listarPorDependente(
-            @PathVariable int dependenteId) {
-        var response = service.listarPorDependente(dependenteId);
         return ResponseEntity.ok().body(ContratoMapper.toDto(response));
     }
 }

@@ -38,4 +38,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     ProblemDetail handle(TypeUserInvalidException e) {
         return handleDefault(HttpStatus.BAD_REQUEST, e);
     }
+
+    @ExceptionHandler(DependentBirthBeforeUserException.class)
+    ProblemDetail handle(DependentBirthBeforeUserException e) {
+        return handleDefault(HttpStatus.BAD_REQUEST, e);
+    }
 }

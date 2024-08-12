@@ -30,17 +30,19 @@ public class ContratoService {
             Contrato payload,
             int motoristaId,
             int responsavelId,
-            int dependenteId) {
+            List<Integer> dependentesId) {
         Usuario motorista = usuarioService.listarPorId(motoristaId);
         Usuario responsavel = usuarioService.listarPorId(responsavelId);
-        Dependente dependente = dependenteService.listarPorId(dependenteId);
+        List<Dependente> dependentes = dependentesId.stream()
+                .map(dependenteService::listarPorId)
+                .toList();
+        LocalDate dataAtual = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+        payload.setData(dataAtual);
         payload.setMotorista(motorista);
         payload.setResponsavel(responsavel);
-        payload.setDependente(dependente);
-        Double teste = payload.getValor();
         Contrato contrato = repository.save(payload);
+        dependentes.forEach(d -> dependenteService.atualizarContrato(d, contrato));
 
-        LocalDate dataAtual = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
         for (int i = dataAtual.getMonth().ordinal() + 1; i <= 12; i++) {
             Pagamento pagamento = new Pagamento();
             pagamento.setContrato(contrato);
@@ -55,6 +57,12 @@ public class ContratoService {
         return repository.save(contrato);
     }
 
+    public Contrato listarPorId(int id) {
+        Optional<Contrato> list = repository.findById(id);
+        if (list.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        return list.get();
+    }
+
     public List<Contrato> listarPorMotorista(int motoristaId) {
         List<Contrato> list = repository.findByMotoristaId(motoristaId);
         if (list.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
@@ -65,11 +73,5 @@ public class ContratoService {
         List<Contrato> list = repository.findByResponsavelId(responsavelId);
         if (list.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return list;
-    }
-
-    public Contrato listarPorDependente(int dependenteId) {
-        Optional<Contrato> contratoOpt = repository.findByDependenteId(dependenteId);
-        if (contratoOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        return contratoOpt.get();
     }
 }

@@ -9,6 +9,7 @@ public class TrajetoMapper {
         TrajetoResponse dto = new TrajetoResponse();
         dto.setId(entity.getId());
         dto.setTipo(entity.getTipo());
+        dto.setHorario(entity.getHorario());
         dto.setDiaSemana(entity.getDiaSemana());
         dto.setEscola(TrajetoResponse.Escola.builder()
                 .id(entity.getEscola().getId())
@@ -36,6 +37,7 @@ public class TrajetoMapper {
 
         Trajeto entity = new Trajeto();
         entity.setTipo(dto.getTipo());
+        entity.setHorario(dto.getHorario());
         entity.setDiaSemana(dto.getDiaSemana());
         return entity;
     }

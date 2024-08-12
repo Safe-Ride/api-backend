@@ -15,8 +15,9 @@ public class ContratoResponse {
     private Integer id;
     private Usuario motorista;
     private Usuario responsavel;
-    private Dependente dependente;
+    private List<Dependente> dependentes;
     private Double valor;
+    private LocalDate data;
     private List<Pagamento> pagamentos;
 
     @Data
@@ -25,6 +26,7 @@ public class ContratoResponse {
     public static class Usuario {
         private Integer id;
         private String nome;
+        private String foto;
     }
 
     @Data

@@ -13,6 +13,7 @@ import school.sptech.saferide.controller.security.jwt.GerenciadorTokenJwt;
 import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
@@ -20,8 +21,7 @@ import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.DependenteRepository;
 import school.sptech.saferide.repository.UsuarioRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +65,19 @@ public class UsuarioService {
         return clienteOpt.get();
     }
 
+    public List<MotoristaListarClientes> listarResponsaveisPorMotorista(int motoristaId) {
+        List<Object[]> resultados = repository.findResponsaveisByMotoristaId(motoristaId);
+
+        List<MotoristaListarClientes> responsaveis = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+            int id = (Integer) resultado[0];
+            String nome = (String) resultado[1];
+            String foto = (String) resultado[2];
+            responsaveis.add(new MotoristaListarClientes(id, nome, foto));
+        }
+        return responsaveis;
+    }
+
     public Usuario atualizarNome(int id, String alteracao) {
         listarPorId(id);
         repository.atualizarNome(id, alteracao);
@@ -102,5 +115,4 @@ public class UsuarioService {
         repository.deleteById(id);
         return null;
     }
-
 }

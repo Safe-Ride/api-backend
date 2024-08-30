@@ -32,11 +32,20 @@ public class UsuarioResponse {
         private LocalDate dataNascimento;
         private Escola escola;
         private String serie;
+        private Responsavel responsavel;
 
         @Data
         @Builder
         @JsonInclude(JsonInclude.Include.NON_NULL)
         public static class Escola {
+            private Integer id;
+            private String nome;
+        }
+
+        @Data
+        @Builder
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public static class Responsavel {
             private Integer id;
             private String nome;
         }

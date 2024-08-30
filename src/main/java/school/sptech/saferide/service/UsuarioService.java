@@ -13,6 +13,7 @@ import school.sptech.saferide.controller.security.jwt.GerenciadorTokenJwt;
 import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.dependente.DependenteResponse;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
@@ -114,5 +115,11 @@ public class UsuarioService {
         if (!dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         repository.deleteById(id);
         return null;
+    }
+
+    public List<Dependente> listarDependentesPorResponsavel(int id) {
+        List<Dependente> dependentes = dependenteRepository.findByResponsavelId(id);
+        if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return dependentes;
     }
 }

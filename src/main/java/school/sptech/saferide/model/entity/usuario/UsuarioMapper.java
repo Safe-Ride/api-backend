@@ -50,6 +50,10 @@ public class UsuarioMapper {
                                     .nome(s.getEscola().getNome())
                                     .build())
                             .serie(s.getSerie())
+                            .responsavel(UsuarioResponse.Dependente.Responsavel.builder()
+                                    .id(s.getResponsavel().getId())
+                                    .nome(s.getResponsavel().getNome())
+                                    .build())
                             .build())
                     .collect(Collectors.toList()));
         }

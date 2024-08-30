@@ -19,6 +19,7 @@ public class ControllerConstants {
     public final static String TRANSPORTE_ESCOLA_LIST_BY_ESCOLA_BASE_PATH = "/escola/{escolaId}";
     public final static String USUARIO_BASE_PATH = "/usuarios";
     public final static String USUARIO_DRIVER_CLIENTS_BASE_PATH = "/clientes-motorista/{id}";
+    public final static String USUARIO_PARENT_DEPENDANTS_BASE_PATH = "/dependentes-responsavel/{id}";
     public final static String DEPENDENTE_LINK_MOTORISTA_PATH = "/{dependenteId}/vincular-motorista/{motoristaId}";
     public final static String SEARCH_CEP = "/buscar-cep/{cep}";
     public final static String ENDERECO_LIST_BY_USUARIO_PATH = "/usuario/{usuarioId}";

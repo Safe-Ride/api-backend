@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
+import school.sptech.saferide.model.entity.dependente.DependenteMapper;
+import school.sptech.saferide.model.entity.dependente.DependenteResponse;
 import school.sptech.saferide.model.entity.usuario.*;
 import school.sptech.saferide.service.UsuarioService;
 
@@ -60,6 +62,14 @@ public class UsuarioController {
             @PathVariable int id) {
         var response = service.listarResponsaveisPorMotorista(id);
         return ResponseEntity.ok(response);
+    }
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.USUARIO_PARENT_DEPENDANTS_BASE_PATH)
+    public ResponseEntity<List<DependenteResponse>> listarDependentesPorResponsavel(
+            @PathVariable int id) {
+        var response = service.listarDependentesPorResponsavel(id);
+        return ResponseEntity.ok(DependenteMapper.toDto(response));
     }
 
     @ApiResponses(value = {

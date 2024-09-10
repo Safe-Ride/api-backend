@@ -99,4 +99,20 @@ public class UsuarioMapper {
 
         return usuarioTokenDto;
     }
+
+    public static ResponsavelListarMotoristas toListaMotoristas(Usuario entity) {
+        if (entity == null) return null;
+
+        ResponsavelListarMotoristas dto = new ResponsavelListarMotoristas();
+        dto.setId(entity.getId());
+        dto.setNome(entity.getNome());
+        dto.setFoto(entity.getImagem().getCaminho());
+        return dto;
+    }
+
+    public static List<ResponsavelListarMotoristas> toListaMotoristas(List<Usuario> entities) {
+        return entities.stream()
+                .map(UsuarioMapper::toListaMotoristas)
+                .toList();
+    }
 }

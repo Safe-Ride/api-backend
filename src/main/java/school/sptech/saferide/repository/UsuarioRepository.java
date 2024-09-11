@@ -18,6 +18,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
             "FROM Dependente d JOIN d.responsavel r " +
             "WHERE d.motorista.id = :motoristaId")
     List<Object[]> findResponsaveisByMotoristaId(@Param("motoristaId") int motoristaId);
+
+    @Query("SELECT DISTINCT d.motorista FROM Dependente d WHERE d.responsavel.id = :responsavelId")
+    List<Usuario> findMotoristasByResponsavelId(@Param("responsavelId") int responsavelId);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.nome = :alteracao WHERE u.id = :id")

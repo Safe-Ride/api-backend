@@ -15,6 +15,7 @@ import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.dependente.DependenteResponse;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.ResponsavelListarMotoristas;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
@@ -77,6 +78,11 @@ public class UsuarioService {
             responsaveis.add(new MotoristaListarClientes(id, nome, foto));
         }
         return responsaveis;
+    }
+
+    public List<Usuario> listarMotoristasPorCliente(int responsavelId) {
+        listarPorId(responsavelId);
+        return repository.findMotoristasByResponsavelId(responsavelId);
     }
 
     public Usuario atualizarNome(int id, String alteracao) {

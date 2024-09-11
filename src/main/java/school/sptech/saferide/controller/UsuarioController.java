@@ -72,6 +72,14 @@ public class UsuarioController {
         return ResponseEntity.ok(DependenteMapper.toDto(response));
     }
 
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping("/motoristas-cliente/{id}")
+    public ResponseEntity<List<ResponsavelListarMotoristas>> listarMotoristasPorCliente(
+            @PathVariable int id) {
+        var response = service.listarMotoristasPorCliente(id);
+        return ResponseEntity.ok(UsuarioMapper.toListaMotoristas(response));
+    }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "ok"),
             @ApiResponse(responseCode = "404", description = "Não encontrado"),

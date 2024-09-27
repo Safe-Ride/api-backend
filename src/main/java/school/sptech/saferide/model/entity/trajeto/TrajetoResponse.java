@@ -8,7 +8,6 @@ import school.sptech.saferide.model.enums.HorarioTrajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.enums.TipoTrajeto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -17,9 +16,10 @@ public class TrajetoResponse {
     private TipoTrajeto tipo;
     private HorarioTrajeto horario;
     private DiaSemana diaSemana;
+    private Boolean ativo;
     private Escola escola;
     private Motorista motorista;
-    private List<DependenteComEndereco> dependentes;
+    private List<Rota> rotas;
 
     @Data
     @Builder
@@ -27,16 +27,6 @@ public class TrajetoResponse {
     public static class Escola {
         private Integer id;
         private String nome;
-        private Endereco endereco;
-
-        @Data
-        @Builder
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        public static class Endereco {
-            private Integer id;
-            private String cep;
-            private Integer numero;
-        }
     }
 
     @Data
@@ -49,21 +39,27 @@ public class TrajetoResponse {
 
     @Data
     @Builder
-    public static class DependenteComEndereco {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Rota {
         private Integer id;
-        private String nome;
         private StatusDependente status;
-        private LocalDate dataNascimento;
-        private String serie;
+        private Dependente dependente;
         private Endereco endereco;
 
         @Data
         @Builder
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public static class Dependente {
+            private Integer id;
+            private String nome;
+        }
+
+        @Data
+        @Builder
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         public static class Endereco {
             private Integer id;
             private String cep;
-            private Integer numero;
-            private String complemento;
         }
     }
 }

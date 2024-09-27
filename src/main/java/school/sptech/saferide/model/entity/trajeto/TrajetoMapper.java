@@ -1,9 +1,11 @@
 package school.sptech.saferide.model.entity.trajeto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrajetoMapper {
-    public static TrajetoResponse toDto(Trajeto entity){
+
+    public static TrajetoResponse toDto(Trajeto entity) {
         if (entity == null) return null;
 
         TrajetoResponse dto = new TrajetoResponse();
@@ -11,22 +13,38 @@ public class TrajetoMapper {
         dto.setTipo(entity.getTipo());
         dto.setHorario(entity.getHorario());
         dto.setDiaSemana(entity.getDiaSemana());
-        dto.setEscola(TrajetoResponse.Escola.builder()
-                .id(entity.getEscola().getId())
-                .nome(entity.getEscola().getNome())
-                .endereco(TrajetoResponse.Escola.Endereco.builder()
-                        .id(entity.getEscola().getEndereco().getId())
-                        .cep(entity.getEscola().getEndereco().getCep())
-                        .build())
-                .build());
-        dto.setMotorista(TrajetoResponse.Motorista.builder()
-                .id(entity.getMotorista().getId())
-                .nome(entity.getMotorista().getNome())
-                .build());
+        dto.setAtivo(entity.getAtivo());
+        if (entity.getEscola() != null) {
+            dto.setEscola(TrajetoResponse.Escola.builder()
+                    .id(entity.getEscola().getId())
+                    .nome(entity.getEscola().getNome())
+                    .build());
+        }
+        if (entity.getMotorista() != null) {
+            dto.setMotorista(TrajetoResponse.Motorista.builder()
+                    .id(entity.getMotorista().getId())
+                    .nome(entity.getMotorista().getNome())
+                    .build());
+        }
+        if (entity.getRotas() != null) {
+            dto.setRotas(entity.getRotas().stream()
+                    .map(s -> TrajetoResponse.Rota.builder()
+                            .id(s.getId())
+                            .status(s.getStatus())
+                            .dependente(TrajetoResponse.Rota.Dependente.builder()
+                                    .id(s.getDependente().getId())
+                                    .nome(s.getDependente().getNome())
+                                    .build())
+                            .endereco(TrajetoResponse.Rota.Endereco.builder()
+                                    .id(s.getDependente().getId())
+                                    .build())
+                            .build())
+                    .collect(Collectors.toList()));
+        }
         return dto;
     }
 
-    public static List<TrajetoResponse> toDto(List<Trajeto> entities){
+    public static List<TrajetoResponse> toDto(List<Trajeto> entities) {
         return entities.stream()
                 .map(TrajetoMapper::toDto)
                 .toList();

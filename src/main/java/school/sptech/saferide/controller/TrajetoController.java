@@ -13,6 +13,8 @@ import school.sptech.saferide.model.entity.trajeto.TrajetoRequest;
 import school.sptech.saferide.model.entity.trajeto.TrajetoResponse;
 import school.sptech.saferide.service.TrajetoService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(ControllerConstants.TRAJETO_BASE_PATH)
 @RequiredArgsConstructor
@@ -45,8 +47,35 @@ public class TrajetoController {
     @GetMapping(ControllerConstants.LIST_BY_ID_PATH)
     public ResponseEntity<TrajetoResponse> listarPorId(
             @PathVariable int id) {
-        var response = service.listarTrajetoCompleto(id);
+        var response = service.listarPorId(id);
+        return ResponseEntity.ok().body(TrajetoMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping("/motorista/{motoristaId}")
+    public ResponseEntity<List<TrajetoResponse>> listarPorMotorista(
+            @PathVariable int motoristaId) {
+        var response = service.listarTrajetosPorMotorista(motoristaId);
         return ResponseEntity.ok().body(response);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PatchMapping("/alterarAtivo/{trajetoId}")
+    public ResponseEntity<TrajetoResponse> atualizarAtivo(
+            @PathVariable int trajetoId,
+            @RequestParam Boolean ativo) {
+        var response = service.atualizarAtivo(trajetoId, ativo);
+        return ResponseEntity.ok().body(TrajetoMapper.toDto(response));
     }
 
     @ApiResponses(value = {

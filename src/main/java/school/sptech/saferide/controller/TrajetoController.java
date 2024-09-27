@@ -73,7 +73,7 @@ public class TrajetoController {
     @PatchMapping("/alterarAtivo/{trajetoId}")
     public ResponseEntity<TrajetoResponse> atualizarAtivo(
             @PathVariable int trajetoId,
-            @RequestParam Boolean ativo) {
+            @RequestParam boolean ativo) {
         var response = service.atualizarAtivo(trajetoId, ativo);
         return ResponseEntity.ok().body(TrajetoMapper.toDto(response));
     }

@@ -8,7 +8,6 @@ import school.sptech.saferide.model.entity.trajeto.TrajetoMapper;
 import school.sptech.saferide.model.entity.trajeto.TrajetoResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.exception.NotFoundException;
-import school.sptech.saferide.repository.RotaRepository;
 import school.sptech.saferide.repository.TrajetoRepository;
 
 import java.util.List;

@@ -8,6 +8,7 @@ import school.sptech.saferide.model.entity.mensagem.Mensagem;
 import school.sptech.saferide.model.enums.StatusDependente;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,14 @@ public class ListarConversasMotorista {
     private String foto;
     private String nome;
     private StatusDependente mensagem;
-    private LocalDateTime localDateTime;
-    private Long quantidadeMensagens;
+    private LocalDateTime horario;
+    private Long qtdMensagens;
+
+    public String getHorario() {
+        return horario.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm"));
+    }
+
+    public String getMensagem() {
+        return mensagem.exibicao;
+    }
 }

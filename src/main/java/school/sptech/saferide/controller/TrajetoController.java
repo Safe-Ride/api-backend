@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
@@ -88,5 +89,18 @@ public class TrajetoController {
     public ResponseEntity<Void> remover(
             @PathVariable int id) {
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping("/baixar-trajeto-motorista/{motoristaId}")
+    public ResponseEntity<InputStreamResource> baixarTrajetos(
+            @PathVariable int motoristaId) {
+        var response = service.baixarTrajetos(motoristaId);
+        return ResponseEntity.ok().body(response);
     }
 }

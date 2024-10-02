@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import school.sptech.saferide.model.enums.StatusDependente;
+import school.sptech.saferide.model.enums.TipoUsuario;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +23,6 @@ public class ConversaResponse {
     public static class Usuario {
         private Integer id;
         private String nome;
-        private String telefone;
     }
 
     @Data
@@ -30,17 +30,9 @@ public class ConversaResponse {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Mensagem {
         private Integer id;
-        private LocalDateTime data;
-        private StatusDependente status;
-        private Integer usuarioId;
-        private Dependente dependente;
-
-        @Data
-        @Builder
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        public static class Dependente {
-            private Integer id;
-            private String nome;
-        }
+        private LocalDateTime horario;
+        private String status;
+        private TipoUsuario tipoUsuario;
+        private String nome;
     }
 }

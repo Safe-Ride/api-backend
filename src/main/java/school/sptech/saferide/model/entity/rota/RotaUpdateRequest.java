@@ -7,7 +7,7 @@ import school.sptech.saferide.model.enums.StatusDependente;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructorz
+@NoArgsConstructor
 public class RotaUpdateRequest {
     private StatusDependente status;
 }

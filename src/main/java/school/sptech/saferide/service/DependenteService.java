@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.saferide.model.entity.contrato.Contrato;
 import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.dependente.DependentePerfilResponse;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.TipoUsuario;
@@ -16,6 +17,7 @@ import school.sptech.saferide.model.exception.NotRemoveWithRelationshipsExceptio
 import school.sptech.saferide.model.exception.TypeUserInvalidException;
 import school.sptech.saferide.repository.DependenteRepository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -62,6 +64,36 @@ public class DependenteService {
     public Dependente atualizarContrato(Dependente dependente, Contrato contrato) {
         dependente.setContrato(contrato);
         return repository.save(dependente);
+    }
+
+    public DependentePerfilResponse listarPerfilPorId(int id) {
+        listarPorId(id);
+        return repository.listarPerfilPorId(id);
+    }
+
+    public Dependente atualizarNome(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarNome(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Dependente atualizarDataNascimento(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarDataNascimento(id, LocalDate.parse(alteracao));
+        return repository.findById(id).get();
+    }
+
+    public Dependente atualizarSerie(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarSerie(id, alteracao);
+        return repository.findById(id).get();
+    }
+
+    public Dependente atualizarEscola(int id, String alteracao) {
+        listarPorId(id);
+        Escola escola = escolaService.listarPorNome(alteracao);
+        repository.atualizarEscola(id, escola);
+        return repository.findById(id).get();
     }
 
     public Void remover(int id) {

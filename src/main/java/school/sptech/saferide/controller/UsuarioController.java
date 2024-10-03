@@ -80,6 +80,14 @@ public class UsuarioController {
         return ResponseEntity.ok(UsuarioMapper.toListaMotoristas(response));
     }
 
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(value = "/foto-perfil/{id}", produces = "image/jpeg")
+    public ResponseEntity<byte[]> consultarFotoPerfilPorId(
+            @PathVariable int id) {
+        var response = service.consultarFotoPerfilPorId(id);
+        return ResponseEntity.ok(response);
+    }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "ok"),
             @ApiResponse(responseCode = "404", description = "Não encontrado"),
@@ -142,6 +150,20 @@ public class UsuarioController {
             @RequestBody UsuarioUpdate request) {
         var response = service.atualizarDataNascimento(request.getId(), request.getAlteracao());
         return ResponseEntity.ok(UsuarioMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PatchMapping(value = "/atualizar-foto-perfil/{id}", consumes = "image/*")
+    public ResponseEntity<Void> atualizarFoto(@PathVariable int id,
+                                              @RequestBody byte[] referenciaArquivoFoto,
+                                              @RequestHeader("Content-Type") String contentType) {
+        service.atualizarFotoPerfilPorId(id, referenciaArquivoFoto, contentType);
+        return ResponseEntity.ok().build();
     }
 
     @ApiResponses(value = {

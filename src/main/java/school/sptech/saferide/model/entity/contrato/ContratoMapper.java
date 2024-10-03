@@ -1,6 +1,5 @@
 package school.sptech.saferide.model.entity.contrato;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +17,7 @@ public class ContratoMapper {
         dto.setResponsavel(ContratoResponse.Usuario.builder()
                 .id(entity.getResponsavel().getId())
                 .nome(entity.getResponsavel().getNome())
+                .foto(entity.getResponsavel().getImagem().getCaminho())
                 .build());
         if (entity.getDependentes() != null) {
             dto.setDependentes(entity.getDependentes().stream()

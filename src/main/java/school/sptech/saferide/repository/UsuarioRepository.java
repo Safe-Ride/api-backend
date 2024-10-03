@@ -21,25 +21,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("SELECT DISTINCT d.motorista FROM Dependente d WHERE d.responsavel.id = :responsavelId")
     List<Usuario> findMotoristasByResponsavelId(@Param("responsavelId") int responsavelId);
-
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE Usuario u SET u.nome = :alteracao WHERE u.id = :id")
-    void atualizarNome(@Param("id") Integer id, @Param("alteracao") Object alteracao);
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE Usuario u SET u.email = :alteracao WHERE u.id = :id")
-    void atualizarEmail(@Param("id") Integer id, @Param("alteracao") Object alteracao);
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE Usuario u SET u.cpf = :alteracao WHERE u.id = :id")
-    void atualizarCpf(@Param("id") Integer id, @Param("alteracao") Object alteracao);
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE Usuario u SET u.telefone = :alteracao WHERE u.id = :id")
-    void atualizarTelefone(@Param("id") Integer id, @Param("alteracao") Object alteracao);
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE Usuario u SET u.dataNascimento = :alteracao WHERE u.id = :id")
-    void atualizarDataNascimento(@Param("id") Integer id, @Param("alteracao") Object alteracao);
 }

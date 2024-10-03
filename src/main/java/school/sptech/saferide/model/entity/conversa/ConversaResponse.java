@@ -15,7 +15,7 @@ public class ConversaResponse {
     private Integer id;
     private Usuario responsavel;
     private Usuario motorista;
-    private List<Mensagem> mensagems;
+    private List<Mensagem> mensagens;
 
     @Data
     @Builder

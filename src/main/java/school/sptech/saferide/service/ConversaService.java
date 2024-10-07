@@ -6,6 +6,7 @@ import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.conversa.ConversaMapper;
 import school.sptech.saferide.model.entity.conversa.ListarConversasMotorista;
 import school.sptech.saferide.model.entity.usuario.Usuario;
+import school.sptech.saferide.model.enums.TipoUsuario;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.ConversaRepository;
 

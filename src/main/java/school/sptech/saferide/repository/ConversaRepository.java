@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.conversa.ListarConversasMotorista;
+import school.sptech.saferide.model.enums.TipoUsuario;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,10 @@ public interface ConversaRepository extends JpaRepository<Conversa, Integer> {
         mt.id, mt.imagem.caminho, mt.nome,
         (select m3.status from Mensagem m3 where m3.conversa = c order by m3.data desc limit 1),
         (select max(m2.data) from Mensagem m2 where m2.conversa = c),
-        (select count(m4.id) from Mensagem m4 where m4.conversa = c and m4.lida = false))
+        (select count(m4.id) from Mensagem m4
+         join Usuario u on m4.usuario = u
+         where m4.conversa = c and m4.lida = false and u.tipo = school.sptech.saferide.model.enums.TipoUsuario.MOTORISTA)
+    )
     from Usuario mt
     join Conversa c on mt = c.motorista
     join Mensagem m on c.id = m.conversa.id

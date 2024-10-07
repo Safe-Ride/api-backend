@@ -21,6 +21,7 @@ public class Mensagem {
     private Integer id;
     private LocalDateTime data;
     private StatusDependente status;
+    private Boolean lida;
     @ManyToOne
     private Conversa conversa;
     @ManyToOne

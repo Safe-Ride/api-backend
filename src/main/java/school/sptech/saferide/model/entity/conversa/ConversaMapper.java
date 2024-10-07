@@ -17,7 +17,7 @@ public class ConversaMapper {
                 .nome(entity.getMotorista().getNome())
                 .build());
         if (entity.getMensagens() != null) {
-            dto.setMensagems(entity.getMensagens().stream()
+            dto.setMensagens(entity.getMensagens().stream()
                     .map(s -> ConversaResponse.Mensagem.builder()
                             .id(s.getId())
                             .horario(s.getData())

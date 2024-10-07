@@ -9,6 +9,7 @@ import school.sptech.saferide.model.enums.StatusDependente;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 @Getter
@@ -23,7 +24,7 @@ public class ListarConversasMotorista {
     private Long qtdMensagens;
 
     public String getHorario() {
-        return horario.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm"));
+        return horario.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
     }
 
     public String getMensagem() {

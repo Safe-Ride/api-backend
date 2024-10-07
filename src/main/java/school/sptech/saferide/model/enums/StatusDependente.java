@@ -5,7 +5,8 @@ public enum StatusDependente {
     INICIADO("Trajeto iniciado"),
     NAO_IRA("Não vai!"),
     NA_VAN("Na van"),
-    NA_ESCOLA("Na escola!");
+    NA_ESCOLA("Na escola!"),
+    CONVERSA_CRIADA("");
 
     public final String exibicao;
 

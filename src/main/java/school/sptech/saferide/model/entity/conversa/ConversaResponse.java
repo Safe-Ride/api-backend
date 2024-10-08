@@ -34,5 +34,6 @@ public class ConversaResponse {
         private String status;
         private TipoUsuario tipoUsuario;
         private String nome;
+        private Boolean lida;
     }
 }

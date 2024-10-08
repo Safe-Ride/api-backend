@@ -22,7 +22,7 @@ public interface ConversaRepository extends JpaRepository<Conversa, Integer> {
 
     @Query(value = """
     select new school.sptech.saferide.model.entity.conversa.ListarConversasMotorista(
-        mt.id, mt.imagem.caminho, mt.nome,
+        mt.id, c.id, mt.imagem.caminho, mt.nome,
         (select m3.status from Mensagem m3 where m3.conversa = c order by m3.data desc limit 1),
         (select max(m2.data) from Mensagem m2 where m2.conversa = c),
         (select count(m4.id) from Mensagem m4

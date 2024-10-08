@@ -35,6 +35,7 @@ public class ContratoResponse {
     public static class Dependente {
         private Integer id;
         private String nome;
+        private String foto;
     }
 
     @Data

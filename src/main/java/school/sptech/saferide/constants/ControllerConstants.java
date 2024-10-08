@@ -27,4 +27,5 @@ public class ControllerConstants {
     public final static String LIST_BY_ID_PATH = "/{id}";
     public final static String REMOVE_PATH = "/{id}";
     public final static String SECURITY_NAME = "Bearer";
+    public static final String USUARIO_PARENT_DRIVERS_BASE_PATH = "/motoristas-responsavel/{id}";
 }

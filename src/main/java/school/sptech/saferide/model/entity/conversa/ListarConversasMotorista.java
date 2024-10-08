@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ListarConversasMotorista {
     private Integer id;
+    private Integer conversaId;
     private String foto;
     private String nome;
     private StatusDependente mensagem;

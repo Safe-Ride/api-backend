@@ -24,6 +24,7 @@ public class ConversaMapper {
                             .status(s.getStatus().exibicao)
                             .tipoUsuario(s.getUsuario().getTipo())
                             .nome(s.getDependente().getNome())
+                            .lida(s.getLida())
                             .build())
                     .collect(Collectors.toList()));
         }

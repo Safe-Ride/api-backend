@@ -7,6 +7,7 @@ import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.EscolaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,8 +23,18 @@ public class EscolaService {
         return repository.save(payload);
     }
 
+    public List<Escola> listar() {
+        return repository.findAll();
+    }
+
     public Escola listarPorId(int id) {
         Optional<Escola> escolaOpt = repository.findById(id);
+        if (escolaOpt.isEmpty()) throw new NotFoundException("Escola");
+        return escolaOpt.get();
+    }
+
+    public Escola listarPorNome(String nome) {
+        Optional<Escola> escolaOpt = repository.findByNome(nome);
         if (escolaOpt.isEmpty()) throw new NotFoundException("Escola");
         return escolaOpt.get();
     }

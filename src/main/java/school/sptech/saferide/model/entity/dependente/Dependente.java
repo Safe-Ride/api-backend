@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import school.sptech.saferide.model.entity.contrato.Contrato;
 import school.sptech.saferide.model.entity.escola.Escola;
+import school.sptech.saferide.model.entity.imagem.Imagem;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 
 import java.time.LocalDate;
@@ -29,4 +30,6 @@ public class Dependente {
     private Usuario motorista;
     @ManyToOne
     private Contrato contrato;
+    @ManyToOne
+    private Imagem imagem;
 }

@@ -13,6 +13,8 @@ import school.sptech.saferide.model.entity.escola.EscolaRequest;
 import school.sptech.saferide.model.entity.escola.EscolaResponse;
 import school.sptech.saferide.service.EscolaService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(ControllerConstants.ESCOLAS_BASE_PATH)
 @RequiredArgsConstructor
@@ -33,6 +35,18 @@ public class EscolaController {
                 payload,
                 request.getEnderecoId());
         return ResponseEntity.created(null).body(EscolaMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping()
+    public ResponseEntity<List<EscolaResponse>> listar() {
+        var response = service.listar();
+        return ResponseEntity.ok(EscolaMapper.toDto(response));
     }
 
     @ApiResponses(value = {

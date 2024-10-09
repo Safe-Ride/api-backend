@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: lucas
+Build-Jdk: 17.0.12
+Implementation-Title: api-backend
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: saferide.sptech
+Main-Class: ${start-class}
+

@@ -163,4 +163,10 @@ public class UsuarioService {
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return dependentes;
     }
+
+    public List<Dependente> listarStatusDependentesPorResponsavel(int id){
+        List<Dependente> dependentes = dependenteRepository.findByResponsavelId(id);
+        if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return dependentes;
+    }
 }

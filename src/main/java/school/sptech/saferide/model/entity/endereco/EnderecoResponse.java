@@ -10,6 +10,7 @@ public class EnderecoResponse {
     private Integer id;
     private Double latitude;
     private Double longitude;
+    private String nome;
     private String cep;
     private Integer numero;
     private String complemento;

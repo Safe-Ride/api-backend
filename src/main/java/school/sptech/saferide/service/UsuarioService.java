@@ -163,4 +163,18 @@ public class UsuarioService {
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return dependentes;
     }
+
+//    public List<ResponsavelListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
+//        List<Object[]> resultados = repository.findMotoristasByResponsavelId(responsavelId);
+//
+//        List<ResponsavelListarMotoristas> responsaveis = new ArrayList<>();
+//        for (Object[] resultado : resultados) {
+//            int id = (Integer) resultado[0];
+//            String nome = (String) resultado[1];
+//            String foto = (String) resultado[2];
+//            responsaveis.add(new ResponsavelListarMotoristas(id, nome, foto));
+//        }
+//
+//        return responsaveis;
+//    }
 }

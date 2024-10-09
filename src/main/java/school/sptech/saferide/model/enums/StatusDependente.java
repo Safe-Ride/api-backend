@@ -1,5 +1,16 @@
 package school.sptech.saferide.model.enums;
 
 public enum StatusDependente {
-    NAO_INICIADO, INICIADO, NAO_IRA, NA_VAN, NA_ESCOLA, ;
+    NAO_INICIADO("Trajeto não iniciado"),
+    INICIADO("Trajeto iniciado"),
+    NAO_IRA("Não vai!"),
+    NA_VAN("Na van"),
+    NA_ESCOLA("Na escola!"),
+    CONVERSA_CRIADA("");
+
+    public final String exibicao;
+
+    StatusDependente(String exibicao) {
+        this.exibicao = exibicao;
+    }
 }

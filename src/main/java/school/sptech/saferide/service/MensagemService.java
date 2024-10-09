@@ -1,15 +1,20 @@
 package school.sptech.saferide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.mensagem.Mensagem;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.exception.DependenteNotLinkUsuarioException;
+import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.MensagemRepository;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +41,17 @@ public class MensagemService {
         payload.setConversa(conversa);
         payload.setUsuario(usuario);
         payload.setDependente(dependente);
+        payload.setLida(false);
         return repository.save(payload);
+    }
+
+    public void marcarLida(Integer id) {
+        Optional<Mensagem> mensagemOpt = repository.findById(id);
+        if(mensagemOpt.isEmpty()) throw new NotFoundException("Mensagem");
+
+        Mensagem mensagem = mensagemOpt.get();
+
+        mensagem.setLida(true);
+        repository.save(mensagem);
     }
 }

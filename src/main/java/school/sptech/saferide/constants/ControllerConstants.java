@@ -5,6 +5,7 @@ public class ControllerConstants {
     public final static String ENDERECO_BASE_PATH = "/enderecos";
     public final static String ESCOLAS_BASE_PATH = "/escolas";
     public final static String CONVERSA_BASE_PATH = "/conversas";
+    public final static String SOLICITACAO_BASE_PATH = "/solicitacoes";
     public final static String MENSAGEM_BASE_PATH = "/mensagens";
     public final static String CONTRATO_BASE_PATH = "/contratos";
     public final static String CONTRATO_POR_MOTORISTA_BASE_PATH = "/motorista/{motoristaId}";

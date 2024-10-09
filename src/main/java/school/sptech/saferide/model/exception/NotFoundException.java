@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String campo) {
-        super(String.format("%s Endereço não encontrado!", campo));
+        super(String.format("%s não encontrado!", campo));
     }
 }

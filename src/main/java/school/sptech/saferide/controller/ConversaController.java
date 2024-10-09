@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
-import school.sptech.saferide.model.entity.conversa.ConversaMapper;
-import school.sptech.saferide.model.entity.conversa.ConversaRequest;
-import school.sptech.saferide.model.entity.conversa.ConversaResponse;
-import school.sptech.saferide.model.entity.conversa.ListarConversasMotorista;
+import school.sptech.saferide.model.entity.conversa.*;
 import school.sptech.saferide.service.ConversaService;
 
 import java.util.List;
@@ -60,5 +57,11 @@ public class ConversaController {
     @GetMapping(ControllerConstants.CONVERSAS_RESPONSAVEL_MOTORISTAS_BASE_PATH)
     public ResponseEntity<List<ListarConversasMotorista>> listarConversasMotoristasPorResponsavel(@PathVariable int id) {
         return ResponseEntity.ok(service.listarConversasMotoristasPorResponsavel(id));
+    }
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.CONVERSAS_MOTORISTA_RESPONSAVEIS_BASE_PATH)
+    public ResponseEntity<List<ListarConversasResponsavel>> listarConversasResponsaveisPorMotorista(@PathVariable int id) {
+        return ResponseEntity.ok(service.listarConversasResponsaveisPorMotorista(id));
     }
 }

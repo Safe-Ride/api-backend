@@ -3,11 +3,9 @@ package school.sptech.saferide.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.saferide.model.entity.conversa.Conversa;
-import school.sptech.saferide.model.entity.conversa.ConversaMapper;
 import school.sptech.saferide.model.entity.conversa.ListarConversasMotorista;
-import school.sptech.saferide.model.entity.mensagem.Mensagem;
+import school.sptech.saferide.model.entity.conversa.ListarConversasResponsavel;
 import school.sptech.saferide.model.entity.usuario.Usuario;
-import school.sptech.saferide.model.enums.TipoUsuario;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.ConversaRepository;
 
@@ -47,5 +45,9 @@ public class ConversaService {
 
     public List<ListarConversasMotorista> listarConversasMotoristasPorResponsavel(int id) {
         return repository.findByResponsavelId(id);
+    }
+
+    public List<ListarConversasResponsavel> listarConversasResponsaveisPorMotorista(int id) {
+        return repository.findByMotoristaId(id);
     }
 }

@@ -29,7 +29,7 @@ public class MensagemService {
             Mensagem payload,
             int conversaId,
             int usuarioId,
-            int dependenteId) {
+            Integer dependenteId) {
         Conversa conversa = conversaService.listarPorId(conversaId);
         Usuario usuario = usuarioService.listarPorId(usuarioId);
         Dependente dependente = dependenteService.listarPorId(dependenteId);

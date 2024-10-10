@@ -28,4 +28,8 @@ public class Mensagem {
     private Usuario usuario;
     @ManyToOne
     private Dependente dependente;
+
+    public Mensagem(StatusDependente status) {
+        this.status = status;
+    }
 }

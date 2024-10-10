@@ -25,6 +25,10 @@ public class SolicitacaoController {
 
     private final SolicitacaoService service;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Criado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<SolicitacaoResponse> criar(
@@ -64,6 +68,20 @@ public class SolicitacaoController {
             @PathVariable int motoristaId) {
         var response = service.listarPorMotorista(motoristaId);
         if (response.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(SolicitacaoMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "204", description = "Sem conteudo"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PatchMapping("/aprovar/{id}")
+    public ResponseEntity<SolicitacaoResponse> aprovar(
+            @PathVariable int id) {
+        var response = service.aprovar(id);
         return ResponseEntity.ok(SolicitacaoMapper.toDto(response));
     }
 

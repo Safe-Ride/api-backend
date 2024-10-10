@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.conversa.ConversaMapper;
 import school.sptech.saferide.model.entity.conversa.ListarConversasMotorista;
+import school.sptech.saferide.model.entity.mensagem.Mensagem;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.TipoUsuario;
 import school.sptech.saferide.model.exception.NotFoundException;
@@ -35,8 +36,7 @@ public class ConversaService {
             int responsavelId,
             int motoristaId) {
         Optional<Conversa> conversaOpt = repository.findByResponsavelIdAndMotoristaId(responsavelId, motoristaId);
-        if (conversaOpt.isEmpty()) throw new NotFoundException("Conversa");
-        return conversaOpt.get();
+        return conversaOpt.orElse(null);
     }
 
     public Conversa listarPorId(int id) {

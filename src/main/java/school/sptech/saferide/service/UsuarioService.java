@@ -16,6 +16,7 @@ import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.imagem.Imagem;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
 import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
+import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;

@@ -19,8 +19,10 @@ import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
 import school.sptech.saferide.model.exception.NotFoundException;
+import school.sptech.saferide.model.view.ListarStatusDependentePorResponsavelView;
 import school.sptech.saferide.repository.DependenteRepository;
 import school.sptech.saferide.repository.UsuarioRepository;
+import school.sptech.saferide.repository.view.ListarStatusDependentePorResponsavelViewRepository;
 import school.sptech.saferide.service.utils.S3Configure;
 
 import java.time.LocalDate;
@@ -37,6 +39,7 @@ public class UsuarioService {
     private final AuthenticationManager authenticationManager;
 
     private final UsuarioRepository repository;
+    private final ListarStatusDependentePorResponsavelViewRepository listarStatusDependentePorResponsavelViewRepository;
     private final DependenteRepository dependenteRepository;
     private final ImagemService imagemService;
 
@@ -164,8 +167,10 @@ public class UsuarioService {
         return dependentes;
     }
 
-    public List<Dependente> listarStatusDependentesPorResponsavel(int id){
-        List<Dependente> dependentes = dependenteRepository.findByResponsavelId(id);
+
+
+    public List<ListarStatusDependentePorResponsavelView> listarStatusDependentePorResponsavel(int responsavelId) {
+        List<ListarStatusDependentePorResponsavelView> dependentes = listarStatusDependentePorResponsavelViewRepository.findByResponsavelId(responsavelId);
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return dependentes;
     }

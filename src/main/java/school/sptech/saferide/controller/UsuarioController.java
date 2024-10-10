@@ -13,6 +13,8 @@ import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.DependenteMapper;
 import school.sptech.saferide.model.entity.dependente.DependenteResponse;
 import school.sptech.saferide.model.entity.usuario.*;
+import school.sptech.saferide.model.view.ListarStatusDependentePorResponsavelView;
+import school.sptech.saferide.model.view.PagamentosTotalEfetuadosView;
 import school.sptech.saferide.service.UsuarioService;
 
 import java.util.List;
@@ -55,7 +57,6 @@ public class UsuarioController {
         var response = service.listarPorId(id);
         return ResponseEntity.ok(UsuarioMapper.toDto(response));
     }
-
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping(ControllerConstants.USUARIO_DRIVER_CLIENTS_BASE_PATH)
     public ResponseEntity<List<MotoristaListarClientes>> listarResponsaveisPorMotorista(
@@ -85,6 +86,19 @@ public class UsuarioController {
     public ResponseEntity<byte[]> consultarFotoPerfilPorId(
             @PathVariable int id) {
         var response = service.consultarFotoPerfilPorId(id);
+        return ResponseEntity.ok(response);
+    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.LIST_STATUS_DEPENDENTE_HISTORICO)
+    public ResponseEntity<List<ListarStatusDependentePorResponsavelView>> listarPagamentosTotalEfetuadosView(
+            @PathVariable int id
+    ) {
+        var response = service.listarStatusDependentePorResponsavel(id);
         return ResponseEntity.ok(response);
     }
 

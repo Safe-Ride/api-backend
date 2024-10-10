@@ -27,4 +27,5 @@ public class ControllerConstants {
     public final static String LIST_BY_ID_PATH = "/{id}";
     public final static String REMOVE_PATH = "/{id}";
     public final static String SECURITY_NAME = "Bearer";
+    public final static String LIST_STATUS_DEPENDENTE_HISTORICO = "/status-dependentes/{id}";
 }

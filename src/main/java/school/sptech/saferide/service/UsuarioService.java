@@ -13,8 +13,8 @@ import school.sptech.saferide.controller.security.jwt.GerenciadorTokenJwt;
 import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
-import school.sptech.saferide.model.entity.dependente.DependenteResponse;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
@@ -77,6 +77,17 @@ public class UsuarioService {
             responsaveis.add(new MotoristaListarClientes(id, nome, foto));
         }
         return responsaveis;
+    }
+
+    public List<Usuario> listarMotoristaPorEscola(int id) {
+        Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
+        if (dependenteOpt.isEmpty()) throw new NotFoundException("Dependente");
+        int escolaId = dependenteOpt.get().getEscola().getId();
+        return repository.findMotoristaByEscolaId(escolaId);
+    }
+
+    public MotoristaPerfilResponse listarPerfilMotorista(int id) {
+        return repository.findMotoristaTranporteByDependenteId(id).orElseThrow(() -> new NotFoundException("Usuario"));
     }
 
     public Usuario atualizarNome(int id, String alteracao) {

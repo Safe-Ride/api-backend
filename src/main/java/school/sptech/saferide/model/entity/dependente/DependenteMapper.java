@@ -19,7 +19,7 @@ public class DependenteMapper {
                 .id(entity.getEscola().getId())
                 .nome(entity.getEscola().getNome())
                 .build());
-        if (dto.getMotorista() != null) {
+        if (entity.getMotorista() != null) {
             dto.setMotorista(DependenteResponse.Usuario.builder()
                     .id(entity.getMotorista().getId())
                     .nome(entity.getMotorista().getNome())

@@ -13,16 +13,19 @@ import school.sptech.saferide.controller.security.jwt.GerenciadorTokenJwt;
 import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
-import school.sptech.saferide.model.entity.dependente.DependenteResponse;
+import school.sptech.saferide.model.entity.imagem.Imagem;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
-import school.sptech.saferide.model.entity.usuario.ResponsavelListarMotoristas;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.DependenteRepository;
 import school.sptech.saferide.repository.UsuarioRepository;
+import school.sptech.saferide.service.utils.S3Configure;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service
@@ -36,6 +39,8 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private final DependenteRepository dependenteRepository;
     private final ImagemService imagemService;
+
+    private final S3Configure s3;
 
     public Usuario criar(Usuario payload) {
         if (repository.findByEmail(payload.getEmail()).isPresent()) throw new ConflictException(payload.getEmail());
@@ -85,34 +90,64 @@ public class UsuarioService {
         return repository.findMotoristasByResponsavelId(responsavelId);
     }
 
-    public Usuario atualizarNome(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarNome(id, alteracao);
-        return repository.findById(id).get();
+    public byte[] consultarFotoPerfilPorId(int id) {
+        Usuario usuario = listarPorId(id);
+        return s3.baixarArquivoS3(usuario.getImagem().getCaminho());
     }
 
-    public Usuario atualizarEmail(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarEmail(id, alteracao);
-        return repository.findById(id).get();
+    public void atualizarFotoPerfilPorId(int id, byte[] foto, String contentType) {
+        Usuario usuario = listarPorId(id);
+
+        String extensao = switch (contentType) {
+            case "image/jpeg" -> ".jpg";
+            case "image/png" -> ".png";
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de imagem não suportado");
+        };
+
+        String nomeArquivo = UUID.randomUUID().toString() + extensao;
+
+        s3.gravarArquivoS3(nomeArquivo, foto);
+
+        Imagem imagem = new Imagem();
+        imagem.setCaminho(nomeArquivo);
+        usuario.setImagem(imagemService.criar(imagem));
+
+        repository.save(usuario);
     }
 
-    public Usuario atualizarCpf(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarCpf(id, alteracao);
-        return repository.findById(id).get();
+    public Usuario atualizarNome(int id, String nome) {
+        Usuario usuario = listarPorId(id);
+        usuario.setNome(nome);
+        return repository.save(usuario);
     }
 
-    public Usuario atualizarTelefone(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarTelefone(id, alteracao);
-        return repository.findById(id).get();
+    public Usuario atualizarEmail(int id, String email) {
+        Usuario usuario = listarPorId(id);
+        usuario.setEmail(email);
+        return repository.save(usuario);
     }
 
-    public Usuario atualizarDataNascimento(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarDataNascimento(id, alteracao);
-        return repository.findById(id).get();
+    public Usuario atualizarCpf(int id, String cpf) {
+        Usuario usuario = listarPorId(id);
+        usuario.setCpf(cpf);
+        return repository.save(usuario);
+    }
+
+    public Usuario atualizarTelefone(int id, String telefone) {
+        Usuario usuario = listarPorId(id);
+        usuario.setTelefone(telefone);
+        return repository.save(usuario);
+    }
+
+    public Usuario atualizarDataNascimento(int id, String dataNascimento) {
+        try {
+            Usuario usuario = listarPorId(id);
+            LocalDate novaDataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ISO_LOCAL_DATE);
+            usuario.setDataNascimento(novaDataNascimento);
+            return repository.save(usuario);
+        } catch (DateTimeParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Formato de data inválido: " + e.getMessage());
+        }
     }
 
     public Void remover(int id) {
@@ -128,4 +163,18 @@ public class UsuarioService {
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return dependentes;
     }
+
+//    public List<ResponsavelListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
+//        List<Object[]> resultados = repository.findMotoristasByResponsavelId(responsavelId);
+//
+//        List<ResponsavelListarMotoristas> responsaveis = new ArrayList<>();
+//        for (Object[] resultado : resultados) {
+//            int id = (Integer) resultado[0];
+//            String nome = (String) resultado[1];
+//            String foto = (String) resultado[2];
+//            responsaveis.add(new ResponsavelListarMotoristas(id, nome, foto));
+//        }
+//
+//        return responsaveis;
+//    }
 }

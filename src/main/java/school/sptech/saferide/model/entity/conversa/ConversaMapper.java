@@ -11,24 +11,20 @@ public class ConversaMapper {
         dto.setResponsavel(ConversaResponse.Usuario.builder()
                 .id(entity.getResponsavel().getId())
                 .nome(entity.getResponsavel().getNome())
-                .telefone(entity.getResponsavel().getTelefone())
                 .build());
         dto.setMotorista(ConversaResponse.Usuario.builder()
                 .id(entity.getMotorista().getId())
                 .nome(entity.getMotorista().getNome())
-                .telefone(entity.getMotorista().getTelefone())
                 .build());
         if (entity.getMensagens() != null) {
-            dto.setMensagems(entity.getMensagens().stream()
+            dto.setMensagens(entity.getMensagens().stream()
                     .map(s -> ConversaResponse.Mensagem.builder()
                             .id(s.getId())
-                            .data(s.getData())
-                            .status(s.getStatus())
-                            .usuarioId(s.getUsuario().getId())
-                            .dependente(ConversaResponse.Mensagem.Dependente.builder()
-                                    .id(s.getDependente().getId())
-                                    .nome(s.getDependente().getNome())
-                                    .build())
+                            .horario(s.getData())
+                            .status(s.getStatus().exibicao)
+                            .tipoUsuario(s.getUsuario().getTipo())
+                            .nome(s.getDependente().getNome())
+                            .lida(s.getLida())
                             .build())
                     .collect(Collectors.toList()));
         }

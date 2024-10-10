@@ -5,6 +5,7 @@ public class ControllerConstants {
     public final static String ENDERECO_BASE_PATH = "/enderecos";
     public final static String ESCOLAS_BASE_PATH = "/escolas";
     public final static String CONVERSA_BASE_PATH = "/conversas";
+    public final static String SOLICITACAO_BASE_PATH = "/solicitacoes";
     public final static String MENSAGEM_BASE_PATH = "/mensagens";
     public final static String CONTRATO_BASE_PATH = "/contratos";
     public final static String CONTRATO_POR_MOTORISTA_BASE_PATH = "/motorista/{motoristaId}";
@@ -21,9 +22,13 @@ public class ControllerConstants {
     public final static String USUARIO_DRIVER_CLIENTS_BASE_PATH = "/clientes-motorista/{id}";
     public final static String USUARIO_PARENT_DEPENDANTS_BASE_PATH = "/dependentes-responsavel/{id}";
     public final static String DEPENDENTE_LINK_MOTORISTA_PATH = "/{dependenteId}/vincular-motorista/{motoristaId}";
+    public final static String DEPENDENTE_PERFIL_BASE_PATH = "/{id}/perfil";
     public final static String SEARCH_CEP = "/buscar-cep/{cep}";
     public final static String ENDERECO_LIST_BY_USUARIO_PATH = "/usuario/{usuarioId}";
     public final static String LIST_BY_ID_PATH = "/{id}";
     public final static String REMOVE_PATH = "/{id}";
     public final static String SECURITY_NAME = "Bearer";
+    public static final String USUARIO_PARENT_DRIVERS_BASE_PATH = "/motoristas-responsavel/{id}";
+    public final static String CONVERSAS_RESPONSAVEL_MOTORISTAS_BASE_PATH = "/motoristas-responsavel/{id}";
+    public static final String CONVERSAS_MOTORISTA_RESPONSAVEIS_BASE_PATH = "/responsaveis-motorista/{id}";
 }

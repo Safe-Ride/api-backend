@@ -42,4 +42,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.dataNascimento = :alteracao WHERE u.id = :id")
     void atualizarDataNascimento(@Param("id") Integer id, @Param("alteracao") Object alteracao);
+
+//    @Query("SELECT DISTINCT m.id AS id, m.nome AS nome, m.imagem.caminho " +
+//            "FROM Dependente d JOIN d.motorista m " +
+//            "WHERE d.responsavel.id = :responsavelId")
+//    List<Object[]> findMotoristasByResponsavelId(@Param("responsavelId") int motoristaId);
 }

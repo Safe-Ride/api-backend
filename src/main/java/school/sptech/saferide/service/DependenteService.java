@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.saferide.model.entity.contrato.Contrato;
-import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.dependente.DependentePerfilResponse;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.TipoUsuario;
@@ -16,6 +16,7 @@ import school.sptech.saferide.model.exception.NotRemoveWithRelationshipsExceptio
 import school.sptech.saferide.model.exception.TypeUserInvalidException;
 import school.sptech.saferide.repository.DependenteRepository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -25,7 +26,6 @@ public class DependenteService {
     private final DependenteRepository repository;
     private final UsuarioService usuarioService;
     private final EscolaService escolaService;
-    private final ConversaService conversaService;
 
     public Dependente criar(Dependente payload, int usuarioId, int escolaId) {
         Usuario responsavel = usuarioService.listarPorId(usuarioId);
@@ -44,23 +44,47 @@ public class DependenteService {
     }
 
     public Dependente vincularMotorista(int dependenteId, int motoristaId) {
-
         Usuario motorista = usuarioService.listarPorId(motoristaId);
         if (!motorista.getTipo().equals(TipoUsuario.MOTORISTA)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         Dependente dependente = listarPorId(dependenteId);
         dependente.setMotorista(motorista);
 
-        conversaService.criar(
-                new Conversa(),
-                dependente.getResponsavel().getId(),
-                motorista.getId());
-
         return repository.save(dependente);
     }
 
-    public Dependente atualizarContrato(Dependente dependente, Contrato contrato) {
+    public void atualizarContrato(Dependente dependente, Contrato contrato) {
         dependente.setContrato(contrato);
+        repository.save(dependente);
+    }
+
+    public DependentePerfilResponse listarPerfilPorId(int id) {
+        listarPorId(id);
+        return repository.listarPerfilPorId(id);
+    }
+
+    public Dependente atualizarNome(int id, String alteracao) {
+        Dependente dependente = listarPorId(id);
+        dependente.setNome(alteracao);
+        return repository.save(dependente);
+    }
+
+    public Dependente atualizarDataNascimento(int id, String alteracao) {
+        Dependente dependente = listarPorId(id);
+        dependente.setDataNascimento(LocalDate.parse(alteracao));
+        return repository.save(dependente);
+    }
+
+    public Dependente atualizarSerie(int id, String alteracao) {
+        Dependente dependente = listarPorId(id);
+        dependente.setSerie(alteracao);
+        return repository.save(dependente);
+    }
+
+    public Dependente atualizarEscola(int id, String alteracao) {
+        Dependente dependente = listarPorId(id);
+        Escola escola = escolaService.listarPorNome(alteracao);
+        dependente.setEscola(escola);
         return repository.save(dependente);
     }
 
@@ -73,4 +97,5 @@ public class DependenteService {
         repository.deleteById(id);
         return null;
     }
+
 }

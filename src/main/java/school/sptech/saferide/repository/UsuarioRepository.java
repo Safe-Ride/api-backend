@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 
 import java.util.List;
@@ -22,6 +22,17 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query("SELECT DISTINCT d.motorista FROM Dependente d WHERE d.responsavel.id = :responsavelId")
     List<Usuario> findMotoristasByResponsavelId(@Param("responsavelId") int responsavelId);
 
+    @Query("SELECT DISTINCT u FROM Usuario u " +
+            "JOIN Trajeto t ON t.motorista = u " +
+            "WHERE u.tipo = 0 AND t.escola.id = " +
+            "(SELECT d.escola.id FROM Dependente d WHERE d.id = :dependenteId)")
+    List<Usuario> findMotoristaByEscolaId(@Param("dependenteId") int dependenteId);
+    @Query("SELECT new school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse(" +
+            "u.id, u.nome, u.telefone, u.email, u.dataNascimento, u.imagem, t.id, t.placa, t.cnpj) " +
+            "FROM Usuario u " +
+            "JOIN Transporte t ON t.usuario.id = u.id " +
+            "WHERE u = (SELECT d.motorista FROM Dependente d WHERE d.id = :dependenteId) AND u.tipo = 0")
+    Optional<MotoristaPerfilResponse> findMotoristaTranporteByDependenteId(@Param("dependenteId") int dependenteId);
     @Modifying
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.nome = :alteracao WHERE u.id = :id")

@@ -15,6 +15,8 @@ import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.imagem.Imagem;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
+import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
@@ -88,6 +90,23 @@ public class UsuarioService {
     public List<Usuario> listarMotoristasPorCliente(int responsavelId) {
         listarPorId(responsavelId);
         return repository.findMotoristasByResponsavelId(responsavelId);
+    }
+
+    public List<Usuario> listarMotoristaPorEscola(int id) {
+        Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
+        if (dependenteOpt.isEmpty()) throw new NotFoundException("Dependente");
+        int escolaId = dependenteOpt.get().getEscola().getId();
+        return repository.findMotoristaByEscolaId(escolaId);
+    }
+
+    public MotoristaPerfilResponse listarPerfilMotorista(int id) {
+        return repository.findMotoristaTranporteByDependenteId(id).orElseThrow(() -> new NotFoundException("Usuario"));
+    }
+
+    public Usuario atualizarNome(int id, String alteracao) {
+        listarPorId(id);
+        repository.atualizarNome(id, alteracao);
+        return repository.findById(id).get();
     }
 
     public byte[] consultarFotoPerfilPorId(int id) {

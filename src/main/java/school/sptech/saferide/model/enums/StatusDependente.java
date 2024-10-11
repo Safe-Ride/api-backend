@@ -6,7 +6,8 @@ public enum StatusDependente {
     NAO_IRA("Não vai!"),
     NA_VAN("Na van"),
     NA_ESCOLA("Na escola!"),
-    CONVERSA_CRIADA("");
+    CONVERSA_CRIADA(""),
+    EM_CASA("Em casa");
 
     public final String exibicao;
 

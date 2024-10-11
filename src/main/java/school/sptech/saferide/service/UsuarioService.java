@@ -103,12 +103,6 @@ public class UsuarioService {
         return repository.findMotoristaTranporteByDependenteId(id).orElseThrow(() -> new NotFoundException("Usuario"));
     }
 
-    public Usuario atualizarNome(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarNome(id, alteracao);
-        return repository.findById(id).get();
-    }
-
     public byte[] consultarFotoPerfilPorId(int id) {
         Usuario usuario = listarPorId(id);
         return s3.baixarArquivoS3(usuario.getImagem().getCaminho());

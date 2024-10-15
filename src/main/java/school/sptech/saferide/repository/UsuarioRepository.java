@@ -53,6 +53,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.dataNascimento = :alteracao WHERE u.id = :id")
     void atualizarDataNascimento(@Param("id") Integer id, @Param("alteracao") Object alteracao);
+    @Query("SELECT DISTINCT m.id AS id, m.nome AS nome, m.imagem.caminho AS foto " +
+            "FROM Dependente  d " +
+            "JOIN Usuario r ON d.responsavel.id = r.id " +
+            "JOIN Usuario m ON d.motorista.id = m.id " +
+            "JOIN Escola e ON d.escola.id = e.id " +
+            "WHERE r.id = :responsavelId")
+    List<Object[]> findMotoristasDisponiveisByResponsavelId(@Param("responsavelId") int responsavelId);
 
 //    @Query("SELECT DISTINCT m.id AS id, m.nome AS nome, m.imagem.caminho " +
 //            "FROM Dependente d JOIN d.motorista m " +

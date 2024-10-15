@@ -14,11 +14,8 @@ import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.imagem.Imagem;
-import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.*;
 import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
-import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
-import school.sptech.saferide.model.entity.usuario.Usuario;
-import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.DependenteRepository;
@@ -103,11 +100,11 @@ public class UsuarioService {
         return repository.findMotoristaTranporteByDependenteId(id).orElseThrow(() -> new NotFoundException("Usuario"));
     }
 
-    public Usuario atualizarNome(int id, String alteracao) {
-        listarPorId(id);
-        repository.atualizarNome(id, alteracao);
-        return repository.findById(id).get();
-    }
+//    public Usuario atualizarNome(int id, String alteracao) {
+//        listarPorId(id);
+//        repository.atualizarNome(id, alteracao);
+//        return repository.findById(id).get();
+//    }
 
     public byte[] consultarFotoPerfilPorId(int id) {
         Usuario usuario = listarPorId(id);
@@ -183,17 +180,17 @@ public class UsuarioService {
         return dependentes;
     }
 
-//    public List<ResponsavelListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
-//        List<Object[]> resultados = repository.findMotoristasByResponsavelId(responsavelId);
-//
-//        List<ResponsavelListarMotoristas> responsaveis = new ArrayList<>();
-//        for (Object[] resultado : resultados) {
-//            int id = (Integer) resultado[0];
-//            String nome = (String) resultado[1];
-//            String foto = (String) resultado[2];
-//            responsaveis.add(new ResponsavelListarMotoristas(id, nome, foto));
-//        }
-//
-//        return responsaveis;
-//    }
+    public List<ClienteListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
+        List<Object[]> resultados = repository.findMotoristasDisponiveisByResponsavelId(responsavelId);
+        List<ClienteListarMotoristas> motoristas = new ArrayList<>();
+        for (Object[] resultado : resultados) {
+           int id = (Integer) resultado[0];
+           String nome = (String) resultado[1];
+           String foto =(String) resultado[2];
+
+           motoristas.add(new ClienteListarMotoristas(id, nome, foto));
+        }
+        if (motoristas.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return motoristas;
+    }
 }

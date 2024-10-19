@@ -7,18 +7,17 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.solicitacao.SolicitacaoMapper;
-import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequest;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequestResponsavel;
 import school.sptech.saferide.model.entity.solicitacao.SolicitacaoResponse;
 import school.sptech.saferide.service.SolicitacaoService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(ControllerConstants.SOLICITACAO_BASE_PATH)
 @RequiredArgsConstructor
 public class SolicitacaoController {
@@ -29,18 +28,11 @@ public class SolicitacaoController {
             @ApiResponse(responseCode = "201", description = "Criado"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+//    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @PostMapping
     public ResponseEntity<SolicitacaoResponse> criar(
-            @Valid @RequestBody SolicitacaoRequest request) {
-        var payload = SolicitacaoMapper.toEntity(request);
-        var response = service.criar(
-                payload,
-                request.getMotoristaId(),
-                request.getResponsavelId(),
-                request.getEscolaId(),
-                request.getEnderecoId(),
-                request.getDependenteId());
+            @Valid @RequestBody SolicitacaoRequestResponsavel request) {
+        var response = service.criar(request);
         return ResponseEntity.created(null).body(SolicitacaoMapper.toDto(response));
     }
 

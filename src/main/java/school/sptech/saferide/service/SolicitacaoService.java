@@ -8,6 +8,7 @@ import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.mensagem.Mensagem;
 import school.sptech.saferide.model.entity.solicitacao.Solicitacao;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequestResponsavel;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.StatusSolicitacao;
 import school.sptech.saferide.model.exception.NotFoundException;
@@ -31,23 +32,16 @@ public class SolicitacaoService {
     private final MensagemService mensagemService;
     private final ConversaService conversaService;
 
-    public Solicitacao criar(
-            Solicitacao solicitacao,
-            int motoristaId,
-            int responsavelId,
-            int escolaId,
-            int enderecoId,
-            int dependenteId) {
-        Usuario motorista = usuarioService.listarPorId(motoristaId);
-        Usuario responsavel = usuarioService.listarPorId(responsavelId);
-        Escola escola = escolaService.listarPorId(escolaId);
-        Endereco endereco = enderecoService.listarPorId(enderecoId);
-        Dependente dependente = dependenteService.listarPorId(dependenteId);
-        solicitacao.setMotorista(motorista);
-        solicitacao.setResponsavel(responsavel);
-        solicitacao.setEscola(escola);
-        solicitacao.setEndereco(endereco);
-        solicitacao.setDependente(dependente);
+    public Solicitacao criar(SolicitacaoRequestResponsavel request) {
+        Usuario motorista = usuarioService.listarPorId(request.getMotoristaId());
+        Usuario responsavel = usuarioService.listarPorId(request.getResponsavelId());
+        Endereco endereco = enderecoService.listarPorId(request.getEnderecoId());
+        Dependente dependente = dependenteService.listarPorId(request.getDependenteId());
+        Escola escola = dependente.getEscola();
+
+        Solicitacao solicitacao = new Solicitacao(
+                responsavel, motorista, endereco, escola, dependente,
+                request.getPeriodo(), request.getTipo(), request.getDiaSemana());
         return repository.save(solicitacao);
     }
 

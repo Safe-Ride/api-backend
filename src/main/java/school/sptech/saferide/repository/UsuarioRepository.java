@@ -31,8 +31,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
             "u.id, u.nome, u.telefone, u.email, u.dataNascimento, u.imagem, t.id, t.placa, t.cnpj) " +
             "FROM Usuario u " +
             "JOIN Transporte t ON t.usuario.id = u.id " +
-            "WHERE u = (SELECT d.motorista FROM Dependente d WHERE d.id = :dependenteId) AND u.tipo = 0")
-    Optional<MotoristaPerfilResponse> findMotoristaTranporteByDependenteId(@Param("dependenteId") int dependenteId);
+            "WHERE u.id = :id")
+    Optional<MotoristaPerfilResponse> findMotoristaTranporteById(@Param("id") int dependenteId);
     @Modifying
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.nome = :alteracao WHERE u.id = :id")

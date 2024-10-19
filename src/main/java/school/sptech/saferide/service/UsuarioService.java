@@ -97,7 +97,7 @@ public class UsuarioService {
     }
 
     public MotoristaPerfilResponse listarPerfilMotorista(int id) {
-        return repository.findMotoristaTranporteByDependenteId(id).orElseThrow(() -> new NotFoundException("Usuario"));
+        return repository.findMotoristaTranporteById(id).orElseThrow(() -> new NotFoundException("Usuario"));
     }
 
 //    public Usuario atualizarNome(int id, String alteracao) {

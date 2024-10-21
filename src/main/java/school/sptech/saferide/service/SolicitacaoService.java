@@ -8,12 +8,16 @@ import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.mensagem.Mensagem;
 import school.sptech.saferide.model.entity.solicitacao.Solicitacao;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoMapper;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequest;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequestResponsavel;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.StatusSolicitacao;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.model.exception.SolicitacaoAlreadyApproveException;
 import school.sptech.saferide.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,24 +35,37 @@ public class SolicitacaoService {
     private final MensagemService mensagemService;
     private final ConversaService conversaService;
 
-    public Solicitacao criar(
-            Solicitacao solicitacao,
-            int motoristaId,
-            int responsavelId,
-            int escolaId,
-            int enderecoId,
-            int dependenteId) {
-        Usuario motorista = usuarioService.listarPorId(motoristaId);
-        Usuario responsavel = usuarioService.listarPorId(responsavelId);
-        Escola escola = escolaService.listarPorId(escolaId);
-        Endereco endereco = enderecoService.listarPorId(enderecoId);
-        Dependente dependente = dependenteService.listarPorId(dependenteId);
-        solicitacao.setMotorista(motorista);
-        solicitacao.setResponsavel(responsavel);
-        solicitacao.setEscola(escola);
-        solicitacao.setEndereco(endereco);
-        solicitacao.setDependente(dependente);
+    public Solicitacao criar(SolicitacaoRequestResponsavel request) {
+        Usuario motorista = usuarioService.listarPorId(request.getMotoristaId());
+        Usuario responsavel = usuarioService.listarPorId(request.getResponsavelId());
+        Endereco endereco = enderecoService.listarPorId(request.getEnderecoId());
+        Dependente dependente = dependenteService.listarPorId(request.getDependenteId());
+        Escola escola = dependente.getEscola();
+
+        Solicitacao solicitacao = new Solicitacao(
+                responsavel, motorista, endereco, escola, dependente,
+                request.getPeriodo(), request.getTipo(), request.getDiaSemana());
         return repository.save(solicitacao);
+    }
+
+    public Solicitacao atualizar(SolicitacaoRequest request) {
+        Solicitacao solicitacao = listarPorId(request.getId());
+
+        solicitacao.setHorarioIda(request.getHorarioIda());
+        solicitacao.setHorarioVolta(request.getHorarioVolta());
+        solicitacao.setContratoInicio(request.getContratoInicio());
+        solicitacao.setContratoFim(request.getContratoFim());
+        solicitacao.setValor(request.getValor());
+        solicitacao.setStatus(StatusSolicitacao.PENDENTE_RESPONSAVEL);
+
+        return repository.save(solicitacao);
+    }
+
+    public void cancelar(Integer id) {
+        Solicitacao solicitacao = listarPorId(id);
+        solicitacao.setStatus(StatusSolicitacao.CANCELADO);
+
+        repository.save(solicitacao);
     }
 
     public Solicitacao listarPorId(int solicitacaoId) {
@@ -60,6 +77,17 @@ public class SolicitacaoService {
     public List<Solicitacao> listarPorMotorista(int motoristaId) {
         usuarioService.listarPorId(motoristaId);
         return repository.findByMotoristaId(motoristaId);
+    }
+
+    public List<Solicitacao> listarPorResponsavel(int responsavelId) {
+        usuarioService.listarPorId(responsavelId);
+        return repository.findByResponsavelId(responsavelId);
+    }
+
+    public Solicitacao listarPorDependente(int dependenteId) {
+        dependenteService.listarPorId(dependenteId);
+        return repository.findByDependenteIdAndStatusIn(dependenteId, new Integer[]{0,1})
+                .orElseThrow(() -> new NotFoundException("Solicitação"));
     }
 
     public Solicitacao aprovar(int solicitacaoId) {

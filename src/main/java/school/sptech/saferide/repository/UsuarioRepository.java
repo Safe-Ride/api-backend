@@ -31,8 +31,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
             "u.id, u.nome, u.telefone, u.email, u.dataNascimento, u.imagem, t.id, t.placa, t.cnpj) " +
             "FROM Usuario u " +
             "JOIN Transporte t ON t.usuario.id = u.id " +
-            "WHERE u = (SELECT d.motorista FROM Dependente d WHERE d.id = :dependenteId) AND u.tipo = 0")
-    Optional<MotoristaPerfilResponse> findMotoristaTranporteByDependenteId(@Param("dependenteId") int dependenteId);
+            "WHERE u.id = :id")
+    Optional<MotoristaPerfilResponse> findMotoristaTranporteById(@Param("id") int dependenteId);
     @Modifying
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.nome = :alteracao WHERE u.id = :id")
@@ -53,6 +53,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Transactional
     @Query(value = "UPDATE Usuario u SET u.dataNascimento = :alteracao WHERE u.id = :id")
     void atualizarDataNascimento(@Param("id") Integer id, @Param("alteracao") Object alteracao);
+    @Query("SELECT DISTINCT m.id AS id, m.nome AS nome, m.imagem.caminho AS foto " +
+            "FROM Dependente  d " +
+            "JOIN Usuario r ON d.responsavel.id = r.id " +
+            "JOIN Usuario m ON d.motorista.id = m.id " +
+            "JOIN Escola e ON d.escola.id = e.id " +
+            "WHERE r.id = :responsavelId")
+    List<Object[]> findMotoristasDisponiveisByResponsavelId(@Param("responsavelId") int responsavelId);
 
 //    @Query("SELECT DISTINCT m.id AS id, m.nome AS nome, m.imagem.caminho " +
 //            "FROM Dependente d JOIN d.motorista m " +

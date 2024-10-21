@@ -9,12 +9,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-public class SolicitacaoRequest {
-    private Integer id;
-    private BigDecimal valor;
-    private LocalTime horarioIda;
-    private LocalTime horarioVolta;
-    private LocalDate contratoInicio;
-    private LocalDate contratoFim;
+public class SolicitacaoRequestResponsavel {
+    private Integer responsavelId;
+    private Integer motoristaId;
+    private Integer dependenteId;
+    private HorarioTrajeto periodo;
+    private String tipo;
+    private String diaSemana;
+    private Integer enderecoId;
     private StatusSolicitacao status;
 }

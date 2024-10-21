@@ -1,5 +1,7 @@
 package school.sptech.saferide.model.entity.solicitacao;
 
+import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.StatusSolicitacao;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class SolicitacaoMapper {
             dto.setResponsavel(SolicitacaoResponse.Responsavel.builder()
                     .id(entity.getResponsavel().getId())
                     .nome(entity.getResponsavel().getNome())
+                    .imagem(entity.getResponsavel().getImagem())
                     .build());
         }
         if (entity.getEscola() != null) {
@@ -32,7 +35,7 @@ public class SolicitacaoMapper {
         if (entity.getEndereco() != null) {
             dto.setEndereco(SolicitacaoResponse.Endereco.builder()
                     .id(entity.getEndereco().getId())
-                    .nome(entity.getEndereco().getCep())
+                    .nome(entity.getEndereco().getNome())
                     .build());
         }
         if (entity.getDependente() != null) {
@@ -59,19 +62,20 @@ public class SolicitacaoMapper {
                 .toList();
     }
 
-    public static Solicitacao toEntity(SolicitacaoRequest dto){
-        if (dto == null) return null;
+//    public static Solicitacao toEntity(SolicitacaoRequest dto){
+//        if (dto == null) return null;
+//
+//        Solicitacao entity = new Solicitacao();
+//        entity.setPeriodo(dto.getPeriodo());
+//        entity.setValor(dto.getValor());
+//        entity.setHorarioIda(dto.getHorarioIda());
+//        entity.setHorarioVolta(dto.getHorarioVolta());
+//        entity.setContratoInicio(dto.getContratoInicio());
+//        entity.setContratoFim(dto.getContratoFim());
+//        entity.setTipo(dto.getTipo());
+//        entity.setDiaSemana(dto.getDiaSemana());
+//        entity.setStatus(StatusSolicitacao.PENDENTE);
+//        return entity;
+//    }
 
-        Solicitacao entity = new Solicitacao();
-        entity.setPeriodo(dto.getPeriodo());
-        entity.setValor(dto.getValor());
-        entity.setHorarioIda(dto.getHorarioIda());
-        entity.setHorarioVolta(dto.getHorarioVolta());
-        entity.setContratoInicio(dto.getContratoInicio());
-        entity.setContratoFim(dto.getContratoFim());
-        entity.setTipo(dto.getTipo());
-        entity.setDiaSemana(dto.getDiaSemana());
-        entity.setStatus(StatusSolicitacao.PENDENTE);
-        return entity;
-    }
 }

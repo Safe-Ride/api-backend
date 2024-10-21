@@ -42,4 +42,17 @@ public class Solicitacao {
     private String tipo;
     private String diaSemana;
     private StatusSolicitacao status;
+
+    // Contrutor para a solicitação inicial
+    public Solicitacao(Usuario responsavel, Usuario motorista, Endereco endereco, Escola escola, Dependente dependente, HorarioTrajeto periodo, String tipo, String diaSemana) {
+        this.responsavel = responsavel;
+        this.motorista = motorista;
+        this.endereco = endereco;
+        this.escola = escola;
+        this.dependente = dependente;
+        this.periodo = periodo;
+        this.tipo = tipo;
+        this.diaSemana = diaSemana;
+        this.status = StatusSolicitacao.PENDENTE_MOTORISTA;
+    }
 }

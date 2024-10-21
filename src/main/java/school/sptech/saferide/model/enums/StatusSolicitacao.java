@@ -1,5 +1,5 @@
 package school.sptech.saferide.model.enums;
 
 public enum StatusSolicitacao {
-    PENDENTE, APROVADO, CANCELADO;
+    PENDENTE_MOTORISTA, PENDENTE_RESPONSAVEL,APROVADO, CANCELADO;
 }

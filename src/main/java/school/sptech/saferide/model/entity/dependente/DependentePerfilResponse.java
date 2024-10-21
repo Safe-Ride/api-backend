@@ -18,6 +18,7 @@ public class DependentePerfilResponse {
     private LocalDate dataNascimento;
     private String serie;
     private String nomeEscola;
+    private Integer idMotorista;
     private String nomeMotorista;
     private String telefoneMotorista;
     private String placaTransporte;

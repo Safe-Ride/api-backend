@@ -3,6 +3,7 @@ package school.sptech.saferide.model.entity.solicitacao;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
+import school.sptech.saferide.model.entity.imagem.Imagem;
 import school.sptech.saferide.model.enums.HorarioTrajeto;
 import school.sptech.saferide.model.enums.StatusSolicitacao;
 
@@ -42,6 +43,7 @@ public class SolicitacaoResponse {
     public static class Responsavel {
         private Integer id;
         private String nome;
+        private Imagem imagem;
     }
 
     @Data

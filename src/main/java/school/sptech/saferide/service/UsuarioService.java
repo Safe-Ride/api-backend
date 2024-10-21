@@ -14,11 +14,8 @@ import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.imagem.Imagem;
-import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.*;
 import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
-import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
-import school.sptech.saferide.model.entity.usuario.Usuario;
-import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.DependenteRepository;
@@ -100,7 +97,7 @@ public class UsuarioService {
     }
 
     public MotoristaPerfilResponse listarPerfilMotorista(int id) {
-        return repository.findMotoristaTranporteByDependenteId(id).orElseThrow(() -> new NotFoundException("Usuario"));
+        return repository.findMotoristaTranporteById(id).orElseThrow(() -> new NotFoundException("Usuario"));
     }
 
     public byte[] consultarFotoPerfilPorId(int id) {

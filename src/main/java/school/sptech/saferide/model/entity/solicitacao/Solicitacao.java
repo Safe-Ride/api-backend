@@ -53,6 +53,6 @@ public class Solicitacao {
         this.periodo = periodo;
         this.tipo = tipo;
         this.diaSemana = diaSemana;
-        this.status = StatusSolicitacao.PENDENTE;
+        this.status = StatusSolicitacao.PENDENTE_MOTORISTA;
     }
 }

@@ -23,6 +23,7 @@ public class SolicitacaoMapper {
             dto.setResponsavel(SolicitacaoResponse.Responsavel.builder()
                     .id(entity.getResponsavel().getId())
                     .nome(entity.getResponsavel().getNome())
+                    .imagem(entity.getResponsavel().getImagem())
                     .build());
         }
         if (entity.getEscola() != null) {
@@ -34,7 +35,7 @@ public class SolicitacaoMapper {
         if (entity.getEndereco() != null) {
             dto.setEndereco(SolicitacaoResponse.Endereco.builder()
                     .id(entity.getEndereco().getId())
-                    .nome(entity.getEndereco().getCep())
+                    .nome(entity.getEndereco().getNome())
                     .build());
         }
         if (entity.getDependente() != null) {

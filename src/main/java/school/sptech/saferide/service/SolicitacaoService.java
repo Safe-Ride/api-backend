@@ -8,6 +8,8 @@ import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.escola.Escola;
 import school.sptech.saferide.model.entity.mensagem.Mensagem;
 import school.sptech.saferide.model.entity.solicitacao.Solicitacao;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoMapper;
+import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequest;
 import school.sptech.saferide.model.entity.solicitacao.SolicitacaoRequestResponsavel;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.StatusSolicitacao;
@@ -15,6 +17,7 @@ import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.model.exception.SolicitacaoAlreadyApproveException;
 import school.sptech.saferide.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,26 @@ public class SolicitacaoService {
         return repository.save(solicitacao);
     }
 
+    public Solicitacao atualizar(SolicitacaoRequest request) {
+        Solicitacao solicitacao = listarPorId(request.getId());
+
+        solicitacao.setHorarioIda(request.getHorarioIda());
+        solicitacao.setHorarioVolta(request.getHorarioVolta());
+        solicitacao.setContratoInicio(request.getContratoInicio());
+        solicitacao.setContratoFim(request.getContratoFim());
+        solicitacao.setValor(request.getValor());
+        solicitacao.setStatus(StatusSolicitacao.PENDENTE_RESPONSAVEL);
+
+        return repository.save(solicitacao);
+    }
+
+    public void cancelar(Integer id) {
+        Solicitacao solicitacao = listarPorId(id);
+        solicitacao.setStatus(StatusSolicitacao.CANCELADO);
+
+        repository.save(solicitacao);
+    }
+
     public Solicitacao listarPorId(int solicitacaoId) {
         Optional<Solicitacao> optional = repository.findById(solicitacaoId);
         if (optional.isEmpty()) throw new NotFoundException("Solicitacao");
@@ -54,6 +77,17 @@ public class SolicitacaoService {
     public List<Solicitacao> listarPorMotorista(int motoristaId) {
         usuarioService.listarPorId(motoristaId);
         return repository.findByMotoristaId(motoristaId);
+    }
+
+    public List<Solicitacao> listarPorResponsavel(int responsavelId) {
+        usuarioService.listarPorId(responsavelId);
+        return repository.findByResponsavelId(responsavelId);
+    }
+
+    public Solicitacao listarPorDependente(int dependenteId) {
+        dependenteService.listarPorId(dependenteId);
+        return repository.findByDependenteIdAndStatusIn(dependenteId, new Integer[]{0,1})
+                .orElseThrow(() -> new NotFoundException("Solicitação"));
     }
 
     public Solicitacao aprovar(int solicitacaoId) {

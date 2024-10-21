@@ -59,4 +59,10 @@ public class ContratoController {
         var response = service.listarPorResponsavel(responsavelId);
         return ResponseEntity.ok().body(ContratoMapper.toDto(response));
     }
+    @GetMapping(ControllerConstants.CONTRATO_POR_MOTORISTA_E_ANO_BASE_PATH)
+    public ResponseEntity<List<ContratoResponse>> listarPorMotoristaEAno(
+            @PathVariable int id, @PathVariable int ano) {
+        var response = service.listarPorMotoristaEAno(id, ano);
+        return ResponseEntity.ok().body(ContratoMapper.toDto(response));
+    }
 }

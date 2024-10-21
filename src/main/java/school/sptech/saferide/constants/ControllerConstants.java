@@ -35,4 +35,5 @@ public class ControllerConstants {
     public static final String USUARIO_PARENT_DRIVERS_BASE_PATH = "/motoristas-responsavel/{id}";
     public final static String CONVERSAS_RESPONSAVEL_MOTORISTAS_BASE_PATH = "/motoristas-responsavel/{id}";
     public static final String CONVERSAS_MOTORISTA_RESPONSAVEIS_BASE_PATH = "/responsaveis-motorista/{id}";
+    public static final String CONTRATO_POR_MOTORISTA_E_ANO_BASE_PATH = "/motorista/{id}/ano/{ano}";
 }

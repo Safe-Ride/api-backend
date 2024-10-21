@@ -93,12 +93,12 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Não encontrado"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    @GetMapping(ControllerConstants.USUARIO_DRIVER_SCHOOL_PATH)
-    public ResponseEntity<List<UsuarioResponse>> listarMotoristaPorEscola(
-            @PathVariable int idDependente) {
-        var response = service.listarMotoristaPorEscola(idDependente);
-        return ResponseEntity.ok(UsuarioMapper.toDto(response));
+//    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.USUARIO_DRIVER_PROFILE_PATH)
+    public ResponseEntity<MotoristaPerfilResponse> listarPerfilMotoristaPorDependente(
+            @PathVariable int id) {
+        var response = service.listarPerfilMotorista(id);
+        return ResponseEntity.ok(response);
     }
 
     @ApiResponses(value = {
@@ -107,11 +107,11 @@ public class UsuarioController {
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    @GetMapping(ControllerConstants.USUARIO_DRIVER_PROFILE_PATH)
-    public ResponseEntity<MotoristaPerfilResponse> listarPerfilMotorista(
-            @PathVariable int id) {
-        var response = service.listarPerfilMotorista(id);
-        return ResponseEntity.ok(response);
+    @GetMapping(ControllerConstants.USUARIO_DRIVER_SCHOOL_PATH)
+    public ResponseEntity<List<UsuarioResponse>> listarMotoristaPorEscola(
+            @PathVariable int idDependente) {
+        var response = service.listarMotoristaPorEscola(idDependente);
+        return ResponseEntity.ok(UsuarioMapper.toDto(response));
     }
 
     @ApiResponses(value = {
@@ -203,18 +203,5 @@ public class UsuarioController {
             @PathVariable int id) {
         var response = service.remover(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok"),
-            @ApiResponse(responseCode = "404", description = "Não encontrado"),
-            @ApiResponse(responseCode = "401", description = "Sem permição")
-    })
-    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    @GetMapping(ControllerConstants.USUARIO_DRIVER_MOTORISTA_BASE_PATH)
-    public ResponseEntity<List<ClienteListarMotoristas>> listarMotoristasPorResponsavel(
-            @PathVariable int responsavelId) {
-        var response = service.listarMotoristasPorResponsavel(responsavelId);
-        return ResponseEntity.ok(response);
     }
 }

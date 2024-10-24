@@ -3,15 +3,23 @@ package school.sptech.saferide.service.utils;
 import org.springframework.stereotype.Component;
 import school.sptech.saferide.model.entity.rota.Rota;
 import school.sptech.saferide.model.entity.trajeto.Trajeto;
+import school.sptech.saferide.model.entity.trajeto.TrajetoRequest;
+import school.sptech.saferide.model.enums.DiaSemana;
+import school.sptech.saferide.model.enums.HorarioTrajeto;
+import school.sptech.saferide.model.enums.TipoTrajeto;
+import school.sptech.saferide.service.TrajetoService;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class TrajetoArquivoTxt {
+
+    private TrajetoService trajetoService;
 
     public byte[] geraArquivoTxt(List<Trajeto> lista) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -84,48 +92,44 @@ public class TrajetoArquivoTxt {
         return outputStream.toByteArray();
     }
 
-//    public static void leArquivoTxt(String nomeArq) {
-//        BufferedReader entrada = null;
-//        String registro, tipoRegistro;
-//        Integer id, tipo, horario, dia;
-//        Boolean ativo;
-//        String nome, artista, duracao, album, genero;
-//        int contaRegDados = 0;
-//        int qtdRegGravados;
-//
-//        List<Trajeto> listaLida = new ArrayList<>();
-//
-//        try {
-//            entrada = new BufferedReader((new FileReader(nomeArq)));
-//        } catch (IOException erro) {
-//            System.out.println("Erro ao abrir o arquivo: " + erro.getMessage());
-//        }
-//
-//        try {
-//            registro = entrada.readLine();
-//
-//            while (registro != null) {
-//                tipoRegistro = registro.substring(0, 2);
-//
-//                if (tipoRegistro.equals("02")) {
-//                    id = Integer.parseInt(registro.substring(2, 6));
-//                    nome = registro.substring(6, 26).trim();
-//                    artista = registro.substring(26, 46).trim();
-//                    duracao = registro.substring(46, 51);
-//                    album = registro.substring(51, 71).trim();
-//                    nota = Double.valueOf(registro.substring(71, 76).replace(',', '.'));
-//                    genero = registro.substring(76, 86).trim();
-//
-//                    Trajeto a = new Trajeto(id, nome, artista, duracao, album, nota, genero);
-//                    listaLida.add(a);
-//                } else {
-//                    System.out.println("Registro inválido");
-//                }
-//
-//                registro = entrada.readLine();
-//            }
-//        } catch (IOException erro) {
-//            erro.printStackTrace();
-//        }
-//    }
+    public static void leArquivoTxt(String nomeArq) {
+        BufferedReader entrada = null;
+        String registro, tipoRegistro;
+        Integer id, tipo, horario, diaSemana, escolaId, morotistaId;
+        Boolean ativo;
+        String nome, artista, duracao, album, genero;
+        int contaRegDados = 0;
+        int qtdRegGravados;
+
+        try {
+            entrada = new BufferedReader((new FileReader(nomeArq)));
+        } catch (IOException erro) {
+            System.out.println("Erro ao abrir o arquivo: " + erro.getMessage());
+        }
+
+        try {
+            registro = entrada.readLine();
+
+            while (registro != null) {
+                tipoRegistro = registro.substring(0, 2);
+
+                if (tipoRegistro.equals("02")) {
+                    id = Integer.parseInt(registro.substring(2,6));
+                    tipo = Integer.parseInt(registro.substring(2,6));
+                    horario = Integer.parseInt(registro.substring(2,6));
+                    diaSemana = Integer.parseInt(registro.substring(2,6));
+                    ativo = Boolean.parseBoolean(registro.substring(2,6).trim());
+
+//                    TrajetoRequest a = new TrajetoRequest(tipo, horario, diaSemana, ativo, escolaId, morotistaId);
+
+                } else {
+                    System.out.println("Registro inválido");
+                }
+
+                registro = entrada.readLine();
+            }
+        } catch (IOException erro) {
+            erro.printStackTrace();
+        }
+    }
 }

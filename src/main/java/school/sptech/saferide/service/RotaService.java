@@ -14,7 +14,16 @@ import java.util.Optional;
 public class RotaService {
 
     private final RotaRepository repository;
+    private final TrajetoService trajetoService;
+    private final DependenteService dependenteService;
+    private final EnderecoService enderecoService;
 
+    public Rota criar(Rota rota, Integer trajetoId, Integer dependenteId, Integer enderecoId) {
+        rota.setTrajeto(trajetoService.listarPorId(trajetoId));
+        rota.setDependente(dependenteService.listarPorId(dependenteId));
+        rota.setEndereco(enderecoService.listarPorId(enderecoId));
+        return repository.save(rota);
+    }
     public Rota listarPorId(int id) {
         Optional<Rota> rotaOpt = repository.findById(id);
         if (rotaOpt.isEmpty()) throw new NotFoundException("Rota");

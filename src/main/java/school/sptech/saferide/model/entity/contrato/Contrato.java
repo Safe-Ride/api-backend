@@ -26,7 +26,8 @@ public class Contrato {
     @OneToMany(mappedBy = "contrato")
     private List<Dependente> dependentes;
     private Double valor;
-    private LocalDate data;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
     @OneToMany(mappedBy = "contrato")
     private List<Pagamento> pagamentos;
 }

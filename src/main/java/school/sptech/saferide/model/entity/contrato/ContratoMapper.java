@@ -28,7 +28,8 @@ public class ContratoMapper {
                     .collect(Collectors.toList()));
         }
         dto.setValor(entity.getValor());
-        dto.setData(entity.getData());
+        dto.setDataInicio(entity.getDataInicio());
+        dto.setDataFim(entity.getDataFim());
         if (entity.getPagamentos() != null) {
             dto.setPagamentos(entity.getPagamentos().stream()
                     .map(s -> ContratoResponse.Pagamento.builder()
@@ -49,11 +50,23 @@ public class ContratoMapper {
                 .toList();
     }
 
+//    public static ContratoUpdate toDtoUpdate(Contrato entity) {
+//        ContratoUpdate dto = new ContratoUpdate();
+//        dto.setId(entity.getId());
+//        dto.setDependentesId(entity.getDependentes().stream().map(Dependente::getId).toList());
+//        dto.setDataInicio(entity.getDataInicio());
+//        dto.setDataFim(entity.getDataFim());
+//        dto.setValor(entity.getValor());
+//        return dto;
+//    }
+
     public static Contrato toEntity(ContratoRequest dto){
         if (dto == null) return null;
 
         Contrato entity = new Contrato();
         entity.setValor(dto.getValor());
+        entity.setDataInicio(dto.getDataInicio());
+        entity.setDataFim(dto.getDataFim());
         return entity;
     }
 }

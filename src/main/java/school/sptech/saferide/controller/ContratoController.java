@@ -11,6 +11,7 @@ import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.contrato.ContratoMapper;
 import school.sptech.saferide.model.entity.contrato.ContratoRequest;
 import school.sptech.saferide.model.entity.contrato.ContratoResponse;
+import school.sptech.saferide.model.entity.contrato.ContratoUpdate;
 import school.sptech.saferide.service.ContratoService;
 
 import java.util.List;
@@ -65,4 +66,13 @@ public class ContratoController {
         var response = service.listarPorMotoristaEAno(id, ano);
         return ResponseEntity.ok().body(ContratoMapper.toDto(response));
     }
+
+    @PutMapping
+    public ResponseEntity<ContratoResponse> atualizar(
+            @Valid @RequestBody ContratoUpdate request
+    ) {
+        var response = service.atualizar(request);
+        return ResponseEntity.ok(ContratoMapper.toDto(response));
+    }
+
 }

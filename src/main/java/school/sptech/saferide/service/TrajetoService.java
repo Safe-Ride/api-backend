@@ -22,6 +22,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +58,16 @@ public class TrajetoService {
         return trajetos.stream()
                 .map(TrajetoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<Trajeto> listarTrajetoPorTipoPeriodoDiaSemanaEscolaMotorista(
+            TipoTrajeto tipo,
+            HorarioTrajeto periodo,
+            DiaSemana diaSemana,
+            Integer escolaId,
+            Integer motoristaId
+    ) {
+        return repository.findByTipoAndHorarioAndDiaSemanaAndEscolaIdAndMotoristaId(tipo, periodo, diaSemana, escolaId, motoristaId);
     }
 
     public Trajeto atualizarAtivo(int trajetoId, Boolean ativo) {

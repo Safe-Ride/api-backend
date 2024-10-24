@@ -2,8 +2,12 @@ package school.sptech.saferide.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.rota.Rota;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
+import school.sptech.saferide.model.entity.trajeto.Trajeto;
+import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
@@ -24,10 +28,18 @@ public class RotaService {
         rota.setEndereco(enderecoService.listarPorId(enderecoId));
         return repository.save(rota);
     }
+    public Rota criar(Trajeto trajeto, Dependente dependente, Endereco endereco) {
+        return repository.save(new Rota(null, trajeto, dependente, endereco, StatusDependente.NAO_INICIADO));
+    }
+
     public Rota listarPorId(int id) {
         Optional<Rota> rotaOpt = repository.findById(id);
         if (rotaOpt.isEmpty()) throw new NotFoundException("Rota");
         return rotaOpt.get();
+    }
+
+    public Optional<Rota> listarPorTrajetoDependenteEndereco(int trajetoId, int dependenteId, int enderecoId) {
+        return repository.findByTrajetoIdAndDependenteIdAndEnderecoId(trajetoId, dependenteId, enderecoId);
     }
 
     public Rota atualizar(int id, RotaUpdateRequest request) {

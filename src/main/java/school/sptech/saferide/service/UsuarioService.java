@@ -170,8 +170,7 @@ public class UsuarioService {
 
 
     public List<ListarStatusDependentePorResponsavelView> listarStatusDependentePorResponsavel(int responsavelId) {
-        List<ListarStatusDependentePorResponsavelView> dependentes = listarStatusDependentePorResponsavelViewRepository.findByResponsavelId(responsavelId);
-        if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return dependentes;
+     return listarStatusDependentePorResponsavelViewRepository.findAll();
+
     }
 }

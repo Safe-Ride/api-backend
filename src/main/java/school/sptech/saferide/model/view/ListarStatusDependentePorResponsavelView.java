@@ -1,13 +1,17 @@
 package school.sptech.saferide.model.view;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.yaml.snakeyaml.events.Event;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -16,12 +20,13 @@ import java.util.Date;
 public class ListarStatusDependentePorResponsavelView {
     @Id
     private Integer responsavelId;
-    private String nomeDependente;
-    private String endereco;
-    private String encerecoCep;
-    private String status;
-    private Date horario;
-    private String enderocoEscola;
+    @Column(name = "dependente_nome")
+    private String dependenteNome;
+    private String enderecoCep;
+    private LocalDateTime horaStatus;
+    private String sentidoTrajeto;
+    private  horario;
+    private String escolaCep;
 
 
 

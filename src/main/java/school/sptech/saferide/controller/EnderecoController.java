@@ -22,20 +22,11 @@ public class EnderecoController {
 
     private final EnderecoService service;
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Criado"),
-            @ApiResponse(responseCode = "401", description = "Sem permição")
-    })
-    @PostMapping
-    public ResponseEntity<EnderecoResponse> criar(
-            @Valid @RequestBody EnderecoRequest request) {
-        var payload = EnderecoMapper.toEntity(request);
-        var response = service.criar(
-                payload,
-                request.getUsuarioId());
-        return ResponseEntity.created(null).body(EnderecoMapper.toDto(response));
-    }
+    // nao sera usado
 
+    // a22
+
+    // teste 3
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "ok"),
             @ApiResponse(responseCode = "404", description = "Não encontrado"),

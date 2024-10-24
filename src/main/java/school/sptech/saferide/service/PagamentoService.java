@@ -37,4 +37,8 @@ public class PagamentoService {
     public List<PagamentosTotalEfetuadosView> listarPagamentosTotalEfetuadosView() {
         return pagamentosTotalEfetuadosViewRepository.findAll();
     }
+
+    public List<Pagamento> listarPorContratoIdAndAnoAtual(int contratoId, Integer ano) {
+        return repository.findByContratoIdAndAno(contratoId, ano);
+    }
 }

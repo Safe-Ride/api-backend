@@ -2,6 +2,9 @@ package school.sptech.saferide.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import school.sptech.saferide.model.entity.contrato.Contrato;
+import school.sptech.saferide.model.entity.contrato.ContratoMapper;
+import school.sptech.saferide.model.entity.contrato.ContratoRequest;
 import school.sptech.saferide.model.entity.conversa.Conversa;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.endereco.Endereco;
@@ -18,6 +21,7 @@ import school.sptech.saferide.model.exception.SolicitacaoAlreadyApproveException
 import school.sptech.saferide.repository.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,7 @@ public class SolicitacaoService {
     private final DependenteService dependenteService;
     private final MensagemService mensagemService;
     private final ConversaService conversaService;
+    private final ContratoService contratoService;
 
     public Solicitacao criar(SolicitacaoRequestResponsavel request) {
         Usuario motorista = usuarioService.listarPorId(request.getMotoristaId());
@@ -111,6 +116,27 @@ public class SolicitacaoService {
                     solicitacao.getDependente().getId());
         }
 
+        var contrato = contratoService.listarPorResponsavelIdAndMotoristaId(
+                solicitacao.getResponsavel().getId(), solicitacao.getMotorista().getId()
+        );
+
+        if (contrato.isEmpty()) {
+            ContratoRequest contratoRequest = new ContratoRequest(
+                    solicitacao.getMotorista().getId(),
+                    solicitacao.getResponsavel().getId(),
+                    Collections.singletonList(solicitacao.getDependente().getId()),
+                    solicitacao.getContratoInicio(),
+                    solicitacao.getContratoFim(),
+                    solicitacao.getValor().doubleValue()
+            );
+            contratoService.criar(ContratoMapper.toEntity(contratoRequest),
+                    solicitacao.getResponsavel().getId(),
+                    solicitacao.getMotorista().getId(),
+                    Collections.singletonList(solicitacao.getDependente().getId())
+            );
+        } else {
+            contratoService.atualizar(contrato.get());
+        }
         solicitacao.setStatus(StatusSolicitacao.APROVADO);
         return repository.save(solicitacao);
     }

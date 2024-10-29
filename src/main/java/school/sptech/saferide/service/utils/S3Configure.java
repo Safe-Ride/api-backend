@@ -10,6 +10,8 @@ import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import static school.sptech.saferide.constants.SafeRideConstants.BUCKET_FOTO_PERFIL_NAME;
+
 @Component
 public class S3Configure {
     private S3Client criarClienteS3() {
@@ -20,7 +22,7 @@ public class S3Configure {
     public byte[] baixarArquivoS3(String nomeArquivo) {
         try {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                    .bucket("bucket-foto-perfil")
+                    .bucket(BUCKET_FOTO_PERFIL_NAME)
                     .key(nomeArquivo)
                     .build();
             S3Client s3 = criarClienteS3();
@@ -34,7 +36,7 @@ public class S3Configure {
     public void gravarArquivoS3(String nomeArquivo, byte[] conteudoArquivo) {
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket("bucket-foto-perfil")
+                    .bucket(BUCKET_FOTO_PERFIL_NAME)
                     .key(nomeArquivo)
                     .acl(ObjectCannedACL.PUBLIC_READ)
                     .build();

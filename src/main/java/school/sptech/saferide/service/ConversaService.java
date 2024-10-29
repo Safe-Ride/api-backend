@@ -3,10 +3,13 @@ package school.sptech.saferide.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.saferide.model.entity.conversa.Conversa;
+import school.sptech.saferide.model.entity.conversa.ListarConversasMotorista;
+import school.sptech.saferide.model.entity.conversa.ListarConversasResponsavel;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.ConversaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,13 +34,20 @@ public class ConversaService {
             int responsavelId,
             int motoristaId) {
         Optional<Conversa> conversaOpt = repository.findByResponsavelIdAndMotoristaId(responsavelId, motoristaId);
-        if (conversaOpt.isEmpty()) throw new NotFoundException("Conversa");
-        return conversaOpt.get();
+        return conversaOpt.orElse(null);
     }
 
     public Conversa listarPorId(int id) {
         Optional<Conversa> conversaOpt = repository.findById(id);
         if (conversaOpt.isEmpty()) throw new NotFoundException("Conversa");
         return conversaOpt.get();
+    }
+
+    public List<ListarConversasMotorista> listarConversasMotoristasPorResponsavel(int id) {
+        return repository.findByResponsavelId(id);
+    }
+
+    public List<ListarConversasResponsavel> listarConversasResponsaveisPorMotorista(int id) {
+        return repository.findByMotoristaId(id);
     }
 }

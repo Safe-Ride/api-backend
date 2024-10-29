@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ListarStatusDependentePorResponsavelViewRepository extends JpaRepository<ListarStatusDependentePorResponsavelView, Integer> {
-   ListarStatusDependentePorResponsavelView findByResponsavelId(int responsavelId);
+   List<ListarStatusDependentePorResponsavelView> findByResponsavelId(int responsavelId);
 }

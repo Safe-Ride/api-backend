@@ -1,6 +1,7 @@
 package school.sptech.saferide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.imagem.Imagem;
 import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
+import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
@@ -39,6 +41,7 @@ public class UsuarioService {
     private final AuthenticationManager authenticationManager;
 
     private final UsuarioRepository repository;
+    @Autowired
     private final ListarStatusDependentePorResponsavelViewRepository listarStatusDependentePorResponsavelViewRepository;
     private final DependenteRepository dependenteRepository;
     private final ImagemService imagemService;
@@ -91,6 +94,17 @@ public class UsuarioService {
     public List<Usuario> listarMotoristasPorCliente(int responsavelId) {
         listarPorId(responsavelId);
         return repository.findMotoristasByResponsavelId(responsavelId);
+    }
+
+    public List<Usuario> listarMotoristaPorEscola(int id) {
+        Optional<Dependente> dependenteOpt = dependenteRepository.findById(id);
+        if (dependenteOpt.isEmpty()) throw new NotFoundException("Dependente");
+        int escolaId = dependenteOpt.get().getEscola().getId();
+        return repository.findMotoristaByEscolaId(escolaId);
+    }
+
+    public MotoristaPerfilResponse listarPerfilMotorista(int id) {
+        return repository.findMotoristaTranporteById(id).orElseThrow(() -> new NotFoundException("Usuario"));
     }
 
     public byte[] consultarFotoPerfilPorId(int id) {
@@ -170,7 +184,22 @@ public class UsuarioService {
 
 
     public List<ListarStatusDependentePorResponsavelView> listarStatusDependentePorResponsavel(int responsavelId) {
-     return listarStatusDependentePorResponsavelViewRepository.findAll();
-
+        List<ListarStatusDependentePorResponsavelView> historicoStatusDependente = listarStatusDependentePorResponsavelViewRepository.findByResponsavelId(responsavelId);
+        return historicoStatusDependente;
     }
+
+
+//    public List<ResponsavelListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
+//        List<Object[]> resultados = repository.findMotoristasByResponsavelId(responsavelId);
+//
+//        List<ResponsavelListarMotoristas> responsaveis = new ArrayList<>();
+//        for (Object[] resultado : resultados) {
+//            int id = (Integer) resultado[0];
+//            String nome = (String) resultado[1];
+//            String foto = (String) resultado[2];
+//            responsaveis.add(new ResponsavelListarMotoristas(id, nome, foto));
+//        }
+//
+//        return responsaveis;
+//    }
 }

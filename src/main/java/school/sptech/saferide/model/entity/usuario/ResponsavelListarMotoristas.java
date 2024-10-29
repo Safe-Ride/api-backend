@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import school.sptech.saferide.model.enums.StatusDependente;
 
 import java.time.LocalDate;
-
 @Data
 @Builder
 @AllArgsConstructor

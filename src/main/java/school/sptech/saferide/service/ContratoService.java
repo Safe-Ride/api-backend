@@ -74,4 +74,12 @@ public class ContratoService {
         if (list.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return list;
     }
+
+    public List<Contrato> listarPorMotoristaEAno(int id, int ano) {
+        LocalDate inicio = LocalDate.of(ano, 1, 1);
+        LocalDate fim = LocalDate.of(ano, 12, 31);
+        List<Contrato> list = repository.findByMotoristaIdAndDataBetween(id, inicio, fim);
+        if (list.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        return list;
+    }
 }

@@ -21,10 +21,15 @@ public class Mensagem {
     private Integer id;
     private LocalDateTime data;
     private StatusDependente status;
+    private Boolean lida;
     @ManyToOne
     private Conversa conversa;
     @ManyToOne
     private Usuario usuario;
     @ManyToOne
     private Dependente dependente;
+
+    public Mensagem(StatusDependente status) {
+        this.status = status;
+    }
 }

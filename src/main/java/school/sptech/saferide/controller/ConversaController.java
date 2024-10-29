@@ -1,5 +1,6 @@
 package school.sptech.saferide.controller;
 
+import io.swagger.models.Response;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -8,10 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
-import school.sptech.saferide.model.entity.conversa.ConversaMapper;
-import school.sptech.saferide.model.entity.conversa.ConversaRequest;
-import school.sptech.saferide.model.entity.conversa.ConversaResponse;
+import school.sptech.saferide.model.entity.conversa.*;
 import school.sptech.saferide.service.ConversaService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ControllerConstants.CONVERSA_BASE_PATH)
@@ -50,5 +51,17 @@ public class ConversaController {
                 responsavelId,
                 motoristaId);
         return ResponseEntity.ok(ConversaMapper.toDto(response));
+    }
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.CONVERSAS_RESPONSAVEL_MOTORISTAS_BASE_PATH)
+    public ResponseEntity<List<ListarConversasMotorista>> listarConversasMotoristasPorResponsavel(@PathVariable int id) {
+        return ResponseEntity.ok(service.listarConversasMotoristasPorResponsavel(id));
+    }
+
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.CONVERSAS_MOTORISTA_RESPONSAVEIS_BASE_PATH)
+    public ResponseEntity<List<ListarConversasResponsavel>> listarConversasResponsaveisPorMotorista(@PathVariable int id) {
+        return ResponseEntity.ok(service.listarConversasResponsaveisPorMotorista(id));
     }
 }

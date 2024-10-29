@@ -19,14 +19,21 @@ import java.time.format.DateTimeFormatter;
 @Table(name = "v_listar_status_dependente_por_responsavel")
 public class ListarStatusDependentePorResponsavelView {
     @Id
-    private Integer responsavelId;
-    @Column(name = "dependente_nome")
-    private String dependenteNome;
-    private String enderecoCep;
-    private LocalDateTime horaStatus;
-    private String sentidoTrajeto;
-    private  horario;
+    @Column(name = "historico_id")
+    private Integer id;
+    private Integer trajetoId;
+    private LocalDateTime horarioInicio;
+    private LocalDateTime horarioFim;
+    private String trajetoSentido;
+    private String trajetoHorario;
     private String escolaCep;
+    private Integer dependenteId;
+    private String dependenteNome;
+    private String dependenteCep;
+    private Integer responsavelId;
+    private LocalDateTime horarioNaVan;
+    private String resposanvelNome;
+
 
 
 

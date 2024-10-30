@@ -24,9 +24,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("SELECT DISTINCT u FROM Usuario u " +
             "JOIN Trajeto t ON t.motorista = u " +
-            "WHERE u.tipo = 0 AND t.escola.id = " +
-            "(SELECT d.escola.id FROM Dependente d WHERE d.id = :dependenteId)")
-    List<Usuario> findMotoristaByEscolaId(@Param("dependenteId") int dependenteId);
+            "WHERE u.tipo = 0 AND t.escola.id = :escolaId")
+    List<Usuario> findMotoristaByEscolaId(@Param("escolaId") int escolaId);
     @Query("SELECT new school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse(" +
             "u.id, u.nome, u.telefone, u.email, u.dataNascimento, u.imagem, t.id, t.placa, t.cnpj) " +
             "FROM Usuario u " +

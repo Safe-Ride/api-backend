@@ -99,6 +99,11 @@ public class SolicitacaoService {
                 .orElseThrow(() -> new NotFoundException("Solicitação"));
     }
 
+    public Integer listarQtdSolicitacao(int motoristaid) {
+        usuarioService.listarPorId(motoristaid);
+        return repository.countByMotoristaIdAndStatus(motoristaid, StatusSolicitacao.PENDENTE_MOTORISTA);
+    }
+
     public Solicitacao aprovar(int solicitacaoId) {
         Solicitacao solicitacao = listarPorId(solicitacaoId);
         if (solicitacao.getStatus().equals(StatusSolicitacao.APROVADO)) throw new SolicitacaoAlreadyApproveException(solicitacao.getId().toString());

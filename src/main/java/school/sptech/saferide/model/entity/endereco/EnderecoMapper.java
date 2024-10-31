@@ -33,6 +33,7 @@ public class EnderecoMapper {
         Endereco entity = new Endereco();
         entity.setLatitude(dto.getLatitude());
         entity.setLongitude(dto.getLongitude());
+        entity.setNome(dto.getNome());
         entity.setCep(dto.getCep());
         entity.setNumero(dto.getNumero());
         entity.setComplemento(dto.getComplemento());

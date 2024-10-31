@@ -49,6 +49,10 @@ public class PagamentoService {
         return pagamentosTotalEfetuadosViewRepository.findAll();
     }
 
+    public List<Pagamento> listarPorContratoIdAndAnoAtual(int contratoId, Integer ano) {
+        return repository.findByContratoIdAndAno(contratoId, ano);
+    }
+
     public InputStreamResource baixarCsv(int motoristaId) {
         List<ListarStatusPagamentosCsvView> pagamentos = listarStatusPagamentosCsvViewRepository.findByMotoristaId(motoristaId);
         if (pagamentos.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.saferide.model.entity.contrato.Contrato;
+import school.sptech.saferide.model.entity.contrato.ContratoUpdate;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.pagamento.Pagamento;
 import school.sptech.saferide.model.entity.usuario.Usuario;
@@ -36,17 +37,15 @@ public class ContratoService {
         List<Dependente> dependentes = dependentesId.stream()
                 .map(dependenteService::listarPorId)
                 .toList();
-        LocalDate dataAtual = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
-        payload.setData(dataAtual);
         payload.setMotorista(motorista);
         payload.setResponsavel(responsavel);
         Contrato contrato = repository.save(payload);
         dependentes.forEach(d -> dependenteService.atualizarContrato(d, contrato));
 
-        for (int i = dataAtual.getMonth().ordinal() + 1; i <= 12; i++) {
+        for (int i = payload.getDataInicio().getMonth().ordinal() + 1; i <= 12; i++) {
             Pagamento pagamento = new Pagamento();
             pagamento.setContrato(contrato);
-            pagamento.setDataVencimento(LocalDate.of(dataAtual.getYear(), i, 10));
+            pagamento.setDataVencimento(LocalDate.of(payload.getDataInicio().getYear(), i, 10));
             pagamento.setValor(contrato.getValor());
             pagamento.setStatus(StatusPagamento.PENDENTE);
             if (contrato.getPagamentos() == null) {
@@ -78,8 +77,33 @@ public class ContratoService {
     public List<Contrato> listarPorMotoristaEAno(int id, int ano) {
         LocalDate inicio = LocalDate.of(ano, 1, 1);
         LocalDate fim = LocalDate.of(ano, 12, 31);
-        List<Contrato> list = repository.findByMotoristaIdAndDataBetween(id, inicio, fim);
+        List<Contrato> list = repository.findByMotoristaIdAndDataInicioBetween(id, inicio, fim);
         if (list.isEmpty()) throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         return list;
+    }
+
+    public Optional<Contrato> listarPorResponsavelIdAndMotoristaId(int responsavelId, int motoristaId) {
+        return repository.findByResponsavelIdAndMotoristaId(responsavelId, motoristaId);
+    }
+
+    public Contrato atualizar(ContratoUpdate dto) {
+        Contrato contrato = listarPorId(dto.getId());
+        contrato.setValor(contrato.getValor() + dto.getValor());
+        repository.save(contrato);
+
+        LocalDate dataHoje = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+        List<Pagamento> pagamentos = pagamentoService.listarPorContratoIdAndAnoAtual(contrato.getId(), dataHoje.getYear());
+
+        // A partir da data de hoje, pega todos os pagamentos de meses posteriores e atualiza o
+        // valor com o ele já incrementado como feito acima.
+        pagamentos.stream()
+                .filter(pagamento -> dataHoje.getYear() == pagamento.getDataVencimento().getYear())
+                .filter(pagamento -> pagamento.getDataVencimento().isAfter(dataHoje))
+                .forEach(pagamento -> {
+                    pagamento.setValor(contrato.getValor());
+                    pagamentoService.criar(pagamento);
+                });
+
+        return repository.save(contrato);
     }
 }

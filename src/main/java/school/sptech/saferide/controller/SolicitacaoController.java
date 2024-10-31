@@ -118,6 +118,19 @@ public class SolicitacaoController {
     }
 
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "401", description = "Sem permição"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping("/motorista/{motoristaId}/qtdSolicitacao")
+    public ResponseEntity<Integer> listarQtdSolicitacaoPorMotorista(
+            @PathVariable int motoristaId) {
+        var response = service.listarQtdSolicitacao(motoristaId);
+        return ResponseEntity.ok(response);
+    }
+
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "204", description = "Sem conteudo"),
             @ApiResponse(responseCode = "404", description = "Não encontrado"),

@@ -107,7 +107,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Não encontrado"),
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
-//    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping(ControllerConstants.USUARIO_DRIVER_PROFILE_PATH)
     public ResponseEntity<MotoristaPerfilResponse> listarPerfilMotoristaPorDependente(
             @PathVariable int id) {

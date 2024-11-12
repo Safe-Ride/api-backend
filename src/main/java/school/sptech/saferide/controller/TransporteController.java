@@ -13,6 +13,8 @@ import school.sptech.saferide.model.entity.transporte.TransporteRequest;
 import school.sptech.saferide.model.entity.transporte.TransporteResponse;
 import school.sptech.saferide.service.TransporteService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(ControllerConstants.TRANSPORTE_BASE_PATH)
 @RequiredArgsConstructor
@@ -44,6 +46,20 @@ public class TransporteController {
     public ResponseEntity<TransporteResponse> listarPorId(
             @PathVariable int id) {
         var response = service.listarPorId(id);
+        return ResponseEntity.ok(TransporteMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "204", description = "Sem conteúdo"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.TRANSPORTE_POR_MOTORISTA_BASE_PATH)
+    public ResponseEntity<List<TransporteResponse>> listarPorMotoristaId(
+            @PathVariable int motoristaId) {
+        var response = service.listarPorMotoristaId(motoristaId);
         return ResponseEntity.ok(TransporteMapper.toDto(response));
     }
 

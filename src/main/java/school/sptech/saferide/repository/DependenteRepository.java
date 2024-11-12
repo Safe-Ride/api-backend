@@ -18,12 +18,12 @@ public interface DependenteRepository extends JpaRepository<Dependente, Integer>
     Optional<Dependente> findByIdAndMotoristaId(int id, int motoristaId);
 
     @Query("SELECT new school.sptech.saferide.model.entity.dependente.DependentePerfilResponse(" +
-            "d.id, d.nome, d.dataNascimento, d.serie, e.nome, u.id, u.nome, u.telefone, t.placa, i.caminho) " +
+            "d.id, d.nome, d.dataNascimento, d.serie, e.nome, m.id, m.nome, m.telefone, t.placa, i.caminho) " +
             "FROM Dependente d " +
             "JOIN d.escola e " +
             "JOIN d.imagem i " +
-            "JOIN d.motorista u " +
-            "JOIN Transporte t ON t.usuario = u " +
+            "JOIN d.motorista m " +
+            "LEFT JOIN Transporte t ON t.usuario = m " +
             "WHERE d.id = :id")
     DependentePerfilResponse listarPerfilPorId(@Param("id") int id);
 

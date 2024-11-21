@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface ListarStatusDependentePorResponsavelViewRepository extends JpaRepository<ListarStatusDependentePorResponsavelView, Integer> {
-  @Query("SELECT lsdprv FROM ListarStatusDependentePorResponsavelView lsdprv WHERE lsdprv.responsavelId = :responsavelId")
-   List<ListarStatusDependentePorResponsavelView> findByResponsavelId(@Param("responsavelId") int responsavelId);
+    @Query("SELECT lsdprv FROM ListarStatusDependentePorResponsavelView lsdprv WHERE lsdprv.responsavelId = :responsavelId")
+    List<ListarStatusDependentePorResponsavelView> findByResponsavelId(@Param("responsavelId") int responsavelId);
+
+    @Query("SELECT lsdprv FROM ListarStatusDependentePorResponsavelView lsdprv WHERE lsdprv.dependenteId = :dependenteId")
+    List<ListarStatusDependentePorResponsavelView> findByDependenteId(@Param("dependenteId") int dependenteId);
 }

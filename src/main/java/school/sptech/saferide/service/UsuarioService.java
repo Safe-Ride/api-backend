@@ -188,6 +188,11 @@ public class UsuarioService {
         return historicoStatusDependente;
     }
 
+    public List<ListarStatusDependentePorResponsavelView> listarStatusDependentePorDependente(int dependenteId) {
+        List<ListarStatusDependentePorResponsavelView> historicoStatusDependente = listarStatusDependentePorResponsavelViewRepository.findByDependenteId(dependenteId);
+        return historicoStatusDependente;
+    }
+
 
 //    public List<ResponsavelListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
 //        List<Object[]> resultados = repository.findMotoristasByResponsavelId(responsavelId);

@@ -33,6 +33,7 @@ public class ControllerConstants {
     public final static String REMOVE_PATH = "/{id}";
     public final static String SECURITY_NAME = "Bearer";
     public final static String LIST_STATUS_DEPENDENTE_HISTORICO = "/status-dependentes/{id}";
+    public final static String LIST_STATUS_DEPENDENTE_HISTORICO_POR_DEPENDENTE = "/status-dependentes/dependente/{id}";
     public static final String USUARIO_PARENT_DRIVERS_BASE_PATH = "/motoristas-responsavel/{id}";
     public final static String CONVERSAS_RESPONSAVEL_MOTORISTAS_BASE_PATH = "/motoristas-responsavel/{id}";
     public static final String CONVERSAS_MOTORISTA_RESPONSAVEIS_BASE_PATH = "/responsaveis-motorista/{id}";

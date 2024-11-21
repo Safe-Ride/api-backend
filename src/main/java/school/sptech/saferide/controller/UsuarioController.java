@@ -95,10 +95,24 @@ public class UsuarioController {
     })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping(ControllerConstants.LIST_STATUS_DEPENDENTE_HISTORICO)
-    public ResponseEntity<List<ListarStatusDependentePorResponsavelView>> listarPagamentosTotalEfetuadosView(
+    public ResponseEntity<List<ListarStatusDependentePorResponsavelView>> listarStatusDependenteHistoricoView(
             @PathVariable int id
     ) {
         var response = service.listarStatusDependentePorResponsavel(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.LIST_STATUS_DEPENDENTE_HISTORICO_POR_DEPENDENTE)
+    public ResponseEntity<List<ListarStatusDependentePorResponsavelView>> listarStatusDependenteHistoricoPorDependente(
+            @PathVariable int id
+    ) {
+        var response = service.listarStatusDependentePorDependente(id);
         return ResponseEntity.ok(response);
     }
 

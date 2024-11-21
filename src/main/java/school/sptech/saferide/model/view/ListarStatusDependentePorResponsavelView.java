@@ -1,10 +1,7 @@
 package school.sptech.saferide.model.view;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,16 +15,20 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Getter
 @Setter
+@IdClass(ListarStatusDependentePorResponsavelKey.class)
 @Table(name = "v_listar_status_dependente_por_responsavel")
 public class ListarStatusDependentePorResponsavelView {
 
+    @Id
     @Column(name = "historico_id")
     private Integer historicoId;
     @Column(name = "trajeto_id")
     private Integer trajetoId;
+    @Id
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "horario_inicio")
     private LocalDateTime horarioInicio;
+    @Id
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "horario_fim")
     private LocalDateTime horarioFim;
@@ -48,7 +49,9 @@ public class ListarStatusDependentePorResponsavelView {
     private Integer responsavelId;
     @Column(name = "re_nome")
     private String responsavelNome;
+    @Id
     @Column(name = "mensagem_status")
+    @Enumerated(EnumType.ORDINAL)
     private StatusDependente mensagemStatus;
 
     public String getMensagemStatus() {

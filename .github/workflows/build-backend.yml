@@ -1,10 +1,9 @@
 name: build-backend
 
 on:
-  push:
-    pull_request:
-      branches:
-        - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -12,26 +11,25 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
-          distribution: "temurin" # ver opções em https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
+          distribution: "temurin"
           java-version: "17"
 
       - name: Build Maven
         run: mvn -f pom.xml clean package
 
-      - name: Gerar artefato Github com o .jar gerado
-        uses: actions/upload-artifact@v4 # essa action promove o envio de um ou mais arquivos para uma pasta temporária do github actions
+      - name: Upload JAR
+        uses: actions/upload-artifact@v3
         with:
-          name: aplicacao # nome do arquivo ou conjunto de arquivos
+          name: aplicacao
           path: target/*.jar
 
-      - name: Gerar artefato Github com os arquivos .sh
-        uses: actions/upload-artifact@v4
+      - name: Upload Scripts
+        uses: actions/upload-artifact@v3
         with:
-          name: scripts # nome do arquivo ou conjunto de arquivos (veja ele depois em 'Recuperar scripts')
-          path: .github/scripts/*.sh # todos os arquivos .sh do diretório .github/scripts
-
+          name: scripts
+          path: .github/scripts/*.sh

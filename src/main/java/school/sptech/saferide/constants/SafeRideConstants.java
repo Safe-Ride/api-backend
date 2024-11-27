@@ -8,5 +8,5 @@ public class SafeRideConstants {
     public final static String USUARIO_INVALID_PASSWORD = "Campo 'senha' nulo ou inválido. Deve conter no mínimo 4 caracteres";
     public final static String USUARIO_INVALID_TIPO = "Campo 'tipo' nulo ou inválido. Deve ser entre: RESPONSAVEL e MOTORISTA.";
     public final static String USUARIO_INVALID_DATA_NASCIMENTO = "Campo 'dataNascimento' nulo ou inválido. Deve estar no formato YYYY-MM-DD.";
-    public final static String BUCKET_FOTO_PERFIL_NAME = "bucket-foto-perfil-saferide1";
+    public final static String BUCKET_FOTO_PERFIL_NAME = "bucket-foto-perfil-saferide33 ";
 }

@@ -1,12 +1,20 @@
 name: deploy-backend
 
+#on:
+#  pull_request_review:
+#    types: [submitted]
+#
+#jobs:
+#  deploy:
+#    if: github.event.review.state == 'approved' && github.event.pull_request.merged == true
+
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  deploy:
-    if: github.event.review.state == 'approved' && github.event.pull_request.merged == true
+  build:
     runs-on: ubuntu-latest
 
     steps:

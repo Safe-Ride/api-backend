@@ -1,13 +1,22 @@
 name: deploy-backend
 
+#on:
+#  pull_request_review:
+#    types: [submitted]
+#
+#jobs:
+#  deploy:
+#    if: github.event.review.state == 'approved' && github.event.pull_request.merged == true
+
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy:
-    if: github.event.review.state == 'approved' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    needs: build  # Dependência configurada aqui
 
     steps:
       - name: Recuperar JAR

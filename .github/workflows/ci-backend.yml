@@ -108,10 +108,11 @@ jobs:
 
       - name: Implantar na EC2 privada
         run: |
-          ssh -T -o StrictHostKeyChecking=no -i $HOME/{{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} << 'EOF'
-            echo "${{ secrets.DEPLOY_KEY }}" >> $HOME/{{ secrets.NOME_ARQUIVO_PEM }}
-            chmod 400 $HOME/{{ secrets.NOME_ARQUIVO_PEM }}
-            scp -i $HOME/{{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api/
-            scp -i $HOME/{{ secrets.NOME_ARQUIVO_PEM }} deploy-api/scripts/* ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api/
-            ssh -i $HOME/{{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }} "sudo docker-compose -f /home/ubuntu/deploy-api/docker-compose.yml up -d --build"
+          ssh -T -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} << 'EOF'
+            echo "${{ secrets.DEPLOY_KEY }}" >> $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
+            chmod 400 $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
+          
+            scp -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api/
+            scp -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/scripts/* ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api/
+            ssh -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }} "sudo docker-compose -f /home/ubuntu/deploy-api/docker-compose.yml up -d --build"
           EOF

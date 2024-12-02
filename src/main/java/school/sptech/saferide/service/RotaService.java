@@ -35,6 +35,6 @@ public class RotaService {
     public void remover(int id) {
         Optional<Rota> rota = repository.findById(id);
         if(rota.isEmpty()) throw new NotFoundException("Rota");
-        repository.remove(rota.get());
+        repository.removeById(id);
     }
 }

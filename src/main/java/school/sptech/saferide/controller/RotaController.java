@@ -40,11 +40,23 @@ public class RotaController {
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    @PostMapping(ControllerConstants.ROTA_BASE_PATH)
+    @PostMapping
     public ResponseEntity<RotaResponse> criar(
-            @PathVariable int id,
             @RequestBody RotaRequest request) {
         var response = service.criar(RotaMapper.toEntity(request));
         return ResponseEntity.ok().body(RotaMapper.toDto(response));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RotaResponse> remover(
+            @PathVariable int id) {
+        service.remover(id);
+        return ResponseEntity.noContent().build();
     }
 }

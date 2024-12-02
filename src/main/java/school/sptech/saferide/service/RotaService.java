@@ -3,6 +3,7 @@ package school.sptech.saferide.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.saferide.model.entity.rota.Rota;
+import school.sptech.saferide.model.entity.rota.RotaRequest;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
@@ -27,4 +28,13 @@ public class RotaService {
         return repository.save(rota);
     }
 
+    public Rota criar(Rota request) {
+        return repository.save(request);
+    }
+
+    public void remover(int id) {
+        Optional<Rota> rota = repository.findById(id);
+        if(rota.isEmpty()) throw new NotFoundException("Rota");
+        repository.remove(rota.get());
+    }
 }

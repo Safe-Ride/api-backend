@@ -10,4 +10,5 @@ public interface RotaRepository extends JpaRepository<Rota, Integer> {
     List<Rota> findByDependenteId(int dependenteId);
     List<Rota> findByTrajetoId(Integer trajetoId);
     Optional<Rota> findByTrajetoIdAndDependenteIdAndEnderecoId(int trajetoId, int dependenteId, int enderecoId);
+    void remove(Rota rota);
 }

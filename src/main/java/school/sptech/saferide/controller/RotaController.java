@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.rota.RotaMapper;
+import school.sptech.saferide.model.entity.rota.RotaRequest;
 import school.sptech.saferide.model.entity.rota.RotaResponse;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
 import school.sptech.saferide.service.RotaService;
@@ -33,4 +34,17 @@ public class RotaController {
         return ResponseEntity.ok().body(RotaMapper.toDto(response));
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @PostMapping(ControllerConstants.ROTA_BASE_PATH)
+    public ResponseEntity<RotaResponse> criar(
+            @PathVariable int id,
+            @RequestBody RotaRequest request) {
+        var response = service.criar(RotaMapper.toEntity(request));
+        return ResponseEntity.ok().body(RotaMapper.toDto(response));
+    }
 }

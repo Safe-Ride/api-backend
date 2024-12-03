@@ -7,6 +7,8 @@ import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.trajeto.Trajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -24,4 +26,5 @@ public class Rota {
     @ManyToOne
     private Endereco endereco;
     private StatusDependente status;
+    private LocalDateTime horario;
 }

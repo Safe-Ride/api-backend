@@ -42,6 +42,7 @@ public class TrajetoMapper {
                             .endereco(TrajetoResponse.Rota.Endereco.builder()
                                     .id(s.getDependente().getId())
                                     .build())
+                            .horario(s.getHorario())
                             .build())
                     .collect(Collectors.toList()));
         }

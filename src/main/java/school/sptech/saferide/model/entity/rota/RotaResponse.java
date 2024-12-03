@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import school.sptech.saferide.model.enums.StatusDependente;
 
+import java.time.LocalDateTime;
+
 @Data
 public class RotaResponse {
     private Integer id;
@@ -12,6 +14,7 @@ public class RotaResponse {
     private Trajeto trajeto;
     private Endereco endereco;
     private StatusDependente status;
+    private LocalDateTime horario;
 
     @Data
     @Builder

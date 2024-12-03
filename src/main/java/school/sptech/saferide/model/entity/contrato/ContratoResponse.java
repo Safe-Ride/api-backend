@@ -17,7 +17,8 @@ public class ContratoResponse {
     private Usuario responsavel;
     private List<Dependente> dependentes;
     private Double valor;
-    private LocalDate data;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
     private List<Pagamento> pagamentos;
 
     @Data

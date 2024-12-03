@@ -8,6 +8,7 @@ import school.sptech.saferide.model.entity.rota.Rota;
 import school.sptech.saferide.model.entity.rota.RotaRequest;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
 import school.sptech.saferide.model.entity.trajeto.Trajeto;
+import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
@@ -21,11 +22,15 @@ public class RotaService {
     private final EnderecoService enderecoService;
     private final DependenteService dependenteService;
     private final TrajetoService trajetoService;
-
+  
     public Rota listarPorId(int id) {
         Optional<Rota> rotaOpt = repository.findById(id);
         if (rotaOpt.isEmpty()) throw new NotFoundException("Rota");
         return rotaOpt.get();
+    }
+
+    public Optional<Rota> listarPorTrajetoDependenteEndereco(int trajetoId, int dependenteId, int enderecoId) {
+        return repository.findByTrajetoIdAndDependenteIdAndEnderecoId(trajetoId, dependenteId, enderecoId);
     }
 
     public Rota atualizar(int id, RotaUpdateRequest request) {
@@ -43,6 +48,7 @@ public class RotaService {
         rota.setEndereco(endereco);
         rota.setDependente(dependente);
         rota.setTrajeto(trajeto);
+        rota.setStatus(StatusDependente.NAO_INICIADO)
         return repository.save(rota);
     }
 

@@ -33,8 +33,12 @@ public class ControllerConstants {
     public final static String LIST_BY_ID_PATH = "/{id}";
     public final static String REMOVE_PATH = "/{id}";
     public final static String SECURITY_NAME = "Bearer";
+    public final static String LIST_STATUS_DEPENDENTE_HISTORICO = "/status-dependentes/{id}";
     public static final String USUARIO_PARENT_DRIVERS_BASE_PATH = "/motoristas-responsavel/{id}";
     public final static String CONVERSAS_RESPONSAVEL_MOTORISTAS_BASE_PATH = "/motoristas-responsavel/{id}";
     public static final String CONVERSAS_MOTORISTA_RESPONSAVEIS_BASE_PATH = "/responsaveis-motorista/{id}";
     public static final String CONTRATO_POR_MOTORISTA_E_ANO_BASE_PATH = "/motorista/{id}/ano/{ano}";
+    public static final String TEMPO_REAL_BASE_PATH = "/tempo-real";
+    public static final String TEMPO_REAL_CREATION_BASE_PATH = "/{motoristaId}";
+    public static final String TEMPO_REAL_LAST_BASE_PATH = "/{motoristaId}";
 }

@@ -1,6 +1,7 @@
 package school.sptech.saferide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,12 +15,16 @@ import school.sptech.saferide.model.autentication.UsuarioLoginDto;
 import school.sptech.saferide.model.autentication.UsuarioTokenDto;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.imagem.Imagem;
-import school.sptech.saferide.model.entity.usuario.*;
+import school.sptech.saferide.model.entity.usuario.MotoristaListarClientes;
 import school.sptech.saferide.model.entity.usuario.MotoristaPerfilResponse;
+import school.sptech.saferide.model.entity.usuario.Usuario;
+import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
 import school.sptech.saferide.model.exception.ConflictException;
 import school.sptech.saferide.model.exception.NotFoundException;
+import school.sptech.saferide.model.view.ListarStatusDependentePorResponsavelView;
 import school.sptech.saferide.repository.DependenteRepository;
 import school.sptech.saferide.repository.UsuarioRepository;
+import school.sptech.saferide.repository.view.ListarStatusDependentePorResponsavelViewRepository;
 import school.sptech.saferide.service.utils.S3Configure;
 
 import java.time.LocalDate;
@@ -36,6 +41,8 @@ public class UsuarioService {
     private final AuthenticationManager authenticationManager;
 
     private final UsuarioRepository repository;
+    @Autowired
+    private final ListarStatusDependentePorResponsavelViewRepository listarStatusDependentePorResponsavelViewRepository;
     private final DependenteRepository dependenteRepository;
     private final ImagemService imagemService;
 
@@ -173,6 +180,14 @@ public class UsuarioService {
         if (dependentes.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return dependentes;
     }
+
+
+
+    public List<ListarStatusDependentePorResponsavelView> listarStatusDependentePorResponsavel(int responsavelId) {
+        List<ListarStatusDependentePorResponsavelView> historicoStatusDependente = listarStatusDependentePorResponsavelViewRepository.findByResponsavelId(responsavelId);
+        return historicoStatusDependente;
+    }
+
 
 //    public List<ResponsavelListarMotoristas> listarMotoristasPorResponsavel(int responsavelId) {
 //        List<Object[]> resultados = repository.findMotoristasByResponsavelId(responsavelId);

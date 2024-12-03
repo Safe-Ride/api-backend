@@ -1,31 +1,4 @@
-#  docker:
-#    runs-on: ubuntu-latest
-#    needs: build
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Set up QEMU
-#        uses: docker/setup-qemu-action@v3
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to Docker Hub
-#        uses: docker/login-action@v3
-#        with:
-#          username: ${{ secrets.DOCKERHUB_BACKEND_USER }}
-#          password: ${{ secrets.DOCKERHUB_BACKEND_TOKEN }}
-#
-#      - name: Build and Push
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: ./
-#          push: true
-#          tags: brunolimabh/api-backend:latest
-
-name: ci-backend
+name: ci-cd
 
 on:
   pull_request:
@@ -86,11 +59,9 @@ jobs:
         run: |
           echo "${{ secrets.DEPLOY_KEY }}" > $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
           chmod 400 $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
-
       - name: Preparar diretório remoto na EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} "mkdir -p /home/ubuntu/deploy-api && chmod 755 /home/ubuntu/deploy-api"
-
       - name: Enviar o JAR para EC2
         uses: appleboy/scp-action@master
         with:
@@ -105,10 +76,7 @@ jobs:
           ssh -T -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} << 'EOF'
             echo "Implantação em andamento..."
           
-            scp -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} /home/ubuntu/deploy-api/*.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu
+            scp -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} /home/ubuntu/deploy-api/*.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/
             echo "JAR copiado para a instância privada com sucesso."
           
-            # Rodar o JAR na instância privada          
-            ssh -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }} "nohup java -jar /home/ubuntu/*.jar > /home/ubuntu/app.log 2>&1 &"
-
           EOF

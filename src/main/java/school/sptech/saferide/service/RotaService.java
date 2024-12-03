@@ -12,6 +12,7 @@ import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,7 @@ public class RotaService {
     public Rota atualizar(int id, RotaUpdateRequest request) {
         Rota rota = listarPorId(id);
         rota.setStatus(request.getStatus());
+        rota.setHorario(LocalDateTime.now());
         return repository.save(rota);
     }
 
@@ -56,5 +58,15 @@ public class RotaService {
         Optional<Rota> rota = repository.findById(id);
         if(rota.isEmpty()) throw new NotFoundException("Rota");
         repository.removeById(id);
+    }
+
+    public Rota criar(Trajeto trajeto, Dependente dependente, Endereco endereco) {
+        Rota rota = new Rota();
+
+        rota.setEndereco(endereco);
+        rota.setDependente(dependente);
+        rota.setTrajeto(trajeto);
+        rota.setStatus(StatusDependente.NAO_INICIADO);
+        return repository.save(rota);
     }
 }

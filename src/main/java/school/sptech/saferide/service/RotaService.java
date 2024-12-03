@@ -48,7 +48,7 @@ public class RotaService {
         rota.setEndereco(endereco);
         rota.setDependente(dependente);
         rota.setTrajeto(trajeto);
-        rota.setStatus(StatusDependente.NAO_INICIADO)
+        rota.setStatus(StatusDependente.NAO_INICIADO);
         return repository.save(rota);
     }
 

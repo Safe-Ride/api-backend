@@ -27,6 +27,15 @@ public class TrajetoResponse {
     public static class Escola {
         private Integer id;
         private String nome;
+        private Endereco endereco;
+
+        @Data
+        @Builder
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public static class Endereco {
+            private Integer id;
+            private String cep;
+        }
     }
 
     @Data

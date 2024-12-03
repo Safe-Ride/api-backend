@@ -43,7 +43,7 @@ public class RotaController {
     @PostMapping
     public ResponseEntity<RotaResponse> criar(
             @RequestBody RotaRequest request) {
-        var response = service.criar(RotaMapper.toEntity(request));
+        var response = service.criar(request);
         return ResponseEntity.ok().body(RotaMapper.toDto(response));
     }
 

@@ -46,4 +46,11 @@ public interface DependenteRepository extends JpaRepository<Dependente, Integer>
     @Transactional
     @Query(value = "UPDATE Dependente d SET d.escola = :alteracao WHERE d.id = :id")
     void atualizarEscola(@Param("id") Integer id, @Param("alteracao") Escola alteracao);
+
+    @Query(value = """
+        SELECT d FROM Dependente d LEFT JOIN Rota r ON d.id = r.dependente.id AND r.trajeto.id = :trajetoId
+        JOIN Usuario m ON m.id = d.motorista.id WHERE m.id = :motoristaId AND r.dependente.id IS NULL
+        AND :escolaId = d.escola.id
+    """)
+    List<Dependente> findByMotoristaAndTrajetoAndEscolaWhereNotExists(@Param("motoristaId") Integer id, @Param("trajetoId") Integer trajetoId, @Param("escolaId") Integer escolaId);
 }

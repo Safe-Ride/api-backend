@@ -2,9 +2,12 @@ package school.sptech.saferide.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import school.sptech.saferide.model.entity.dependente.Dependente;
+import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.rota.Rota;
 import school.sptech.saferide.model.entity.rota.RotaRequest;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
+import school.sptech.saferide.model.entity.trajeto.Trajeto;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
@@ -15,6 +18,9 @@ import java.util.Optional;
 public class RotaService {
 
     private final RotaRepository repository;
+    private final EnderecoService enderecoService;
+    private final DependenteService dependenteService;
+    private final TrajetoService trajetoService;
 
     public Rota listarPorId(int id) {
         Optional<Rota> rotaOpt = repository.findById(id);
@@ -28,8 +34,16 @@ public class RotaService {
         return repository.save(rota);
     }
 
-    public Rota criar(Rota request) {
-        return repository.save(request);
+    public Rota criar(RotaRequest request) {
+        Rota rota = new Rota();
+        Endereco endereco = enderecoService.listarPorId(request.getEnderecoId());
+        Dependente dependente = dependenteService.listarPorId(request.getDependenteId());
+        Trajeto trajeto = trajetoService.listarPorId(request.getTrajetoId());
+
+        rota.setEndereco(endereco);
+        rota.setDependente(dependente);
+        rota.setTrajeto(trajeto);
+        return repository.save(rota);
     }
 
     public void remover(int id) {

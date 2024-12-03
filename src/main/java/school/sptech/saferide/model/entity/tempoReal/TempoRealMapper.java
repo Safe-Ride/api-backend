@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 
 @Component
 public class TempoRealMapper {
-    public static TempoRealRequest toDto(TempoReal tempoReal) {
+    public static TempoRealResponse toDto(TempoReal tempoReal) {
         if (tempoReal == null) {
             return null;
         }
         LocalDateTime date = LocalDateTime.now();
-        return TempoRealRequest.builder()
+        return TempoRealResponse.builder()
                 .latitude(tempoReal.getLatitude())
                 .longitude(tempoReal.getLongitude())
                 .data(tempoReal.getId().getData())

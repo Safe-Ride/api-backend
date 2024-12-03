@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RotaRequest {
-    private int trajetoId;
-    private int dependenteId;
-    private int enderecoId;
+    private Integer trajetoId;
+    private Integer dependenteId;
+    private Integer enderecoId;
 }

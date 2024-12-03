@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.saferide.model.entity.tempoReal.TempoReal;
 import school.sptech.saferide.model.entity.tempoReal.TempoRealMapper;
 import school.sptech.saferide.model.entity.tempoReal.TempoRealRequest;
-import school.sptech.saferide.model.entity.trajeto.TrajetoResponse;
 import school.sptech.saferide.model.entity.usuario.Usuario;
 import school.sptech.saferide.model.enums.TipoUsuario;
 import school.sptech.saferide.model.exception.NotFoundException;
@@ -34,9 +33,6 @@ public class TempoRealSersvice {
 
     public void save(TempoRealRequest tempoRealRequest, Integer idMotorista) {
         Usuario motorista = motorista(idMotorista);
-        if (tempoRealRequest.getData() == null) {
-            tempoRealRequest.setData(LocalDateTime.now());
-        }
 
         TempoReal tempoReal = TempoRealMapper.toEntity(tempoRealRequest, motorista);
         tempoRealRepository.save(tempoReal);

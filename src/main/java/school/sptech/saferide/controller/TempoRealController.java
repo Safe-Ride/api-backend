@@ -10,6 +10,7 @@ import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.tempoReal.TempoReal;
 import school.sptech.saferide.model.entity.tempoReal.TempoRealMapper;
 import school.sptech.saferide.model.entity.tempoReal.TempoRealRequest;
+import school.sptech.saferide.model.entity.tempoReal.TempoRealResponse;
 import school.sptech.saferide.service.TempoRealSersvice;
 
 @RestController
@@ -43,7 +44,7 @@ public class TempoRealController {
     })
     @GetMapping(ControllerConstants.TEMPO_REAL_LAST_BASE_PATH)
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    public ResponseEntity<TempoRealRequest> ultimoRegistro(@PathVariable Integer motoristaId) {
+    public ResponseEntity<TempoRealResponse> ultimoRegistro(@PathVariable Integer motoristaId) {
         TempoReal response = tempoRealSersvice.findById(motoristaId);
         return ResponseEntity.ok().body(TempoRealMapper.toDto(response));
     }

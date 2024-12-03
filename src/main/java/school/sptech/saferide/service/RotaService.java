@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.rota.Rota;
+import school.sptech.saferide.model.entity.rota.RotaEscolaEndereco;
+import school.sptech.saferide.model.entity.rota.RotaListarEnderecos;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
 import school.sptech.saferide.model.entity.trajeto.Trajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +49,14 @@ public class RotaService {
         Rota rota = listarPorId(id);
         rota.setStatus(request.getStatus());
         return repository.save(rota);
+    }
+
+    public List<RotaListarEnderecos> listarEnderecosPeloTrajeto(int idTrajeto) {
+      return repository.listarParadaPorTrajeto(idTrajeto);
+    }
+
+    public RotaEscolaEndereco listarEscolaEndereco(int idTrajeto) {
+      return repository.listarEnderecoEscolaPorTrajeto(idTrajeto);
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.rota.Rota;
+import school.sptech.saferide.model.entity.rota.RotaRequest;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
 import school.sptech.saferide.model.entity.trajeto.Trajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
@@ -18,20 +19,10 @@ import java.util.Optional;
 public class RotaService {
 
     private final RotaRepository repository;
-    private final TrajetoService trajetoService;
-    private final DependenteService dependenteService;
     private final EnderecoService enderecoService;
-
-    public Rota criar(Rota rota, Integer trajetoId, Integer dependenteId, Integer enderecoId) {
-        rota.setTrajeto(trajetoService.listarPorId(trajetoId));
-        rota.setDependente(dependenteService.listarPorId(dependenteId));
-        rota.setEndereco(enderecoService.listarPorId(enderecoId));
-        return repository.save(rota);
-    }
-    public Rota criar(Trajeto trajeto, Dependente dependente, Endereco endereco) {
-        return repository.save(new Rota(null, trajeto, dependente, endereco, StatusDependente.NAO_INICIADO));
-    }
-
+    private final DependenteService dependenteService;
+    private final TrajetoService trajetoService;
+  
     public Rota listarPorId(int id) {
         Optional<Rota> rotaOpt = repository.findById(id);
         if (rotaOpt.isEmpty()) throw new NotFoundException("Rota");
@@ -48,4 +39,22 @@ public class RotaService {
         return repository.save(rota);
     }
 
+    public Rota criar(RotaRequest request) {
+        Rota rota = new Rota();
+        Endereco endereco = enderecoService.listarPorId(request.getEnderecoId());
+        Dependente dependente = dependenteService.listarPorId(request.getDependenteId());
+        Trajeto trajeto = trajetoService.listarPorId(request.getTrajetoId());
+
+        rota.setEndereco(endereco);
+        rota.setDependente(dependente);
+        rota.setTrajeto(trajeto);
+        rota.setStatus(StatusDependente.NAO_INICIADO)
+        return repository.save(rota);
+    }
+
+    public void remover(int id) {
+        Optional<Rota> rota = repository.findById(id);
+        if(rota.isEmpty()) throw new NotFoundException("Rota");
+        repository.removeById(id);
+    }
 }

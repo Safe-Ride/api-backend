@@ -40,5 +40,5 @@ public class ControllerConstants {
     public static final String CONTRATO_POR_MOTORISTA_E_ANO_BASE_PATH = "/motorista/{id}/ano/{ano}";
     public static final String TEMPO_REAL_BASE_PATH = "/tempo-real";
     public static final String TEMPO_REAL_CREATION_BASE_PATH = "/{motoristaId}";
-    public static final String TEMPO_REAL_LAST_BASE_PATH = "/{motoristaId}";
+    public static final String TEMPO_REAL_LAST_BASE_PATH = "/{dependenteId}";
 }

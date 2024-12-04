@@ -59,24 +59,36 @@ jobs:
         run: |
           echo "${{ secrets.DEPLOY_KEY }}" > $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
           chmod 400 $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
-      - name: Preparar diretório remoto na EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} "mkdir -p /home/ubuntu/deploy-api && chmod 755 /home/ubuntu/deploy-api"
+
       - name: Enviar o JAR para EC2
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
+          host: ${{ secrets.IP_PRIVADO_EC2 }}
           username: ubuntu
           key: ${{ secrets.DEPLOY_KEY }}
           source: "./*.jar"
-          target: "/home/ubuntu/deploy-api/"
+          target: "/home/ubuntu/"
 
-      - name: Implantar na EC2 privada
-        run: |
-          ssh -T -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} << 'EOF'
-            echo "Implantação em andamento..."
-          
-            scp -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} /home/ubuntu/deploy-api/*.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/
-            echo "JAR copiado para a instância privada com sucesso."
-          
-          EOF
+      - name: Rodar aplicação
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.IP_PRIVADO_EC2 }}
+          username: ubuntu
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          script: |
+            nohup sudo java -jar *.jar > /home/ubuntu/app.log 2>&1 &  
+
+#      - name: Preparar diretório remoto na EC2
+#        run: |
+#          ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} "mkdir -p /home/ubuntu/deploy-api && chmod 755 /home/ubuntu/deploy-api"
+#
+#      - name: Implantar na EC2 privada
+#        run: |
+#          ssh -T -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} << 'EOF'
+#            echo "Implantação em andamento..."
+#
+#            scp -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} /home/ubuntu/deploy-api/*.jar ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/
+#            echo "JAR copiado para a instância privada com sucesso."
+#
+#          EOF

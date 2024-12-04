@@ -19,6 +19,7 @@ public class RotaMapper {
                 .id(entity.getDependente().getId())
                 .build());
         dto.setStatus(entity.getStatus());
+        dto.setHorario(entity.getHorario());
         return dto;
     }
 }

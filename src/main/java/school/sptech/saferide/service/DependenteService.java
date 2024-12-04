@@ -17,6 +17,7 @@ import school.sptech.saferide.model.exception.TypeUserInvalidException;
 import school.sptech.saferide.repository.DependenteRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,6 +97,10 @@ public class DependenteService {
         ).isPresent()) throw new NotRemoveWithRelationshipsException("Dependente", "Motorista");
         repository.deleteById(id);
         return null;
+    }
+
+    public List<Dependente> listarPorIdMotoristaEIdTrajetoEIdEscolaOndeNaoExiste(Integer motoristaId, Integer trajetoId, Integer escolaId) {
+        return repository.findByMotoristaAndTrajetoAndEscolaWhereNotExists(motoristaId, trajetoId, escolaId);
     }
 
 }

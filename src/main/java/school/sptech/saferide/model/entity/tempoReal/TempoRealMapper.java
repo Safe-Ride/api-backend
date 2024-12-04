@@ -12,7 +12,6 @@ public class TempoRealMapper {
         if (tempoReal == null) {
             return null;
         }
-        LocalDateTime date = LocalDateTime.now();
         return TempoRealResponse.builder()
                 .latitude(tempoReal.getLatitude())
                 .longitude(tempoReal.getLongitude())

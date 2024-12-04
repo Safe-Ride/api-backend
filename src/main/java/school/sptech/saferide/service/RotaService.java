@@ -6,6 +6,8 @@ import school.sptech.saferide.model.entity.dependente.Dependente;
 import school.sptech.saferide.model.entity.endereco.Endereco;
 import school.sptech.saferide.model.entity.rota.Rota;
 import school.sptech.saferide.model.entity.rota.RotaRequest;
+import school.sptech.saferide.model.entity.rota.RotaEscolaEndereco;
+import school.sptech.saferide.model.entity.rota.RotaListarEnderecos;
 import school.sptech.saferide.model.entity.rota.RotaUpdateRequest;
 import school.sptech.saferide.model.entity.trajeto.Trajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
@@ -13,6 +15,7 @@ import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,5 +71,27 @@ public class RotaService {
         rota.setTrajeto(trajeto);
         rota.setStatus(StatusDependente.NAO_INICIADO);
         return repository.save(rota);
+    }
+
+    public List<RotaListarEnderecos> listarEnderecosPeloTrajeto(int idTrajeto) {
+      return repository.listarParadaPorTrajeto(idTrajeto);
+    }
+
+    public RotaEscolaEndereco listarEscolaEndereco(int idTrajeto) {
+        List<Object[]> resultado = repository.listarEnderecoEscolaPorTrajeto(idTrajeto);
+
+        if (resultado.isEmpty()) {
+            throw new NotFoundException("Rota não encontrada");
+        }
+
+        Object[] dados = resultado.get(0);
+        if (dados.length != 2) {
+            throw new NotFoundException("Dados inválidos");
+        }
+
+        Double latitude = (dados[0] != null) ? (Double) dados[0] : null;
+        Double longitude = (dados[1] != null) ? (Double) dados[1] : null;
+
+        return new RotaEscolaEndereco(latitude, longitude);
     }
 }

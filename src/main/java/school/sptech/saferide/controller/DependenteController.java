@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.dependente.*;
-import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
-import school.sptech.saferide.model.entity.usuario.UsuarioResponse;
-import school.sptech.saferide.model.entity.usuario.UsuarioUpdate;
 import school.sptech.saferide.service.DependenteService;
 
 import java.util.List;

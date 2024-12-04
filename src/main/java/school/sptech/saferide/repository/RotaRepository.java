@@ -1,10 +1,10 @@
 package school.sptech.saferide.repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import school.sptech.saferide.model.entity.rota.Rota;
-import school.sptech.saferide.model.entity.rota.RotaEscolaEndereco;
 import school.sptech.saferide.model.entity.rota.RotaListarEnderecos;
 
 import java.util.List;
@@ -14,6 +14,8 @@ public interface RotaRepository extends JpaRepository<Rota, Integer> {
     List<Rota> findByDependenteId(int dependenteId);
     List<Rota> findByTrajetoId(Integer trajetoId);
     Optional<Rota> findByTrajetoIdAndDependenteIdAndEnderecoId(int trajetoId, int dependenteId, int enderecoId);
+    @Transactional
+    void removeById(int id);
 
     @Query(value = """
         SELECT new school.sptech.saferide.model.entity.rota.RotaListarEnderecos(
@@ -37,4 +39,3 @@ public interface RotaRepository extends JpaRepository<Rota, Integer> {
     """, nativeQuery = true)
     List<Object[]> listarEnderecoEscolaPorTrajeto(@Param("idTrajeto") int idTrajeto);
 }
-

@@ -8,6 +8,7 @@ import school.sptech.saferide.model.enums.HorarioTrajeto;
 import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.enums.TipoTrajeto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -27,6 +28,15 @@ public class TrajetoResponse {
     public static class Escola {
         private Integer id;
         private String nome;
+        private Endereco endereco;
+
+        @Data
+        @Builder
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public static class Endereco {
+            private Integer id;
+            private String cep;
+        }
     }
 
     @Data
@@ -45,6 +55,7 @@ public class TrajetoResponse {
         private StatusDependente status;
         private Dependente dependente;
         private Endereco endereco;
+        private LocalDateTime horario;
 
         @Data
         @Builder

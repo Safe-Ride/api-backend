@@ -9,10 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.dependente.*;
-import school.sptech.saferide.model.entity.usuario.UsuarioMapper;
-import school.sptech.saferide.model.entity.usuario.UsuarioResponse;
-import school.sptech.saferide.model.entity.usuario.UsuarioUpdate;
 import school.sptech.saferide.service.DependenteService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ControllerConstants.DEPENDENTES_BASE_PATH)
@@ -137,5 +136,17 @@ public class DependenteController {
             @PathVariable int id) {
         var response = service.remover(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "401", description = "Sem permição")
+    })
+    @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
+    @GetMapping(ControllerConstants.DEPENDENTES_MOTORISTA_TRAJETO_BASE_PATH)
+    public ResponseEntity<List<DependenteResponse>>listarPorIdMotoristaEIdTrajetoOndeNaoExiste(@PathVariable Integer motoristaId, @PathVariable Integer trajetoId, @PathVariable Integer escolaId) {
+        var response = service.listarPorIdMotoristaEIdTrajetoEIdEscolaOndeNaoExiste(motoristaId, trajetoId, escolaId);
+        return ResponseEntity.ok(DependenteMapper.toDto(response));
     }
 }

@@ -2,6 +2,7 @@ package school.sptech.saferide.constants;
 
 public class ControllerConstants {
     public final static String DEPENDENTES_BASE_PATH = "/dependentes";
+    public final static String DEPENDENTES_MOTORISTA_TRAJETO_BASE_PATH = "motoristas/{motoristaId}/trajetos/{trajetoId}/escolas/{escolaId}";
     public final static String ENDERECO_BASE_PATH = "/enderecos";
     public final static String ESCOLAS_BASE_PATH = "/escolas";
     public final static String CONVERSA_BASE_PATH = "/conversas";
@@ -39,5 +40,5 @@ public class ControllerConstants {
     public static final String CONTRATO_POR_MOTORISTA_E_ANO_BASE_PATH = "/motorista/{id}/ano/{ano}";
     public static final String TEMPO_REAL_BASE_PATH = "/tempo-real";
     public static final String TEMPO_REAL_CREATION_BASE_PATH = "/{motoristaId}";
-    public static final String TEMPO_REAL_LAST_BASE_PATH = "/{motoristaId}";
+    public static final String TEMPO_REAL_LAST_BASE_PATH = "/{dependenteId}";
 }

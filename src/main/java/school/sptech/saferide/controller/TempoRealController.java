@@ -10,14 +10,15 @@ import school.sptech.saferide.constants.ControllerConstants;
 import school.sptech.saferide.model.entity.tempoReal.TempoReal;
 import school.sptech.saferide.model.entity.tempoReal.TempoRealMapper;
 import school.sptech.saferide.model.entity.tempoReal.TempoRealRequest;
-import school.sptech.saferide.service.TempoRealSersvice;
+import school.sptech.saferide.model.entity.tempoReal.TempoRealResponse;
+import school.sptech.saferide.service.TempoRealService;
 
 @RestController
 @RequestMapping(ControllerConstants.TEMPO_REAL_BASE_PATH)
 @RequiredArgsConstructor
 public class TempoRealController {
 
-    private final TempoRealSersvice tempoRealSersvice;
+    private final TempoRealService tempoRealService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "ok"),
@@ -31,7 +32,7 @@ public class TempoRealController {
             @RequestBody TempoRealRequest tempoRealRequest,
             @PathVariable Integer motoristaId
     ) {
-        tempoRealSersvice.save(tempoRealRequest, motoristaId);
+        tempoRealService.save(tempoRealRequest, motoristaId);
         return ResponseEntity.ok().build();
     }
 
@@ -43,8 +44,8 @@ public class TempoRealController {
     })
     @GetMapping(ControllerConstants.TEMPO_REAL_LAST_BASE_PATH)
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    public ResponseEntity<TempoRealRequest> ultimoRegistro(@PathVariable Integer motoristaId) {
-        TempoReal response = tempoRealSersvice.findById(motoristaId);
+    public ResponseEntity<TempoRealResponse> ultimoRegistro(@PathVariable Integer dependenteId) {
+        TempoReal response = tempoRealService.findById(dependenteId);
         return ResponseEntity.ok().body(TempoRealMapper.toDto(response));
     }
 

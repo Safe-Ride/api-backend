@@ -18,6 +18,10 @@ public class TrajetoMapper {
             dto.setEscola(TrajetoResponse.Escola.builder()
                     .id(entity.getEscola().getId())
                     .nome(entity.getEscola().getNome())
+                    .endereco(TrajetoResponse.Escola.Endereco.builder()
+                            .id(entity.getEscola().getEndereco().getId())
+                            .cep(entity.getEscola().getEndereco().getCep())
+                            .build())
                     .build());
         }
         if (entity.getMotorista() != null) {
@@ -38,6 +42,7 @@ public class TrajetoMapper {
                             .endereco(TrajetoResponse.Rota.Endereco.builder()
                                     .id(s.getDependente().getId())
                                     .build())
+                            .horario(s.getHorario())
                             .build())
                     .collect(Collectors.toList()));
         }

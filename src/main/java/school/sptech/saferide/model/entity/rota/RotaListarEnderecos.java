@@ -10,5 +10,4 @@ import lombok.Setter;
 public class RotaListarEnderecos {
     private Double latitude ;
     private Double longitude ;
-
 }

@@ -26,7 +26,7 @@ public class RotaService {
     private final EnderecoService enderecoService;
     private final DependenteService dependenteService;
     private final TrajetoService trajetoService;
-
+  
     public Rota listarPorId(int id) {
         Optional<Rota> rotaOpt = repository.findById(id);
         if (rotaOpt.isEmpty()) throw new NotFoundException("Rota");

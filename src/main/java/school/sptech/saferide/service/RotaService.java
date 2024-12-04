@@ -13,6 +13,7 @@ import school.sptech.saferide.model.enums.StatusDependente;
 import school.sptech.saferide.model.exception.NotFoundException;
 import school.sptech.saferide.repository.RotaRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +57,21 @@ public class RotaService {
     }
 
     public RotaEscolaEndereco listarEscolaEndereco(int idTrajeto) {
-      return repository.listarEnderecoEscolaPorTrajeto(idTrajeto);
+        List<Object[]> resultado = repository.listarEnderecoEscolaPorTrajeto(idTrajeto);
+
+        if (resultado.isEmpty()) {
+            throw new NotFoundException("Rota não encontrada");
+        }
+
+        Object[] dados = resultado.get(0);
+        if (dados.length != 2) {
+            throw new NotFoundException("Dados inválidos");
+        }
+
+        Double latitude = (dados[0] != null) ? (Double) dados[0] : null;
+        Double longitude = (dados[1] != null) ? (Double) dados[1] : null;
+
+        return new RotaEscolaEndereco(latitude, longitude);
     }
 
 }

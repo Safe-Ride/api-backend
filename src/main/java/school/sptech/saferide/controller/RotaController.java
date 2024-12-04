@@ -43,8 +43,8 @@ public class RotaController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping("/map-box/listar-enderecos/{idTrajeto}")
     public ResponseEntity<List<RotaListarEnderecos>> ListarEnderecosPeloTrajeto(
-            @PathVariable int id) {
-        var response = service.listarEnderecosPeloTrajeto(id);
+            @PathVariable int idTrajeto) {
+        var response = service.listarEnderecosPeloTrajeto(idTrajeto);
         return ResponseEntity.ok().body(response);
     }
 
@@ -56,8 +56,8 @@ public class RotaController {
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
     @GetMapping("/map-box/listar-escola-endereco/{idTrajeto}")
     public ResponseEntity<RotaEscolaEndereco> ListarEscolaEndereco(
-            @PathVariable int id) {
-        var response = service.listarEscolaEndereco(id);
+            @PathVariable int idTrajeto) {
+        var response = service.listarEscolaEndereco(idTrajeto);
         return ResponseEntity.ok().body(response);
     }
 

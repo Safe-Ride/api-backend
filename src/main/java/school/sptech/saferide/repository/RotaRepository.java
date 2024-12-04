@@ -16,12 +16,12 @@ public interface RotaRepository extends JpaRepository<Rota, Integer> {
     Optional<Rota> findByTrajetoIdAndDependenteIdAndEnderecoId(int trajetoId, int dependenteId, int enderecoId);
 
     @Query(value = """
-SELECT e.latitude AS latitude, e.longitude AS longitude 
+SELECT e.latitude AS latitude, e.longitude AS longitude
 FROM rota r
 INNER JOIN trajeto t ON r.trajeto_id = t.id
 INNER JOIN endereco e ON r.endereco_id = e.id
 WHERE t.id = :idTrajeto
-""", nativeQuery = true)
+""")
     List<RotaListarEnderecos> listarParadaPorTrajeto(@Param("idTrajeto") int idTrajeto);
 
     @Query(value = """
@@ -31,7 +31,7 @@ INNER JOIN trajeto t ON r.trajeto_id = t.id
 INNER JOIN escola es ON t.escola_id = es.id
 INNER JOIN endereco e ON es.endereco_id = e.id
 WHERE t.id = :idTrajeto
-""", nativeQuery = true)
+""")
     RotaEscolaEndereco listarEnderecoEscolaPorTrajeto(@Param("idTrajeto") int idTrajeto);
 
 }

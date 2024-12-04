@@ -41,10 +41,10 @@ public class RotaController {
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    @GetMapping("/map-box/listar-enderecos/{idTrajeto}")
+    @GetMapping(ControllerConstants.LIST_ENDERECOS_BY_TRAJETO)
     public ResponseEntity<List<RotaListarEnderecos>> ListarEnderecosPeloTrajeto(
-            @PathVariable int id) {
-        var response = service.listarEnderecosPeloTrajeto(id);
+            @PathVariable int idTrajeto) {
+        List<RotaListarEnderecos> response = service.listarEnderecosPeloTrajeto(idTrajeto);
         return ResponseEntity.ok().body(response);
     }
 
@@ -54,13 +54,11 @@ public class RotaController {
             @ApiResponse(responseCode = "401", description = "Sem permição")
     })
     @SecurityRequirement(name = ControllerConstants.SECURITY_NAME)
-    @GetMapping("/map-box/listar-escola-endereco/{idTrajeto}")
+    @GetMapping(ControllerConstants.LIST_ENDERECOS_BY_ESCOLA)
     public ResponseEntity<RotaEscolaEndereco> ListarEscolaEndereco(
-            @PathVariable int id) {
-        var response = service.listarEscolaEndereco(id);
+            @PathVariable int idTrajeto) {
+        var response = service.listarEscolaEndereco(idTrajeto);
         return ResponseEntity.ok().body(response);
     }
-
-
 
 }

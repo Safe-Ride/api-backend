@@ -40,4 +40,6 @@ public class ControllerConstants {
     public static final String TEMPO_REAL_BASE_PATH = "/tempo-real";
     public static final String TEMPO_REAL_CREATION_BASE_PATH = "/{motoristaId}";
     public static final String TEMPO_REAL_LAST_BASE_PATH = "/{motoristaId}";
+    public static final String LIST_ENDERECOS_BY_TRAJETO = "/listar-enderecos/{idTrajeto}";
+    public static final String LIST_ENDERECOS_BY_ESCOLA = "/listar-escola-endereco/{idTrajeto}";
 }

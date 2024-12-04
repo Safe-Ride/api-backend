@@ -1,23 +1,15 @@
 package school.sptech.saferide.model.entity.rota;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
-
+@Data
 public class RotaListarEnderecos {
 
     private Double latitude ;
     private Double longitude ;
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
 }

@@ -74,3 +74,4 @@
 #           COMMIT_URL: ${{ env.COMMIT_URL }}
 #         run: |
 #           python -u automacao-relatorio/main.py
+
